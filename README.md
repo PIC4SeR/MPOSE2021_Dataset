@@ -1,5 +1,7 @@
 # MPOSE Dataset
 
+This repository contains the MPOSE Dataset [1-3] for posture-based Human Action Recognition (HAR). 
+
 # References
 [1] F. Angelini, J. Yan and S. M. Naqvi, "Privacy-preserving Online Human Behaviour Anomaly Detection Based on Body Movements and Objects Positions," ICASSP 2019 - 2019 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Brighton, United Kingdom, 2019, pp. 8444-8448. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8683026&isnumber=8682151
 
