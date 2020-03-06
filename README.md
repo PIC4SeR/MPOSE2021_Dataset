@@ -1,6 +1,6 @@
 # MPOSE Dataset
 
-This repository contains the MPOSE Dataset [1-3] for posture-based Human Action Recognition (HAR). 
+This repository contains the MPOSE Dataset [1-3] for pose-based Human Action Recognition (HAR). MPOSE Dataset is made by human pose data detected by OpenPose [4] on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7] and KTH [8]. RGB data for these datasets are available online on their respective repositories. Since these datasets had heterogenous action labels, each dataset labels were remapped to a common and homogeneous list of actions [1]. Less represented actions were discarded [1]. Moreover, MPOSE also includes RGB and pose data for the Intelligent Sensing Lab Dataset (ISLD) [1].
 
 # References
 [1] F. Angelini, J. Yan and S. M. Naqvi, "Privacy-preserving Online Human Behaviour Anomaly Detection Based on Body Movements and Objects Positions," ICASSP 2019 - 2019 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Brighton, United Kingdom, 2019, pp. 8444-8448. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8683026&isnumber=8682151
