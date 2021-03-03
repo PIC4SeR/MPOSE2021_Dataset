@@ -26,7 +26,9 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
 4. Create virtual environment (optional, but recommended).
  * venv...
  * source venv/bin/activate
-5. `pip install -r requirements.txt`
+5. Install python requirements 
+ * `pip install -r requirements.txt`
+
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689
