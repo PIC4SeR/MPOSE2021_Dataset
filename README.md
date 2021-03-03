@@ -6,7 +6,7 @@ MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by
 
 This repository contains pose data in a python-friendly format. Moreover, it also contains the scripts to generate MPOSE2021 dataset (RGB data) starting from the original RGB sequences belonging to the above-mentioned dataset. For licence-related reasons, the user must download RGB data from the original sources, as explanined in the manual.
 
-1. Download archives from the following third-party repositories (NO unzip!):
+1. Download RGB archives from the following third-party repositories (NO unzip!):
   * [IXMAS Dataset](https://www.epfl.ch/labs/cvlab/data/data-ixmas10). Download "original IXMAS ROIs" archive.
   * [Weizmann Dataset](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html). Download actions: Walk, Run, Jump, Bend, One-hand wave, Two-hands wave, Jump in place.
   * [i3DPost Dataset](http://kahlan.eps.surrey.ac.uk/i3dpost_action/) (subject to password request!). Download all archives related to actions: Walk, Run, Jump, Bend, Hand-wave, Jump in place.
