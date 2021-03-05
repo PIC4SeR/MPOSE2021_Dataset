@@ -90,13 +90,13 @@ frame_size = dict(kth=(160, 120),
                   isldas=(480, 300))
 resize_interpolation = cv2.INTER_CUBIC
 
-misc_paths = dict(kth='misc/kth_splitter.csv',
-                  ixmas='misc/ixmas_exclude.csv',
-                  i3dpost='misc/i3dpost_archives.csv',
+misc_paths = dict(kth='../misc/kth_splitter.csv',
+                  ixmas='../misc/ixmas_exclude.csv',
+                  i3dpost='../misc/i3dpost_archives.csv',
                   weizmann=None,
-                  isld='misc/isld_truth.xlsx',
+                  isld='../misc/isld_truth.xlsx',
                   isldas=None,
-                  checksum='misc/cksum_mpose2021.csv')
+                  checksum='../misc/cksum_mpose2021.csv')
 
 video_extention = '.avi'
 codec = cv2.VideoWriter_fourcc(*'MPEG')

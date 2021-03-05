@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from scripts.vars import *
+from init_vars import *
 import os
 from matplotlib import collections as mc
 from matplotlib.animation import FuncAnimation
@@ -12,8 +12,10 @@ def read(file):
     with open(file) as json_file:
         data = np.array(json.load(json_file)['people'][0]['pose_keypoints_2d'])
         if isinstance(data, list):
-            return np.nan * np.zeros((15, 3))
+            detection = 0
+            return np.nan * np.zeros((15, 3)), detection
         else:
+            detection = 1
             data[data == 0] = np.nan
             x = np.zeros((25, 3))
             for i in range(0, 3):
@@ -21,7 +23,7 @@ def read(file):
             x[0, :] = np.nanmean(x[openpose_parts['head'], :], axis=0)
             x[11, :] = np.nanmean(x[openpose_parts['right_foot'], :], axis=0)
             x[14, :] = np.nanmean(x[openpose_parts['left_foot'], :], axis=0)
-            return x[0:15, :]
+            return x[0:15, :], detection
 
 
 def create_limbs(body):
@@ -71,26 +73,34 @@ def animation(seq, path, filename):
 def read_sequence(sample, animate_path=None):
     jsons = os.listdir(sample)
     sequence = np.nan * np.zeros((15, 3, len(jsons)))
+    detections = np.nan * np.zeros((len(jsons)))
+    frames = np.nan * np.zeros((len(jsons)))
     for i in jsons:
         t = int(i[-27:-15])
-        sequence[:, :, t] = read(os.path.join(sample, i))
+        sequence[:, :, t], detections[t] = read(os.path.join(sample, i))
+        frames[t] = t
+
     if animate_path is not None:
         animation(sequence, animate_path, os.path.basename(sample).replace('.avi', ''))
 
-    return sequence
+    return sequence, detections, frames
 
 
-def save_sequence(seq, sample, path=seq_path):
+def save_sequence(seq, det, fra, sample, name, path=paths['pose']):
+    to_save = dict(seq=seq, det=det, length=seq.shape[2], frames=fra, sample=sample)
+    to_save.update(get_meta(sample))
+    pickle.dump(to_save, open(os.path.join(path, name+'.p'), 'wb'))
+
+
+def get_meta(sample):
     res = [i for i in range(len(sample)) if sample.startswith('_', i)]
-    to_save = dict(seq=seq,
-                   sample=sample,
-                   dataset=sample[:res[0]],
-                   actor=sample[res[0]+1:res[1]],
-                   unique_id=sample[res[1]+1:res[2]],
-                   length=seq.shape[2])
-    pickle.dump(to_save, open(os.path.join(path, sample+'.p'), 'wb'))
+    return dict(sample=sample,
+                dataset=sample[:res[0]],
+                actor=sample[res[0] + 1:res[1]],
+                unique_id=sample[res[1] + 1:res[2]])
 
 
-sample = '../data/json/i3dpost_chris_bend_177.avi'
-seq = read_sequence(sample)
-save_sequence(seq, os.path.basename(sample))
+if __name__ == '__main__':
+    sample = paths['json'] + 'i3dpost_chris_bend_177.avi'
+    seq, det, frames = read_sequence(sample)
+    save_sequence(seq=seq, det=det, sample=os.path.basename(sample))

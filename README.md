@@ -11,8 +11,6 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
 * ?? free disk space;
 * Python 3.8;
 
-## Download pose data
-
 ## Generate RGB data
 1. Clone the repository.
 
@@ -62,6 +60,14 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
     
 9. Check integrity of RGB data (to make sure that the json files in "archives_path"/json are compatible):
    * `python scripts/check_integrity.py`
+
+## Generate POSE data
+1. Perform steps 1., 2., 3., and 4. from "Generate RGB data".
+
+2. Download json data
+
+3. Extract json data
+    * `python scripts/extract_json.py`
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689

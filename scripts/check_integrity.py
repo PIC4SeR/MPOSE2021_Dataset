@@ -16,7 +16,7 @@ def generate_checksums():
 
 def check_integrity():
     current = pd.read_csv(os.path.join(temp_path, 'cksum.csv'), index_col='sample')
-    target = pd.read_csv('../' + misc_paths['checksum'], index_col='sample')
+    target = pd.read_csv(misc_paths['checksum'], index_col='sample')
     try:
         if ((target == current).sum() == len(target)).values[0]:
             print('Test passed!')
