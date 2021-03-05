@@ -1,35 +1,50 @@
 import os
 import cv2
 
-
+# path where the dataset will be exported
 dataset_path = '/home/federico/Documents/MPOSE2021/'
-temp_paths = dict(kth='temp/kth/',
-                  ixmas='temp/ixmas/',
-                  i3dpost='temp/i3dpost/',
-                  weizmann='temp/weizmann/',
-                  isld='temp/isld/',
-                  isldas='temp/isldas/')
-max_frame_length = 30
-min_frame_length = 20
+
+# paths where the formers dataset archives will be stored
+# which requires ??? free space
+archives_path = dataset_path + 'archives/'
+
+# temporary folder, which requires ??? free space
+# it will contain unzipped archives
+temp_path = dataset_path + 'temp/'
+
+# maximum frame length for each MPOSE2021 sequence
+max_frame_length = 30  # deault 30
+min_frame_length = 20  # default 20
 
 '''
 ########################################################################
 ################ do NOT modify after this point ########################
 ########################################################################
 '''
+if max_frame_length == 30 and min_frame_length == 20:
+    print('MPOSE2021 with default frame_length parameters')
+else:
+    print('MPOSE2021 with NON-default frame_length parameters!!!')
 
-former_paths = dict(kth=dataset_path + 'former_data/kth/',
-                    ixmas=dataset_path + 'former_data/ixmas/',
-                    i3dpost=dataset_path + 'former_data/i3dpost/',
-                    weizmann=dataset_path + 'former_data/weizmann/',
-                    isld=dataset_path + 'former_data/isld/',
-                    isldas=dataset_path + 'former_data/isldas/')
+archives_paths = dict(kth=archives_path + 'kth/',
+                      ixmas=archives_path + 'ixmas/',
+                      i3dpost=archives_path + 'i3dpost/',
+                      weizmann=archives_path + 'weizmann/',
+                      isld=archives_path + 'isld/',
+                      isldas=archives_path + 'isldas/',
+                      json=archives_path + 'json/')
+del archives_path
+
+former_paths = dict(kth=temp_path + 'kth/',
+                    ixmas=temp_path + 'ixmas/',
+                    i3dpost=temp_path + 'i3dpost/',
+                    weizmann=temp_path + 'weizmann/',
+                    isld=temp_path + 'isld/',
+                    isldas=temp_path + 'isldas/')
 
 paths = dict(video=dataset_path + 'video/',
              pose=dataset_path + 'pose/',
-             json=dataset_path + 'json/',
-             former=dataset_path + 'former_data/',
-             meta=dataset_path + 'meta/')
+             json=dataset_path + 'json/')
 
 actions = ['stand',
            'check-watch',
@@ -75,28 +90,35 @@ frame_size = dict(kth=(160, 120),
                   isldas=(480, 300))
 resize_interpolation = cv2.INTER_CUBIC
 
-gt_paths = dict(kth='misc/kth_splitter.csv',
-                ixmas='misc/ixmas_exclude.csv',
-                i3dpost='misc/i3dpost_archives.csv',
-                weizmann=None,
-                isld='misc/isld_truth.xlsx',
-                isldas=None)
+misc_paths = dict(kth='misc/kth_splitter.csv',
+                  ixmas='misc/ixmas_exclude.csv',
+                  i3dpost='misc/i3dpost_archives.csv',
+                  weizmann=None,
+                  isld='misc/isld_truth.xlsx',
+                  isldas=None,
+                  checksum='misc/cksum_mpose2021.csv')
 
 video_extention = '.avi'
 codec = cv2.VideoWriter_fourcc(*'MPEG')
 
-checksum_file_for_integrity_check = dataset_path + 'meta/cksum_mpose2021.csv'
-
 # json related vars
 min_conf_threshold = 0.2
 
+# OpenPose keypoints index
+openpose_parts = dict(head=[0, 15, 16, 17, 18],
+                      right_foot=[11, 22, 23, 24],
+                      left_foot=[14, 19, 20, 21])
+
+
 if __name__ == '__main__':
-    for i in temp_paths.keys():
-        if not os.path.exists(temp_paths[i]):
-            os.mkdir(temp_paths[i])
+    if not os.path.exists(temp_path):
+        os.mkdir(temp_path)
+    for i in archives_paths.keys():
+        if not os.path.exists(archives_paths[i]):
+            os.makedirs(archives_paths[i])
     for i in paths.keys():
         if not os.path.exists(paths[i]):
-            os.mkdir(paths[i])
+            os.makedirs(paths[i])
     for i in former_paths.keys():
         if not os.path.exists(former_paths[i]):
-            os.mkdir(former_paths[i])
+            os.makedirs(former_paths[i])

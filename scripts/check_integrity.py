@@ -11,12 +11,12 @@ def generate_checksums():
                                 'cksum': hashlib.md5(open(os.path.join(paths['video'], f), 'rb').read()).hexdigest()},
                                ignore_index=True)
     report = report.set_index('sample')
-    report.to_csv(os.path.join(paths['meta'], 'cksum.csv'))
+    report.to_csv(os.path.join(temp_path, 'cksum.csv'))
 
 
 def check_integrity():
-    current = pd.read_csv(os.path.join(paths['meta'], 'cksum.csv'), index_col='sample')
-    target = pd.read_csv(checksum_file_for_integrity_check, index_col='sample')
+    current = pd.read_csv(os.path.join(temp_path, 'cksum.csv'), index_col='sample')
+    target = pd.read_csv('../' + misc_paths['checksum'], index_col='sample')
     try:
         if ((target == current).sum() == len(target)).values[0]:
             print('Test passed!')
@@ -29,3 +29,4 @@ def check_integrity():
 if __name__ == '__main__':
     generate_checksums()
     check_integrity()
+
