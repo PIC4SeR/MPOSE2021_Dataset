@@ -46,27 +46,27 @@ paths = dict(video=dataset_path + 'video/',
              pose=dataset_path + 'pose/',
              json=dataset_path + 'json/')
 
-actions = ['stand',
-           'check-watch',
-           'cross-arms',
-           'scratch-head',
-           'sit-down',
-           'get-up',
-           'turn',
-           'walk',
-           'wave1',
-           'box',
-           'kick',
-           'point',
-           'pick-up',
-           'throw',
-           'bend',
-           'hands-clap',
-           'wave2',
-           'jog',
-           'jump',
-           'pjump',
-           'run']
+actions = {'standing': 0,
+           'check-watch': 1,
+           'cross-arms': 2,
+           'scratch-head': 3,
+           'sit-down': 4,
+           'get-up': 5,
+           'turn': 6,
+           'walk': 7,
+           'wave1': 8,
+           'box': 9,
+           'kick': 10,
+           'point': 11,
+           'pick-up': 12,
+           'throw': 13,
+           'bend': 14,
+           'hands-clap': 15,
+           'wave2': 16,
+           'jog': 17,
+           'jump': 18,
+           'pjump': 19,
+           'run': 20}
 
 fps = dict(kth=25,
            ixmas=25,
@@ -90,19 +90,16 @@ frame_size = dict(kth=(160, 120),
                   isldas=(480, 300))
 resize_interpolation = cv2.INTER_CUBIC
 
-misc_paths = dict(kth='../misc/kth_splitter.csv',
-                  ixmas='../misc/ixmas_exclude.csv',
-                  i3dpost='../misc/i3dpost_archives.csv',
+misc_paths = dict(kth='misc/kth_splitter.csv',
+                  ixmas='misc/ixmas_exclude.csv',
+                  i3dpost='misc/i3dpost_archives.csv',
                   weizmann=None,
-                  isld='../misc/isld_truth.xlsx',
+                  isld='misc/isld_truth.xlsx',
                   isldas=None,
-                  checksum='../misc/cksum_mpose2021.csv')
+                  checksum='misc/cksum_mpose2021.csv')
 
 video_extention = '.avi'
 codec = cv2.VideoWriter_fourcc(*'MPEG')
-
-# json related vars
-min_conf_threshold = 0.2
 
 # OpenPose keypoints index
 openpose_parts = dict(head=[0, 15, 16, 17, 18],

@@ -173,7 +173,7 @@ def process_former(dataset):
             sets = os.listdir(os.path.join(former_paths[dataset], actor, child_dir))
             for s in sets:
                 action = gt.loc[(gt['Code'] == s) & (gt['Actor'] == actor), 'Action'].values[0].lower()
-                if action == 'Hand-wave':
+                if action == 'hand-wave':
                     action = 'wave1'
                 elif action == 'jump in place':
                     action = 'pjump'
@@ -204,11 +204,11 @@ def process_former(dataset):
 
 if __name__ == '__main__':
     for dataset in [
-        'weizmann',
-        'isldas',
-        'isld',
-        'ixmas',
-        'kth',
+        # 'weizmann',
+        # 'isldas',
+        # 'isld',
+        # 'ixmas',
+        # 'kth',
         'i3dpost'
     ]:
         process_former(dataset)

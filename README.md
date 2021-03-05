@@ -15,59 +15,62 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
 1. Clone the repository.
 
 2. Create virtual environment (optional, but recommended).
-* venv...
-* source venv/bin/activate
+    * venv...
+    * source venv/bin/activate
 
 3. Check and set top variables in "scripts/init_vars.py":
-* "dataset_path": where you want the dataset to be exported
-* "archives_path": where you want to save the former dataset archives (requires ??? free space)
-* "temporary_path": where temporary files will be stored (requires ??? free space)
-* "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't chance for reproducibility)
-* "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't chance for reproducibility)
+    * "dataset_path": where you want the dataset to be exported
+    * "archives_path": where you want to save the former dataset archives (requires ??? free space)
+    * "temporary_path": where temporary files will be stored (requires ??? free space)
+    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't chance for reproducibility)
+    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't chance for reproducibility)
 
 4. Run variables initialization
-* `python scripts/init_vars.py`
+    * `python init_vars.py`
 
 5. Download RGB archives from the following third-party repositories:
-* [IXMAS Dataset](https://www.epfl.ch/labs/cvlab/data/data-ixmas10).
-   * Download "original IXMAS ROIs" archive.
-   * Save the archive into "arhives_path"/ixmas/.
-* [Weizmann Dataset](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html).
-   * Download actions: Walk, Run, Jump, Bend, One-hand wave, Two-hands wave, Jump in place.
-   * Save the archive into "arhives_path"/weizmann/.
-* [i3DPost Dataset](http://kahlan.eps.surrey.ac.uk/i3dpost_action/) (subject to password request!).
-   * Download all archives related to actions: Walk, Run, Jump, Bend, Hand-wave, Jump in place.
-   * Save the archive into "arhives_path"/i3DPost/.
-* [KTH Dataset](https://www.csc.kth.se/cvap/actions/).
-   * Download archives "walking.zip", "jogging.zip", "running.zip", "boxing.zip", "handwaving.zip", "handclapping.zip".
-   * Save the archive into "arhives_path"/kth/.
-* [ISLD Dataset]()
-   * Download ???.
-   * Save the archive into "arhives_path"/isld/.
-* [ISLD-Additional-Sequences Dataset]()
-   * Download ???.
-   * Save the archive into "arhives_path"/isldas/.
+    * [IXMAS Dataset](https://www.epfl.ch/labs/cvlab/data/data-ixmas10).
+        * Download "original IXMAS ROIs" archive.
+        * Save the archive into "arhives_path"/ixmas/.
+    * [Weizmann Dataset](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html).
+        * Download actions: Walk, Run, Jump, Bend, One-hand wave, Two-hands wave, Jump in place.
+        * Save the archive into "arhives_path"/weizmann/.
+    * [i3DPost Dataset](http://kahlan.eps.surrey.ac.uk/i3dpost_action/) (subject to password request!).
+        * Download all archives related to actions: Walk, Run, Jump, Bend, Hand-wave, Jump in place.
+        * Save the archive into "arhives_path"/i3DPost/.
+    * [KTH Dataset](https://www.csc.kth.se/cvap/actions/).
+        * Download archives "walking.zip", "jogging.zip", "running.zip", "boxing.zip", "handwaving.zip", "handclapping.zip".
+        * Save the archive into "arhives_path"/kth/.
+    * [ISLD Dataset]()
+        * Download ???.
+        * Save the archive into "arhives_path"/isld/.
+    * [ISLD-Additional-Sequences Dataset]()
+        * Download ???.
+        * Save the archive into "arhives_path"/isldas/.
 
-6. Install python requirements 
-   * `pip install -r requirements.txt`
+6. Install python requirements:
+    * `pip install -r requirements.txt`
 
 7. Extract archives:
-   * `python scripts/extract_formers.py`
+    * `python extract_formers.py`
   
 8. Create RGB data:
-   * `python scripts/create_video.py`
-   * RGB data for MPOSE2021 are located in "dataset_path"/video
+    * `python create_video.py`
+    * RGB data for MPOSE2021 are located in "dataset_path"/video
     
 9. Check integrity of RGB data (to make sure that the json files in "archives_path"/json are compatible):
-   * `python scripts/check_integrity.py`
+    * `python check_integrity.py`
 
 ## Generate POSE data
 1. Perform steps 1., 2., 3., and 4. from "Generate RGB data".
 
-2. Download json data
+2. Download json data:
 
-3. Extract json data
-    * `python scripts/extract_json.py`
+3. Extract json data:
+    * `python extract_json.py`
+    
+4. Generate POSE data:
+    * `python create_pose.py`
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689

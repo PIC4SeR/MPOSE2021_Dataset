@@ -10,20 +10,30 @@ import pickle
 
 def read(file):
     with open(file) as json_file:
-        data = np.array(json.load(json_file)['people'][0]['pose_keypoints_2d'])
-        if isinstance(data, list):
-            detection = 0
-            return np.nan * np.zeros((15, 3)), detection
-        else:
+        try:
+            data = np.array(json.load(json_file)['people'][0]['pose_keypoints_2d'])
             detection = 1
             data[data == 0] = np.nan
             x = np.zeros((25, 3))
             for i in range(0, 3):
                 x[:, i] = data[range(i, 75, 3)]
-            x[0, :] = np.nanmean(x[openpose_parts['head'], :], axis=0)
-            x[11, :] = np.nanmean(x[openpose_parts['right_foot'], :], axis=0)
-            x[14, :] = np.nanmean(x[openpose_parts['left_foot'], :], axis=0)
+            if np.isnan(x[openpose_parts['head'], :]).all():
+                x[0, :] = [np.nan, np.nan, np.nan]
+            else:
+                x[0, :] = np.nanmean(x[openpose_parts['head'], :], axis=0)
+            if np.isnan(x[openpose_parts['right_foot'], :]).all():
+                x[11, :] = [np.nan, np.nan, np.nan]
+            else:
+                x[11, :] = np.nanmean(x[openpose_parts['right_foot'], :], axis=0)
+            if np.isnan(x[openpose_parts['left_foot'], :]).all():
+                x[14, :] = [np.nan, np.nan, np.nan]
+            else:
+                x[14, :] = np.nanmean(x[openpose_parts['left_foot'], :], axis=0)
             return x[0:15, :], detection
+
+        except:
+            detection = 0
+            return np.nan * np.zeros((15, 3)), detection
 
 
 def create_limbs(body):
@@ -36,7 +46,10 @@ def create_limbs(body):
     return limbs
 
 
-def animation(seq, path, filename):
+def animation(seq, filename, path=temp_path):
+
+    if filename.find('.avi'):
+        filename.replace('avi', '')
 
     def animationUpdate(k):
         x = seq[:, 0, k]
@@ -48,11 +61,11 @@ def animation(seq, path, filename):
         return scat,
 
     f = plt.figure(figsize=(10, 5))
-    min_x = seq[:, 0, :].min().round()
-    max_x = seq[:, 0, :].max().round()
+    min_x = np.nanmin(seq[:, 0, :]).round()
+    max_x = np.nanmax(seq[:, 0, :]).round()
     width = max_x - min_x
-    min_y = seq[:, 1, :].min().round()
-    max_y = seq[:, 1, :].max().round()
+    min_y = np.nanmin(seq[:, 1, :]).round()
+    max_y = np.nanmax(seq[:, 1, :]).round()
     heigth = max_y - min_y
     xlim = (min_x - width*0.2, max_x + width*0.2)
     ylim = (min_y - heigth*0.2, max_y + heigth*0.2)
@@ -86,8 +99,10 @@ def read_sequence(sample, animate_path=None):
     return sequence, detections, frames
 
 
-def save_sequence(seq, det, fra, sample, name, path=paths['pose']):
-    to_save = dict(seq=seq, det=det, length=seq.shape[2], frames=fra, sample=sample)
+def save_sequence(seq, det, fra, sample, name, label, path=paths['pose']):
+    to_save = dict(seq=seq, det=det, length=seq.shape[2],
+                   frames=fra, sample=sample, label=label,
+                   num_label=actions[label])
     to_save.update(get_meta(sample))
     pickle.dump(to_save, open(os.path.join(path, name+'.p'), 'wb'))
 
@@ -96,11 +111,12 @@ def get_meta(sample):
     res = [i for i in range(len(sample)) if sample.startswith('_', i)]
     return dict(sample=sample,
                 dataset=sample[:res[0]],
-                actor=sample[res[0] + 1:res[1]],
-                unique_id=sample[res[1] + 1:res[2]])
+                actor=sample[res[0]+1:res[1]],
+                action=sample[res[1]+1:res[2]],
+                unique_id=sample[res[2]+1:sample.find('.avi')])
 
 
 if __name__ == '__main__':
     sample = paths['json'] + 'i3dpost_chris_bend_177.avi'
     seq, det, frames = read_sequence(sample)
-    save_sequence(seq=seq, det=det, sample=os.path.basename(sample))
+    save_sequence(seq=seq, det=det, sample=os.path.basename(sample), label='bend')

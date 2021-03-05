@@ -1,6 +1,6 @@
 from init_vars import *
 import os
-import lib_json as lj
+import scripts.lib_json as lj
 import json
 import numpy as np
 import pandas as pd
@@ -10,12 +10,26 @@ import matplotlib.pyplot as plt
 dir_path = os.path.dirname(os.path.realpath(__file__))
 print(dir_path)
 
-def load_gt(dataset):
-    if dataset == 'isld':
-        gt = pd.read_excel(misc_paths[dataset], sheet_name=None, header=1, usecols='A:F')
-    return gt
+verbose = True
 
-def split_seq(s, d, f):
+
+# remove empty frames at the beginning and at the end
+def trim_seq(s, d, f):
+    if d[0] == 0:
+        start = next(i for i, obj in enumerate(d) if obj == 1)
+    else:
+        start = 0
+    if d[-1] == 0:
+        end = -1-next(i for i, obj in enumerate(d[::-1]) if obj == 1)
+        return s[:, :, start:end], d[start:end], f[start:end]
+    else:
+        return s[:, :, start:], d[start:], f[start:]
+
+
+# split sequence in parts with min_frame_length >= frames >= max_frame_length
+def split_seq(s, d, f, label, trim=True, verbose=verbose):
+    if trim:
+        s, d, f, = trim_seq(s, d, f)
     s = s[:, :, d == 1]
     frames = f[d == 1]
     for count, start in enumerate(range(0, s.shape[2], max_frame_length)):
@@ -26,14 +40,15 @@ def split_seq(s, d, f):
                              det=np.ones((sub_s.shape[2])),
                              fra=fra,
                              sample=i,
-                             name='{}-{}-{}'.format(i, int(fra[0]), int(fra[-1])))
+                             name='{}-{}-{}'.format(i, int(fra[0]), int(fra[-1])),
+                             label=meta['action'])
+            if verbose:
+                print('Saved: {}-{}-{}'.format(i, int(fra[0]), int(fra[-1])))
 
-gt = dict(isld=load_gt('isld'))
 
 jsons = os.listdir(paths['json'])
 for i in jsons:
     meta = lj.get_meta(i)
-
     if meta['dataset'] == 'isldas':
         seq, det, fra = lj.read_sequence(paths['json'] + i)
         if det.sum() >= min_frame_length:
@@ -41,17 +56,12 @@ for i in jsons:
                              det=det,
                              fra=fra,
                              sample=i,
-                             name=i)
+                             name=i,
+                             label=meta['action'])
 
-    elif meta['dataset'] == 'isld':
+    else:
         seq, det, fra = lj.read_sequence(paths['json'] + i)
-        for k, row in gt[meta['dataset']][meta['actor']].iterrows():
-            split_seq(s=seq[:, :, row['start']:row['end']],
-                      d=det[row['start']:row['end']],
-                      f=fra[row['start']:row['end']])
-
-
-
+        split_seq(s=seq, d=det, f=fra, label=meta['action'])
 
 '''
 report = pd.DataFrame(columns=['sample', 'dataset', 'num_frames', 'aver_conf'])
