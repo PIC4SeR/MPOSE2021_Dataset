@@ -23,12 +23,12 @@ fig, axs = plt.subplots(3, 2, figsize=(7, 7))
 sns.set(style="darkgrid")
 for ax, dataset in zip(axs.reshape(-1)[:len(datasets)], datasets):
     sns.histplot(data=report[report['dataset'] == dataset.lower()],
-                 x="length", color=colors[dataset.lower()], label=dataset, kde=True,
+                 x="length", color=colors[dataset.lower()], label=dataset,
                  ax=ax, discrete=True, legend=True)
     ax.set_ylabel('sequences')
     ax.set_xlabel('length')
     ax.legend(loc='upper left')
-    ax.set_xlim([20, 30])
+    ax.set_xlim([19, 31])
 plt.tight_layout()
 plt.savefig(os.path.join(paths['figures'], 'report_frame_num.png'), bbox_inches='tight')
 print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_frame_num.png')))
