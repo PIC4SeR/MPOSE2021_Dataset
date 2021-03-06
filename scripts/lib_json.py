@@ -99,10 +99,10 @@ def read_sequence(sample, animate_path=None):
     return sequence, detections, frames
 
 
-def save_sequence(seq, det, fra, sample, name, label, path=paths['pose']):
+def save_sequence(seq, det, fra, sample, name, action, path=paths['pose']):
     to_save = dict(seq=seq, det=det, length=seq.shape[2],
-                   frames=fra, sample=sample, label=label,
-                   num_label=actions[label])
+                   frames=fra, sample=sample, action=action,
+                   label=actions[action])
     to_save.update(get_meta(sample))
     pickle.dump(to_save, open(os.path.join(path, name+'.p'), 'wb'))
 
@@ -119,4 +119,4 @@ def get_meta(sample):
 if __name__ == '__main__':
     sample = paths['json'] + 'i3dpost_chris_bend_177.avi'
     seq, det, frames = read_sequence(sample)
-    save_sequence(seq=seq, det=det, sample=os.path.basename(sample), label='bend')
+    save_sequence(seq=seq, det=det, sample=os.path.basename(sample), action='bend')
