@@ -44,7 +44,8 @@ former_paths = dict(kth=temp_path + 'kth/',
 
 paths = dict(video=dataset_path + 'video/',
              pose=dataset_path + 'pose/',
-             json=dataset_path + 'json/')
+             json=dataset_path + 'json/',
+             figures=dataset_path + 'figures/')
 
 actions = {'standing': 0,
            'check-watch': 1,
