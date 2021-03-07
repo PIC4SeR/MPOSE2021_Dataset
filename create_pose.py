@@ -52,7 +52,8 @@ if __name__ == '__main__':
                                  sample=i,
                                  name=i,
                                  action=meta['action'])
-
+                if verbose:
+                    print('Saved: {}'.format(i))
         else:
             seq, det, fra = lj.read_sequence(paths['json'] + i)
             split_seq(s=seq, d=det, f=fra, action=meta['action'])
