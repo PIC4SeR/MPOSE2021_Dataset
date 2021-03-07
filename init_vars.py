@@ -7,10 +7,13 @@ dataset_path = '/home/federico/Documents/MPOSE2021/'
 # paths where the formers dataset archives will be stored
 # which requires ??? free space
 archives_path = dataset_path + 'archives/'
+## TODO: specify the space
+## TODO: create scripts to free the space up
 
 # temporary folder, which requires ??? free space
 # it will contain unzipped archives
 temp_path = dataset_path + 'temp/'
+## TODO: specify the space
 
 # maximum frame length for each MPOSE2021 sequence
 max_frame_length = 30  # deault 30
