@@ -11,57 +11,60 @@ This repository contains pose data in a python-friendly format. Moreover, it als
 
 ## Requirements
 The following requirements are needed to generate RGB data for MPOSE2021 (tested on Ubuntu 20.04).
-* ?? free disk space;
+* around 380 GB free disk space (for storing archives, temporary files);
+* around 8 GB free disk space (for storing generated MPOSE2021 RGB data):
 * Python 3.8;
 
 ## Generate RGB data
 1. Clone the repository.
 
 2. Create virtual environment (optional, but recommended).
-    * venv...
-    * source venv/bin/activate
+    * Create virtual environment following commands for your distribution;
+    * Make sure to use Python 3.8. Previous versions are not tested.
+    * Activate virtual environment.
 
 3. Check and set top variables in "scripts/init_vars.py":
-    * "dataset_path": where you want the dataset to be exported
-    * "archives_path": where you want to save the former dataset archives (requires ??? free space)
-    * "temporary_path": where temporary files will be stored (requires ??? free space)
-    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't chance for reproducibility)
-    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't chance for reproducibility)
+    * "dataset_path": where you want the dataset to be exported;
+    * "archives_path": where you want to save the former dataset archives (see below point 5.);
+    * "temporary_path": where temporary files will be stored (see below point 7.);
+    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't chance for reproducibility);
+    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't chance for reproducibility).
 
 4. Run variables initialization
     * `python init_vars.py`
 
 5. Download RGB archives from the following third-party repositories:
     * [IXMAS Dataset](https://www.epfl.ch/labs/cvlab/data/data-ixmas10).
-        * Download "original IXMAS ROIs" archive.
+        * Download "original IXMAS ROIs" archive;
         * Save the archive into "arhives_path"/ixmas/.
     * [Weizmann Dataset](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html).
-        * Download actions: Walk, Run, Jump, Bend, One-hand wave, Two-hands wave, Jump in place.
+        * Download actions: Walk, Run, Jump, Bend, One-hand wave, Two-hands wave, Jump in place;
         * Save the archive into "arhives_path"/weizmann/.
     * [i3DPost Dataset](http://kahlan.eps.surrey.ac.uk/i3dpost_action/) (subject to password request!).
-        * Download all archives related to actions: Walk, Run, Jump, Bend, Hand-wave, Jump in place.
+        * Download all archives related to actions: Walk, Run, Jump, Bend, Hand-wave, Jump in place;
         * Save the archive into "arhives_path"/i3DPost/.
     * [KTH Dataset](https://www.csc.kth.se/cvap/actions/).
-        * Download archives "walking.zip", "jogging.zip", "running.zip", "boxing.zip", "handwaving.zip", "handclapping.zip".
+        * Download archives "walking.zip", "jogging.zip", "running.zip", "boxing.zip", "handwaving.zip", "handclapping.zip";
         * Save the archive into "arhives_path"/kth/.
-    * [ISLD Dataset]()
-        * Download ???.
+    * [ISLD Dataset](https://doi.org/10.25405/data.ncl.14061806.v1)
+        * Download archive;
         * Save the archive into "arhives_path"/isld/.
     * [ISLD-Additional-Sequences Dataset]()
-        * Download ???.
+        * Download archive;
         * Save the archive into "arhives_path"/isldas/.
 
 6. Install python requirements:
-    * `pip install -r requirements.txt`
+    * `pip3 install -r requirements.txt`
 
 7. Extract archives:
     * `python extract_formers.py`
+    *  Archives are extracted int the "temporaty_path" folder.
   
 8. Create RGB data:
     * `python create_video.py`
-    * RGB data for MPOSE2021 are located in "dataset_path"/video
+    * RGB data for MPOSE2021 are located in "dataset_path"/video.
     
-9. Check integrity of RGB data (to make sure that the json files in "archives_path"/json are compatible):
+9. Check integrity of RGB data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
     * `python check_integrity.py`
 
 ## Generate POSE data
