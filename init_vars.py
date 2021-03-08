@@ -1,23 +1,23 @@
 import os
 import cv2
 
-# path where the dataset will be exported
-dataset_path = '/home/federico/Documents/MPOSE2021/'
+# path where the dataset will be exported 
+# (specify an absolute path, leave 'MPOSE2021' to export in the current folder)
+dataset_path = 'MPOSE2021/'
 
 # paths where the formers dataset archives will be stored
-# which requires ??? free space
+# which requires around 180 GB of free space
+# (leave as it is if you want to store archives into the "'dataset_path'/archives/" folder)
 archives_path = dataset_path + 'archives/'
-## TODO: specify the space
-## TODO: create scripts to free the space up
 
-# temporary folder, which requires ??? free space
+# temporary folder, which requires 200 GB of free space
 # it will contain unzipped archives
+# (leave as it is if you want to store temporary files into the "'dataset_path'/temp/" folder)
 temp_path = dataset_path + 'temp/'
-## TODO: specify the space
 
 # maximum frame length for each MPOSE2021 sequence
-max_frame_length = 30  # deault 30
-min_frame_length = 20  # default 20
+max_frame_length = 30  # deault 30, don't change for reproducibility!
+min_frame_length = 20  # deault 20, don't change for reproducibility!
 
 '''
 ########################################################################
