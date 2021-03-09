@@ -60,11 +60,11 @@ def extract(dataset):
 
 if __name__ == '__main__':
     for dataset in [
-        # 'weizmann',
-        # 'isldas',
+        'weizmann',
+        'isldas',
         'isld',
-        # 'ixmas',
-        # 'kth',
-        # 'i3dpost'
+        'ixmas',
+        'kth',
+        'i3dpost'
     ]:
         extract(dataset)
