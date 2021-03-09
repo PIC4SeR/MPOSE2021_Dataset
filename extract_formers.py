@@ -27,8 +27,22 @@ def untar(filename, save_to):
     tf.extractall(save_to)
 
 
+def untar_isld(filename, save_to):
+    target = 'ISLD/ISLD_RGB_original_videos.tar.xz'
+    tar = tarfile.open(filename)
+    for member in tar.getmembers():
+        if member.name == target:
+            tar.extract(member, save_to)
+            sub_tar = tarfile.open(save_to+target)
+            sub_tar.extractall(save_to)
+            for i in os.listdir(save_to+'RGB/'):
+                os.replace(save_to+'RGB/'+i, save_to+i)
+            shutil.rmtree(save_to+'RGB/')
+            shutil.rmtree(save_to + 'ISLD/')
+
+
 def extract(dataset):
-    print('Extracting {} dataset...'.format(dataset))
+    print('Extracting from {} archive...'.format(dataset))
     files = [f for f in os.listdir(archives_paths[dataset]) if os.path.isfile(os.path.join(archives_paths[dataset], f))]
     for file in files:
         if verbose:
@@ -39,17 +53,18 @@ def extract(dataset):
         elif file.endswith('.tar.gz'):
             untar(filename=archives_paths[dataset]+file,
                   save_to=former_paths[dataset])
-        else:
-            raise Exception('Extension not supported')
+        elif file.endswith('.tar.xz') and dataset == 'isld':
+            untar_isld(filename=archives_paths[dataset]+file,
+                       save_to=former_paths[dataset])
 
 
 if __name__ == '__main__':
     for dataset in [
-        'weizmann',
-        'isldas',
+        # 'weizmann',
+        # 'isldas',
         'isld',
-        'ixmas',
-        'kth',
-        'i3dpost'
+        # 'ixmas',
+        # 'kth',
+        # 'i3dpost'
     ]:
         extract(dataset)
