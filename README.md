@@ -64,7 +64,7 @@ The following procedure initialise the dataset variables and generates video dat
 
 7. Extract archives:
     * `python extract_formers.py`
-    *  Archives are extracted int the "temporaty_path" folder.
+    *  Archives are extracted into the "temporary_path" folder.
   
 8. Create RGB data:
     * `python create_video.py`
@@ -77,14 +77,17 @@ The following procedure initialise the dataset variables and generates video dat
 The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length".
 
 1. Download detected data:
-    * Download [json](https://drive.google.com/file/d/1wgkgN6dPcHL7-zZsAj73CUgZm5GJamYT/view?usp=sharing) obtained using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 RGB data;
-    * Alternatively, download Posenet data (coming soon!).
+    * Download [json](https://drive.google.com/file/d/1wgkgN6dPcHL7-zZsAj73CUgZm5GJamYT/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
+    * Save the archive into "arhives_path"/json/.
    
 2. Extract json data:
     * `python extract_json.py`
+    * The archive is extracted into the "dataset_path"/json folder.
     
-3. Generate POSE data:
-    * `python create_pose.py`
+3. Generate RGB+POSE data:
+    * `python create_rgb_pose.py`
+    * RGB data is available in the "dataset_path"/rgb folder;
+    * POSE data is available in the "dataset_path"/pose folder.
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689
