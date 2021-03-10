@@ -19,7 +19,9 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
 * around 8 GB free disk space (for storing generated MPOSE2021 RGB data):
 * Python 3.8;
 
-## Generate RGB data
+## 1. Generate precursor VIDEO data
+The following procedure generates video data starting from the above-mentioned datasets. Generated video sequences have are named consistently according to MPOSE2021 format and are used as precursor of subsequent processing steps.
+
 1. Clone the repository.
 
 2. Create virtual environment (optional, but recommended).
