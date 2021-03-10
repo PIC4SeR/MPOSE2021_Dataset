@@ -74,7 +74,7 @@ The following procedure initialise the dataset variables and generates video dat
     * `python check_integrity.py`
 
 ## 2. Generate RGB and POSE data
-The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length".
+The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length" (default: 20 <= f <= 30).
 
 1. Download detected data:
     * Download [json](https://drive.google.com/file/d/1wgkgN6dPcHL7-zZsAj73CUgZm5GJamYT/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
