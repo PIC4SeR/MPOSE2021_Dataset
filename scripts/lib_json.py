@@ -99,12 +99,28 @@ def read_sequence(sample, animate_path=None):
     return sequence, detections, frames
 
 
-def save_sequence(seq, det, fra, sample, name, action, path=paths['pose']):
-    to_save = dict(seq=seq, det=det, length=seq.shape[2],
-                   frames=fra, sample=sample, action=action,
-                   label=actions[action])
-    to_save.update(get_meta(sample))
-    pickle.dump(to_save, open(os.path.join(path, name+'.p'), 'wb'))
+def save_sequence(seq, det, fra, name, meta, video):
+    # save POSE
+    to_save = dict(seq=seq,
+                   det=det,
+                   length=seq.shape[2],
+                   frames=fra,
+                   name=name,
+                   action=meta['action'],
+                   label=actions[meta['action']],
+                   dataset=meta['dataset'],
+                   actor=meta['actor'],
+                   unique_id=meta['unique_id'])
+    pickle.dump(to_save, open(os.path.join(paths['pose'], name+'.p'), 'wb'))
+
+    # save RGB
+    out = cv2.VideoWriter(os.path.join(paths['rgb'], name+'.avi'),
+                          codec,
+                          fps[meta['dataset']],
+                          frame_size[meta['dataset']])
+    for i in fra:
+        out.write(video[int(i)])
+    out.release()
 
 
 def get_meta(sample):
@@ -115,8 +131,3 @@ def get_meta(sample):
                 action=sample[res[1]+1:res[2]],
                 unique_id=sample[res[2]+1:sample.find('.avi')])
 
-
-if __name__ == '__main__':
-    sample = paths['json'] + 'i3dpost_chris_bend_177.avi'
-    seq, det, frames = read_sequence(sample)
-    save_sequence(seq=seq, det=det, sample=os.path.basename(sample), action='bend')

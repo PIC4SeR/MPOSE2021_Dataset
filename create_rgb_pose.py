@@ -18,9 +18,8 @@ def trim_seq(s, d, f):
     else:
         return s[:, :, start:], d[start:], f[start:]
 
-
 # split sequence in parts with min_frame_length >= frames >= max_frame_length
-def split_seq(s, d, f, action, trim=True, verbose=verbose):
+def split_seq(s, d, f, meta, video, trim=True, verbose=verbose):
     if trim:
         s, d, f, = trim_seq(s, d, f)
     s = s[:, :, d == 1]
@@ -32,30 +31,43 @@ def split_seq(s, d, f, action, trim=True, verbose=verbose):
             lj.save_sequence(seq=sub_s,
                              det=np.ones((sub_s.shape[2])),
                              fra=fra,
-                             sample=i,
                              name='{}-{}-{}'.format(i, int(fra[0]), int(fra[-1])),
-                             action=action)
+                             meta=meta,
+                             video=video)
             if verbose:
                 print('Saved: {}-{}-{}'.format(i, int(fra[0]), int(fra[-1])))
+
+
+def read_video(path):
+    vidcap = cv2.VideoCapture(path)
+    success, image = vidcap.read()
+    frames = []
+    while success:
+        success, image = vidcap.read()
+        frames.append(image)
+    vidcap.release()
+
+    return frames
 
 
 if __name__ == '__main__':
     jsons = os.listdir(paths['json'])
     for i in jsons:
         meta = lj.get_meta(i)
+        video = read_video(os.path.join(paths['video'], i))
         if meta['dataset'] == 'isldas':
             seq, det, fra = lj.read_sequence(paths['json'] + i)
             if det.sum() >= min_frame_length:
                 lj.save_sequence(seq=seq,
                                  det=det,
                                  fra=fra,
-                                 sample=i,
                                  name=i,
-                                 action=meta['action'])
+                                 meta=meta,
+                                 video=video)
                 if verbose:
                     print('Saved: {}'.format(i))
         else:
             seq, det, fra = lj.read_sequence(paths['json'] + i)
-            split_seq(s=seq, d=det, f=fra, action=meta['action'])
+            split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
 
 
