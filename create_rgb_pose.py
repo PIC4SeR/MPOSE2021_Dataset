@@ -19,7 +19,7 @@ def trim_seq(s, d, f):
         return s[:, :, start:], d[start:], f[start:]
 
 # split sequence in parts with min_frame_length >= frames >= max_frame_length
-def split_seq(s, d, f, meta, video, trim=True, verbose=verbose):
+def split_seq(s, d, f, meta, video, trim=True):
     if trim:
         s, d, f, = trim_seq(s, d, f)
     s = s[:, :, d == 1]
@@ -34,8 +34,6 @@ def split_seq(s, d, f, meta, video, trim=True, verbose=verbose):
                              name='{}-{}-{}'.format(i, int(fra[0]), int(fra[-1])),
                              meta=meta,
                              video=video)
-            if verbose:
-                print('Saved: {}-{}-{}'.format(i, int(fra[0]), int(fra[-1])))
 
 
 def read_video(path):
@@ -64,8 +62,6 @@ if __name__ == '__main__':
                                  name=i,
                                  meta=meta,
                                  video=video)
-                if verbose:
-                    print('Saved: {}'.format(i))
         else:
             seq, det, fra = ls.read_sequence(paths['json'] + i)
             split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
