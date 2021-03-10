@@ -2,7 +2,7 @@
 
 This repository is under construction. Consinstent changes will be done soon!
 
-# MPOSE2021 Dataset
+# MPOSE2021 Dataset for Short-time Human Action Recognition
 
 This repository contains the MPOSE2021 Dataset for short-time pose-based Human Action Recognition (HAR). 
 
@@ -15,9 +15,11 @@ This repository allows users to generate RGB+POSE data for MPOSE2021 in a python
 
 FORMER DATASETS ARCHIVES --> Precursor VIDEO Data --> OpenPose --> RGB+POSE
                                                   
-Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. VIDEO data serves are processed via OpenPose, and the output (JSON files) are stored. In this repository, generated JSON files are provided to allow the users to skip the time consuming OpenPose step and to provide a fair benchmark platform for comparisons. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated.
+Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored. In this repository, generated JSON files are provided, to allow the users to skip the time consuming OpenPose step, and to provide a fair benchmark platform for methods comparison. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated.
 
 For licence-related reasons, the user must download the FORMER DATASETS ARCHIVES from the original sources, as explanined in the following documentation.
+
+MPOSE2021 is specifically designed to perform short-time Human Action Recognition. RGB+POSE sequences have a number of frames between 20 and 30. Sequences are obtained cutting the precursor videos with non-overlapping sliding windows. RGB data contains the target ROI obtained from POSE sequences. 
 
 ## Requirements
 The following requirements are needed to generate RGB data for MPOSE2021 (tested on Ubuntu 20.04).
