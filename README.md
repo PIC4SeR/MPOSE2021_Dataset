@@ -11,7 +11,13 @@ MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by
 on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7], and KTH [8] alongside original video datasets, i.e. ISLD and ISLD-Additional-Sequences [1]. 
 Since these datasets had heterogenous action labels, each dataset labels were remapped to a common and homogeneous list of actions.
 
-This repository contains pose data in a python-friendly format. Moreover, it also contains the scripts to generate MPOSE2021 dataset (RGB data) starting from the original RGB sequences belonging to the above-mentioned dataset. For licence-related reasons, the user must download RGB data from the original sources, as explanined in the manual.
+This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. The pipeline is the following:
+
+FORMER DATASETS ARCHIVES --> Precursor VIDEO Data --> OpenPose --> RGB+POSE
+                                                  |-----skip-----|
+Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. VIDEO data serves are processed via OpenPose, and the output (JSON files) are stored. In this repository, generated JSON files are provided to allow the users to skip the time consuming OpenPose step and to provide a fair benchmark platform for comparisons. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated.
+
+For licence-related reasons, the user must download the FORMER DATASETS ARCHIVES from the original sources, as explanined in the following documentation.
 
 ## Requirements
 The following requirements are needed to generate RGB data for MPOSE2021 (tested on Ubuntu 20.04).
