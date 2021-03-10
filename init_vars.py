@@ -3,7 +3,7 @@ import cv2
 
 # path where the dataset will be exported 
 # (specify an absolute path, leave 'MPOSE2021' to export in the current folder)
-dataset_path = 'MPOSE2021/'
+dataset_path = '/home/user/Documents/MPOSE2021/'
 
 # paths where the formers dataset archives will be stored
 # which requires around 180 GB of free space
@@ -15,20 +15,15 @@ archives_path = dataset_path + 'archives/'
 # (leave as it is if you want to store temporary files into the "'dataset_path'/temp/" folder)
 temp_path = dataset_path + 'temp/'
 
-# maximum frame length for each MPOSE2021 sequence
-max_frame_length = 30  # deault 30, don't change for reproducibility!
-min_frame_length = 20  # deault 20, don't change for reproducibility!
+# maximum/minimum frame length for each MPOSE2021 sequence
+max_frame_length = 30  # default 30, don't change for reproducibility!
+min_frame_length = 20  # default 20, don't change for reproducibility!
 
 '''
 ########################################################################
 ################ do NOT modify after this point ########################
 ########################################################################
 '''
-if max_frame_length == 30 and min_frame_length == 20:
-    print('MPOSE2021 with default frame_length parameters')
-else:
-    print('MPOSE2021 with NON-default frame_length parameters!!!')
-
 archives_paths = dict(kth=archives_path + 'kth/',
                       ixmas=archives_path + 'ixmas/',
                       i3dpost=archives_path + 'i3dpost/',
@@ -48,7 +43,8 @@ former_paths = dict(kth=temp_path + 'kth/',
 paths = dict(video=dataset_path + 'video/',
              pose=dataset_path + 'pose/',
              json=dataset_path + 'json/',
-             figures=dataset_path + 'figures/')
+             figures=dataset_path + 'figures/',
+             rgb=dataset_path + 'rgb/')
 
 actions = {'standing': 0,
            'check-watch': 1,
@@ -90,7 +86,7 @@ frame_size = dict(kth=(160, 120),
                   i3dpost=(480, 270),
                   weizmann=(180, 144),
                   isld=(480, 270),
-                  isldas=(480, 300))
+                  isldas=(960, 600))
 resize_interpolation = cv2.INTER_CUBIC
 
 misc_paths = dict(kth='misc/kth_splitter.csv',
@@ -108,6 +104,12 @@ codec = cv2.VideoWriter_fourcc(*'MPEG')
 openpose_parts = dict(head=[0, 15, 16, 17, 18],
                       right_foot=[11, 22, 23, 24],
                       left_foot=[14, 19, 20, 21])
+
+
+# Remove sample in post-processing
+samples_to_remove = [
+    'ixmas_hedlena3_get-up_572.avi-50-79.avi',
+]
 
 
 if __name__ == '__main__':

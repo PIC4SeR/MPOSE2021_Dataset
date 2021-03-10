@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 if verbose:
                     print('Saved: {}'.format(i))
         else:
-            seq, det, fra = ss.read_sequence(paths['json'] + i)
+            seq, det, fra = ls.read_sequence(paths['json'] + i)
             split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
 
 
