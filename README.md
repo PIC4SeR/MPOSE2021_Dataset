@@ -20,7 +20,7 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
 * Python 3.8;
 
 ## 1. Generate precursor VIDEO data
-The following procedure generates video data starting from the above-mentioned datasets. Generated video sequences have are named consistently according to MPOSE2021 format and are used as precursor of subsequent processing steps.
+The following procedure initialise the dataset variables and generates video data starting from the above-mentioned datasets. Generated video sequences are consistently named according to MPOSE2021 format and are used as precursor of subsequent processing steps.
 
 1. Clone the repository.
 
@@ -73,17 +73,17 @@ The following procedure generates video data starting from the above-mentioned d
 9. Check integrity of RGB data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
     * `python check_integrity.py`
 
-## Generate POSE data
-1. Perform steps 1., 2., 3., and 4. from "Generate RGB data".
+## 2. Generate RGB and POSE data
+The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length".
 
-2. Download detected data:
+1. Download detected data:
     * Download [json](https://drive.google.com/file/d/1wgkgN6dPcHL7-zZsAj73CUgZm5GJamYT/view?usp=sharing) obtained using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 RGB data;
     * Alternatively, download Posenet data (coming soon!).
    
-3. Extract json data:
+2. Extract json data:
     * `python extract_json.py`
     
-4. Generate POSE data:
+3. Generate POSE data:
     * `python create_pose.py`
 
 # References
