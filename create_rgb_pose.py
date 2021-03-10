@@ -1,6 +1,6 @@
 from init_vars import *
 import os
-import scripts.lib_json as lj
+import scripts.lib_seq as ls
 import numpy as np
 
 verbose = True
@@ -28,7 +28,7 @@ def split_seq(s, d, f, meta, video, trim=True, verbose=verbose):
         sub_s = s[:, :, start:start+max_frame_length]
         fra = frames[start:start + max_frame_length]
         if sub_s.shape[2] >= min_frame_length:
-            lj.save_sequence(seq=sub_s,
+            ls.save_sequence(seq=sub_s,
                              det=np.ones((sub_s.shape[2])),
                              fra=fra,
                              name='{}-{}-{}'.format(i, int(fra[0]), int(fra[-1])),
@@ -53,12 +53,12 @@ def read_video(path):
 if __name__ == '__main__':
     jsons = os.listdir(paths['json'])
     for i in jsons:
-        meta = lj.get_meta(i)
+        meta = ls.get_meta(i)
         video = read_video(os.path.join(paths['video'], i))
         if meta['dataset'] == 'isldas':
-            seq, det, fra = lj.read_sequence(paths['json'] + i)
+            seq, det, fra = ls.read_sequence(paths['json'] + i)
             if det.sum() >= min_frame_length:
-                lj.save_sequence(seq=seq,
+                ls.save_sequence(seq=seq,
                                  det=det,
                                  fra=fra,
                                  name=i,
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 if verbose:
                     print('Saved: {}'.format(i))
         else:
-            seq, det, fra = lj.read_sequence(paths['json'] + i)
+            seq, det, fra = ss.read_sequence(paths['json'] + i)
             split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
 
 
