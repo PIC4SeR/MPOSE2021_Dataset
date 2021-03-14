@@ -99,13 +99,13 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
 
 ## 3. Refine RGB and POSE data
 1. The following procedure refines generated RGB and POSE data by applying the following transformations:
-  * remove samples such that the RGB encoding failed due to corrupted data;
-  * renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore;
-  * remove sequences judjed to be non-sense;
-  * convert "pick-up" action labels to "bend" action labels (due to their strong similarity);
-  * convert "turn" action labels to "walk" action labels (due to their strong similarity); 
+  - remove samples such that the RGB encoding failed due to corrupted data;
+  - renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore;
+  - remove sequences judjed to be non-sense;
+  - convert "pick-up" action labels to "bend" action labels (due to their strong similarity);
+  - convert "turn" action labels to "walk" action labels (due to their strong similarity); 
 
-To apply such a refinement, run:
+  To apply such a refinement, run:
   * `python refine_dataset.py`
 
 2. Generate dataset meta and summary figures:
