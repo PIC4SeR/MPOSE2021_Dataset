@@ -37,7 +37,7 @@ The following procedure initialise the dataset variables and generates video dat
     * Make sure to use Python 3.8. Previous versions are not tested.
     * Activate virtual environment.
 
-3. Check and set top variables in "init_vars.py":
+3. Check and setup variables in "init_vars.py":
     * "dataset_path": where you want the dataset to be exported;
     * "archives_path": where you want to save the former dataset archives (see below point 5.);
     * "temporary_path": where temporary files will be stored (see below point 7.);
