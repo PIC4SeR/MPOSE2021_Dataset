@@ -127,11 +127,23 @@ def save_sequence(seq, det, fra, name, meta, video):
     print('Saved: {}'.format(name))
 
 
-def get_meta(sample):
-    res = [i for i in range(len(sample)) if sample.startswith('_', i)]
-    return dict(sample=sample,
-                dataset=sample[:res[0]],
-                actor=sample[res[0]+1:res[1]],
-                action=sample[res[1]+1:res[2]],
-                unique_id=sample[res[2]+1:sample.find('.avi')])
+def get_meta(sample, is_video=True):
+    if is_video:
+        res = [i for i in range(len(sample)) if sample.startswith('_', i)]
+        return dict(sample=sample,
+                    dataset=sample[:res[0]],
+                    actor=sample[res[0]+1:res[1]],
+                    action=sample[res[1]+1:res[2]],
+                    unique_id=sample[res[2]+1:sample.find('.avi')])
+    else:
+        res = [i for i in range(len(sample)) if sample.startswith('_', i)]
+        das = [i for i in range(len(sample)) if sample.startswith('-', i)]
+        if das == []:
+            das = [len(sample)]
+        return dict(sample=sample,
+                    dataset=sample[:res[0]],
+                    actor=sample[res[0] + 1:res[1]],
+                    action=sample[res[1] + 1:res[2]],
+                    unique_id=sample[res[2] + 1:das[0]],
+                    window=sample[das[0]+1::])
 
