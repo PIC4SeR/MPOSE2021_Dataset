@@ -106,7 +106,7 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
   * convert "turn" action labels to "walk" action labels (due to their strong similarity); 
 
 To apply such a refinement, run:
-    * `python refine_dataset.py`
+  * `python refine_dataset.py`
 
 2. Generate dataset meta and summary figures:
     * `python generate_meta_and_figures.py`
