@@ -3,7 +3,7 @@ import cv2
 
 # path where the dataset will be exported 
 # (specify an absolute path, leave 'MPOSE2021' to export in the current folder)
-dataset_path = '/home/user/Documents/MPOSE2021/'
+dataset_path = '/home/federico/Documents/MPOSE2021/'
 
 # paths where the formers dataset archives will be stored
 # which requires around 180 GB of free space
@@ -95,7 +95,8 @@ misc_paths = dict(kth='misc/kth_splitter.csv',
                   weizmann=None,
                   isld='misc/isld_truth.xlsx',
                   isldas=None,
-                  checksum='misc/cksum_mpose2021.csv')
+                  checksum='misc/cksum_mpose2021.csv',
+                  outliers='misc/refine_dataset')
 
 video_extention = '.avi'
 codec = cv2.VideoWriter_fourcc(*'MPEG')
@@ -104,12 +105,6 @@ codec = cv2.VideoWriter_fourcc(*'MPEG')
 openpose_parts = dict(head=[0, 15, 16, 17, 18],
                       right_foot=[11, 22, 23, 24],
                       left_foot=[14, 19, 20, 21])
-
-
-# Remove sample in post-processing
-samples_to_remove = [
-    'ixmas_hedlena3_get-up_572.avi-50-79.avi',
-]
 
 
 if __name__ == '__main__':
