@@ -98,7 +98,7 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
     * POSE data is available in the "dataset_path"/pose folder.
 
 ## 3. Refine RGB and POSE data and finalise dataset
-1. Refines generated RGB and POSE:
+1. Refine generated RGB and POSE:
     * `python refine_dataset.py`
 
 NOTE: This procedure applies the following transformations:
