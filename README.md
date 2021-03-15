@@ -13,9 +13,9 @@ Since these datasets had heterogenous action labels, each dataset labels were re
 
 This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. The pipeline is the following:
 
-FORMER DATASETS ARCHIVES --> Precursor VIDEO Data --> OpenPose --> RGB+POSE
+FORMER DATASETS ARCHIVES --> Precursor VIDEO Data --> OpenPose --> RGB+POSE (1) --> Post-processing --> RGB+POSE (final)
                                                   
-Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored. In this repository, generated JSON files are provided, to allow the users to skip the time consuming OpenPose step, and to provide a fair benchmark platform for methods comparison. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated.
+Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored. In this repository, generated JSON files are provided, to allow the users to skip the time consuming OpenPose step, and to provide a fair benchmark platform for methods comparison. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated. At this stage, the pipeline concludes with a post-processing step where defective sequences are amended/discarded.
 
 For licence-related reasons, the user must download the FORMER DATASETS ARCHIVES from the original sources, as explanined in the following documentation.
 
@@ -97,14 +97,14 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
     * RGB data is available in the "dataset_path"/rgb folder;
     * POSE data is available in the "dataset_path"/pose folder.
 
-## 3. Refine RGB and POSE data and finalise dataset
+## 3. Post-processing to RGB and POSE data
 1. Refine generated RGB and POSE:
     * `python refine_dataset.py`
 
 NOTE: This procedure applies the following transformations: 1) remove samples such that the RGB encoding failed due to corrupted data; 2) renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore; 3) remove sequences judjed to be non-sense; 4) convert "pick-up" action labels to "bend" action labels (due to their strong similarity); 5) convert "turn" action labels to "walk" action labels (due to their strong similarity). 
 
 2. Generate dataset meta and summary figures:
-    * `python generate_meta_and_figures.py`
+    * `python export_meta_and_figures.py`
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689
