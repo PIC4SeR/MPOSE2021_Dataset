@@ -109,7 +109,6 @@ def save_sequence(seq, det, fra, name, meta, video):
                    frames=fra,
                    name=name,
                    action=meta['action'],
-                   label=actions[meta['action']],
                    dataset=meta['dataset'],
                    actor=meta['actor'],
                    unique_id=meta['unique_id'])
