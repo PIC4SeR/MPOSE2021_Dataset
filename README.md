@@ -101,7 +101,7 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
 1. Refine generated RGB and POSE:
     * `python refine_dataset.py`
 
-NOTE: This procedure applies the following transformations: 1) remove samples such that the RGB encoding failed due to corrupted data; 2) renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore; 3) remove sequences judjed to be non-sense. The script `find_outliers.py` was used to scan rgb files and find which sequence should have been considered an outlier. The results of this search are located into 'misc/refine_dataset/'.
+NOTE: This procedure applies the following transformations: 1) remove samples such that the RGB encoding failed due to corrupted data; 2) renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore; 3) remove sequences judjed to be non-sense. The script `find_outliers.py` was used to manually scan RGB files and find which sequence should have been considered an outlier. The results of this search are located into 'misc/refine_dataset/'.
 
 2. Generate dataset meta and summary figures:
     * `python export_meta_and_figures.py`
