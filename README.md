@@ -74,11 +74,11 @@ The following procedure initialise the dataset variables and generates video dat
     * `python extract_formers.py`
     *  Archives are extracted into the "temporary_path" folder.
   
-8. Create RGB data:
+8. Create precursor VIDEO data:
     * `python create_video.py`
-    * RGB data for MPOSE2021 are located in "dataset_path"/video.
+    * VIDEO data for generating MPOSE2021 are located in "dataset_path"/video.
     
-9. Check integrity of RGB data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
+9. Check integrity of VIDEO data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
     * `python check_integrity.py`
 
 ## 2. Generate RGB and POSE data
