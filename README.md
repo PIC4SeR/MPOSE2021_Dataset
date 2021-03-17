@@ -37,17 +37,7 @@ The following procedure initialise the dataset variables and generates video dat
     * Make sure to use Python 3.8. Previous versions are not tested.
     * Activate virtual environment.
 
-3. Check and setup variables in "init_vars.py":
-    * "dataset_path": where you want the dataset to be exported;
-    * "archives_path": where you want to save the former dataset archives (see below point 5.);
-    * "temporary_path": where temporary files will be stored (see below point 7.);
-    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't change for reproducibility);
-    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't change for reproducibility).
-
-4. Run variables initialization
-    * `python init_vars.py`
-
-5. Download RGB archives from the following third-party repositories:
+3. Download RGB archives from the following third-party repositories:
     * [IXMAS Dataset](https://www.epfl.ch/labs/cvlab/data/data-ixmas10).
         * Download "original IXMAS ROIs" archive;
         * Save the archive into "arhives_path"/ixmas/.
@@ -67,8 +57,18 @@ The following procedure initialise the dataset variables and generates video dat
         * Download archive;
         * Save the archive into "arhives_path"/isldas/.
 
-6. Install python requirements:
+4. Install python requirements:
     * `pip3 install -r requirements.txt`
+
+5. Check and setup variables in "init_vars.py":
+    * "dataset_path": where you want the dataset to be exported;
+    * "archives_path": where you want to save the former dataset archives (see below point 5.);
+    * "temporary_path": where temporary files will be stored (see below point 7.);
+    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't change for reproducibility);
+    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't change for reproducibility).
+
+6. Run variables initialization
+    * `python init_vars.py`
 
 7. Extract archives:
     * `python extract_formers.py`
