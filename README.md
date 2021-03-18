@@ -78,10 +78,10 @@ The following procedure initialise the dataset variables and generates video dat
     * `python create_video.py`
     * VIDEO data for generating MPOSE2021 are located in "dataset_path"/video.
     
-9. Check integrity of VIDEO data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
-    * `python check_integrity.py`
+9. (Optional) Check integrity of VIDEO data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
+    * `python check_integrity.py video`
 
-## 2. Generate RGB and POSE data
+## 2. Generate RGB+POSE data
 The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length" (default: 20 <= f <= 30).
 
 1. Download detected data:
@@ -96,15 +96,22 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
     * `python create_rgb_pose.py`
     * RGB data is available in the "dataset_path"/rgb folder;
     * POSE data is available in the "dataset_path"/pose folder.
-
-## 3. Post-processing to RGB and POSE data
-1. Refine generated RGB and POSE:
+   
+4. Refine generated RGB+POSE data:
     * `python refine_dataset.py`
+    * Refined RGB data is available in the "dataset_path"/rgb folder;
+    * Refined POSE data is available in the "dataset_path"/pose folder.
 
 NOTE: This procedure applies the following transformations: 1) remove samples such that the RGB encoding failed due to corrupted data; 2) renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore; 3) remove sequences judjed to be non-sense. The script `find_outliers.py` was used to manually scan RGB files and find which sequence should have been considered an outlier. The results of this search are located into 'misc/refine_dataset/'.
 
-2. Generate dataset meta and summary figures:
-    * `python export_meta_and_figures.py`
+5. (Optional) Check integrity of RGB+POSE data (to make sure that generated sequences are in compliance with MPOSE2021 official sequences):
+    * `python check_integrity.py rgb_pose`
+    * You should get the following message: "Test against misc/cksum_rgb.csv passed!";
+    * You should get the following message: "Test against misc/cksum_pose.csv passed!".
+
+6. Generate dataset summary figures:
+    * `python export_figures.py`
+    * Figures are available in the "dataset_path"/figures folder.
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689
