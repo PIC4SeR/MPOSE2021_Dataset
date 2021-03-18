@@ -21,16 +21,19 @@ RGB data contains the target ROI obtained from POSE sequences.
 The overview of the processing to generate MPOSE2021 is the following:
 ![alt text](https://github.com/FedericoAngelini/MPOSE2021_Dataset/blob/master/docs/pipeline.png?raw=true)
 
-* "1A." processing allows the user to generate precurso VIDEO data. Former datasets archives must be downloaded in order to encode the precursor VIDEO data. 
+1A. allows the user to generate precurso VIDEO data. For licence-related reasons, the user must download the Former Datasets Archives from the original sources,
+as explanined in the following documentation. Former datasets archives must be downloaded in order to encode the precursor VIDEO data. 
 Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored.
-* "2A." processing allows the user to generate RGB+POSE data for MPOSE2021. On the basis of JSON files (provided to the user for convenience), 
+
+2A. allows the user to generate RGB+POSE data for MPOSE2021. On the basis of JSON files (provided to the user for convenience), 
   RGB and POSE data for MPOSE2021 are generated. Therefore, a post-processing step is needed to discard/amend defective sequences.
-* "B." processing allows the user to generate POSE data only, ignoring RGB data.
 
-Below, the instructions to perform 1A., 2A. or B. processes are explained.
+B. allows the user to generate POSE data only, ignoring RGB data.
 
-For licence-related reasons, the user must download the Former Datasets Archives from the original sources,
-as explanined in the following documentation. MPOSE2021 is intended for scientific research purposes.
+Below, the instructions to perform 1A., 2A. or B. are explained.
+
+## Citations
+MPOSE2021 is intended for scientific research purposes.
 The user that wants to use MPOSE2021 for publications, please cite [1-8].
 
 ## Requirements
