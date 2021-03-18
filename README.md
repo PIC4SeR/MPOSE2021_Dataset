@@ -5,21 +5,33 @@ This repository is under construction. Consinstent changes will be done soon!
 # MPOSE2021 Dataset for Short-time Human Action Recognition
 
 This repository contains the MPOSE2021 Dataset for short-time pose-based Human Action Recognition (HAR). 
+MPOSE2021 is specifically designed to perform short-time Human Action Recognition.
 
 MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by human pose data detected by 
 [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) [4] (and [Posenet](https://github.com/tensorflow/tfjs-models/tree/master/posenet), coming soon!) 
 on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7], and KTH [8] alongside original video datasets, i.e. ISLD and ISLD-Additional-Sequences [1]. 
 Since these datasets had heterogenous action labels, each dataset labels were remapped to a common and homogeneous list of actions.
 
-This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. The pipeline is the following:
+This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. 
+Generated RGB+POSE sequences have a number of frames between 20 and 30. 
+Sequences are obtained cutting Precursor VIDEOS, belonging to the above-mentioned datasets, 
+with non-overlapping sliding windows.
+RGB data contains the target ROI obtained from POSE sequences. 
 
+The overview of the processing to generate MPOSE2021 is the following:
 ![alt text](https://github.com/FedericoAngelini/MPOSE2021_Dataset/blob/master/docs/pipeline.png?raw=true)
-                                                  
-Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored. In this repository, generated JSON files are provided, to allow the users to skip the time consuming OpenPose step, and to provide a fair benchmark platform for methods comparison. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated. At this stage, the pipeline concludes with a post-processing step where defective sequences are amended/discarded.
 
-For licence-related reasons, the user must download the FORMER DATASETS ARCHIVES from the original sources, as explanined in the following documentation.
+* "1A." processing allows the user to generate precurso VIDEO data. Former datasets archives must be downloaded in order to encode the precursor VIDEO data. 
+Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored.
+* "2A." processing allows the user to generate RGB+POSE data for MPOSE2021. On the basis of JSON files (provided to the user for convenience), 
+  RGB and POSE data for MPOSE2021 are generated. Therefore, a post-processing step is needed to discard/amend defective sequences.
+* "B." processing allows the user to generate POSE data only, ignoring RGB data.
 
-MPOSE2021 is specifically designed to perform short-time Human Action Recognition. RGB+POSE sequences have a number of frames between 20 and 30. Sequences are obtained cutting the precursor videos with non-overlapping sliding windows. RGB data contains the target ROI obtained from POSE sequences. 
+Below, the instructions to perform 1A., 2A. or B. processes are explained.
+
+For licence-related reasons, the user must download the Former Datasets Archives from the original sources,
+as explanined in the following documentation. MPOSE2021 is intended for scientific research purposes.
+The user that wants to use MPOSE2021 for publications, please cite [1-8].
 
 ## Requirements
 The following requirements are needed to generate RGB data for MPOSE2021 (tested on Ubuntu 20.04).
@@ -27,7 +39,7 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
 * around 8 GB free disk space (for storing generated MPOSE2021 RGB data):
 * Python 3.8;
 
-## A1. Generate precursor VIDEO data
+## 1A. Generate precursor VIDEO data
 The following procedure initialise the dataset variables and generates video data starting from the above-mentioned datasets. Generated video sequences are consistently named according to MPOSE2021 format and are used as precursor of subsequent processing steps.
 
 1. Clone the repository.
@@ -82,7 +94,7 @@ The following procedure initialise the dataset variables and generates video dat
     * `python check_integrity.py video`
     * You should get the following message: "Test against misc/cksum_video.csv passed!";
 
-## A2. Generate RGB+POSE data
+## 2A. Generate RGB+POSE data
 The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length" (default: 20 <= f <= 30).
 
 1. Download detected poses (by OpenPose) as JSON files:
