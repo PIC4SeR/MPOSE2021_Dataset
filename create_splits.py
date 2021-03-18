@@ -64,4 +64,4 @@ for i in range(1, 3):
     split = pd.concat([split,
                        pd.DataFrame({'sample': report.loc[~report.actor.isin(testing_actors[i]), 'sample'],
                                      'set': 'train'})])
-    split.to_csv(dataset_path + 'train_testing_split{}.txt'.format(i), sep='\t', index=None, header=None)
+    split.to_csv(dataset_path + 'train_test_split{}.txt'.format(i), sep='\t', index=None, header=None)
