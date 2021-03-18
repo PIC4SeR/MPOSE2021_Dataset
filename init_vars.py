@@ -105,10 +105,10 @@ resize_interpolation = cv2.INTER_CUBIC
 misc_paths = dict(kth='misc/kth_splitter.csv',
                   ixmas='misc/ixmas_exclude.csv',
                   i3dpost='misc/i3dpost_archives.csv',
-                  weizmann=None,
                   isld='misc/isld_truth.xlsx',
-                  isldas=None,
-                  checksum='misc/cksum_mpose2021.csv',
+                  checksum_video='misc/cksum_video.csv',
+                  checksum_rgb='misc/cksum_rgb.csv',
+                  checksum_pose='misc/cksum_pose.csv',
                   outliers='misc/refine_dataset')
 
 video_extention = '.avi'
