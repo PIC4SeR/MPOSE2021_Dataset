@@ -27,12 +27,12 @@ The following requirements are needed to generate RGB data for MPOSE2021 (tested
 * around 8 GB free disk space (for storing generated MPOSE2021 RGB data):
 * Python 3.8;
 
-## 1. Generate precursor VIDEO data
+## A1. Generate precursor VIDEO data
 The following procedure initialise the dataset variables and generates video data starting from the above-mentioned datasets. Generated video sequences are consistently named according to MPOSE2021 format and are used as precursor of subsequent processing steps.
 
 1. Clone the repository.
 
-2. Create virtual environment (optional, but recommended).
+2. (Optional, but recommented) Create virtual environment.
     * Create virtual environment following commands for your distribution;
     * Make sure to use Python 3.8. Previous versions are not tested.
     * Activate virtual environment.
@@ -80,13 +80,14 @@ The following procedure initialise the dataset variables and generates video dat
     
 9. (Optional) Check integrity of VIDEO data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
     * `python check_integrity.py video`
+    * You should get the following message: "Test against misc/cksum_video.csv passed!";
 
-## 2. Generate RGB+POSE data
+## A2. Generate RGB+POSE data
 The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length" (default: 20 <= f <= 30).
 
-1. Download detected data:
+1. Download detected poses (by OpenPose) as JSON files:
     * Download [json](https://drive.google.com/file/d/1wgkgN6dPcHL7-zZsAj73CUgZm5GJamYT/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
-    * Save the archive into "arhives_path"/json/.
+    * Save the archive into "archives_path"/json/.
    
 2. Extract json data:
     * `python extract_json.py`
@@ -94,13 +95,13 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
     
 3. Generate RGB+POSE data:
     * `python create_rgb_pose.py`
-    * RGB data is available in the "dataset_path"/rgb folder;
-    * POSE data is available in the "dataset_path"/pose folder.
+    * RGB data is stored into "dataset_path"/rgb folder;
+    * POSE data is stored into "dataset_path"/pose folder.
    
 4. Refine generated RGB+POSE data:
     * `python refine_dataset.py`
-    * Refined RGB data is available in the "dataset_path"/rgb folder;
-    * Refined POSE data is available in the "dataset_path"/pose folder.
+    * Refined RGB data is stored into "dataset_path"/rgb folder;
+    * Refined POSE data is stored into"dataset_path"/pose folder.
 
 NOTE: This procedure applies the following transformations: 1) remove samples such that the RGB encoding failed due to corrupted data; 2) renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore; 3) remove sequences judjed to be non-sense. The script `find_outliers.py` was used to manually scan RGB files and find which sequence should have been considered an outlier. The results of this search are located into 'misc/refine_dataset/'.
 
@@ -109,9 +110,17 @@ NOTE: This procedure applies the following transformations: 1) remove samples su
     * You should get the following message: "Test against misc/cksum_rgb.csv passed!";
     * You should get the following message: "Test against misc/cksum_pose.csv passed!".
 
-6. Generate dataset summary figures:
+6. Generate meta data containing the 3 default splits list.
+    * `python create_splits.py`
+    * Splits files are stored into "dataset_path" folder.
+   
+7. Generate dataset summary figures:
     * `python export_figures.py`
-    * Figures are available in the "dataset_path"/figures folder.
+    * Figures are stored into "dataset_path"/figures folder.
+
+## B. Generate POSE data only
+
+Coming soon.
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689
