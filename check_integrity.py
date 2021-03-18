@@ -15,24 +15,30 @@ import hashlib
 from init_vars import *
 import os
 import pandas as pd
+import sys
+
+try:
+    target = int(sys.argv[1])
+except:
+    target = 'video'
 
 
-def generate_checksums():
+def generate_checksums(path):
     report = pd.DataFrame(columns=['sample', 'cksum'])
-    for f in os.listdir(paths['video']):
+    for f in os.listdir(path):
         report = report.append({'sample': f,
-                                'cksum': hashlib.md5(open(os.path.join(paths['video'], f), 'rb').read()).hexdigest()},
+                                'cksum': hashlib.md5(open(os.path.join(path, f), 'rb').read()).hexdigest()},
                                ignore_index=True)
     report = report.set_index('sample')
-    report.to_csv(os.path.join(temp_path, 'cksum.csv'))
+
+    return report
 
 
-def check_integrity():
-    current = pd.read_csv(os.path.join(temp_path, 'cksum.csv'), index_col='sample')
-    target = pd.read_csv(misc_paths['checksum'], index_col='sample')
+def check_integrity(current, path):
+    standard = pd.read_csv(path, index_col='sample')
     try:
-        if ((target == current).sum() == len(target)).values[0]:
-            print('Test passed!')
+        if ((standard == current).sum() == len(standard)).values[0]:
+            print('Test against {} passed!'.format(path))
         else:
             print('Error (code 1)')
     except:
@@ -40,6 +46,14 @@ def check_integrity():
 
 
 if __name__ == '__main__':
-    generate_checksums()
-    check_integrity()
-
+    if target == 'video':
+        current = generate_checksums(paths['video'])
+        check_integrity(current, misc_paths['checksum_video'])
+    elif target == 'rgb_pose':
+        current = generate_checksums(paths['rgb'])
+        check_integrity(current, misc_paths['checksum_rgb'])
+        current = generate_checksums(paths['pose'])
+        check_integrity(current, misc_paths['checksum_pose'])
+    elif target == 'pose':
+        current = generate_checksums(paths['pose'])
+        check_integrity(current, misc_paths['checksum_pose'])
