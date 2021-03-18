@@ -56,12 +56,13 @@ testing_actors = {1: ['person12',
                       'ira']}
 
 
-report = read_poses()
+if __name__ == '__main__':
+    report = read_poses()
 
-for i in range(1, 3):
-    split = pd.DataFrame({'sample': report.loc[report.actor.isin(testing_actors[i]), 'sample'],
-                           'set': 'test'})
-    split = pd.concat([split,
-                       pd.DataFrame({'sample': report.loc[~report.actor.isin(testing_actors[i]), 'sample'],
-                                     'set': 'train'})])
-    split.to_csv(dataset_path + 'train_test_split{}.txt'.format(i), sep='\t', index=None, header=None)
+    for i in range(1, 3):
+        split = pd.DataFrame({'sample': report.loc[report.actor.isin(testing_actors[i]), 'sample'],
+                               'set': 'test'})
+        split = pd.concat([split,
+                           pd.DataFrame({'sample': report.loc[~report.actor.isin(testing_actors[i]), 'sample'],
+                                         'set': 'train'})])
+        split.to_csv(dataset_path + 'train_test_split{}.txt'.format(i), sep='\t', index=None, header=None)
