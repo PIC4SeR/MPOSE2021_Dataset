@@ -13,7 +13,7 @@ Since these datasets had heterogenous action labels, each dataset labels were re
 
 This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. The pipeline is the following:
 
-FORMER DATASETS ARCHIVES --> Precursor VIDEO Data --> OpenPose --> RGB+POSE (1) --> Post-processing --> RGB+POSE (final)
+![alt text](https://github.com/FedericoAngelini/MPOSE2021_Dataset/blob/master/docs/pipeline.png?raw=true)
                                                   
 Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored. In this repository, generated JSON files are provided, to allow the users to skip the time consuming OpenPose step, and to provide a fair benchmark platform for methods comparison. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated. At this stage, the pipeline concludes with a post-processing step where defective sequences are amended/discarded.
 
