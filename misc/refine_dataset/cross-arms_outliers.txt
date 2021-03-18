@@ -1,0 +1,4 @@
+isld_anna_cross-arms_239-60-80	remove
+isld_anna_cross-arms_225-60-80	remove
+ixmas_andreas2_cross-arms_1034-30-59	remove
+ixmas_clare3_cross-arms_1081-30-59	remove

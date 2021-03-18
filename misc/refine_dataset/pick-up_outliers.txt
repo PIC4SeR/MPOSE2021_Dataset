@@ -1,0 +1,17 @@
+ixmas_hedlena1_pick-up_1326-75-96	standing
+ixmas_daniel2_pick-up_6-0-29	remove
+ixmas_daniel2_pick-up_759-30-59	bend
+ixmas_hedlena3_pick-up_48-0-34	bend
+ixmas_hedlena1_pick-up_1326-0-29	bend
+ixmas_daniel2_pick-up_759-0-29	standing
+ixmas_amel1_pick-up_928-0-29	remove
+ixmas_chiara2_pick-up_1229-33-56	remove
+ixmas_daniel2_pick-up_825-0-29	standing
+ixmas_amel3_pick-up_566-0-29	remove
+ixmas_nicolas2_pick-up_115-0-29	remove
+ixmas_amel1_pick-up_216-0-29	remove
+ixmas_amel1_pick-up_88-0-29	bend
+ixmas_hedlena1_pick-up_311-0-29	bend
+ixmas_nicolas2_pick-up_532-0-29	remove
+ixmas_daniel2_pick-up_343-0-29	standing
+ixmas_clare3_pick-up_87-0-29	remove

@@ -1,0 +1,3 @@
+kth_person22_wave2_481-720-749	hands-clap
+kth_person17_wave2_160-240-269	standing
+kth_person02_wave2_217-180-209	standing

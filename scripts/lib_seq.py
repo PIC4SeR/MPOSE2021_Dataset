@@ -1,3 +1,16 @@
+# Copyright (C) 2021  Federico Angelini
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 3
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details:
+# http://www.gnu.org/licenses/gpl.txt
+
 import json
 import numpy as np
 from init_vars import *
@@ -141,8 +154,7 @@ def get_meta(sample, is_video=True):
             das = [len(sample)]
         return dict(sample=sample,
                     dataset=sample[:res[0]],
-                    actor=sample[res[0] + 1:res[1]],
-                    action=sample[res[1] + 1:res[2]],
-                    unique_id=sample[res[2] + 1:das[0]],
+                    actor=sample[res[0]+1:res[1]],
+                    action=sample[res[1]+1:res[2]],
                     window=sample[das[0]+1::])
 
