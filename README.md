@@ -13,9 +13,9 @@ Since these datasets had heterogenous action labels, each dataset labels were re
 
 This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. The pipeline is the following:
 
-FORMER DATASETS ARCHIVES --> Precursor VIDEO Data --> OpenPose --> RGB+POSE
+FORMER DATASETS ARCHIVES --> Precursor VIDEO Data --> OpenPose --> RGB+POSE (1) --> Post-processing --> RGB+POSE (final)
                                                   
-Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored. In this repository, generated JSON files are provided, to allow the users to skip the time consuming OpenPose step, and to provide a fair benchmark platform for methods comparison. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated.
+Precursor VIDEO data for MPOSE2021 are generated from the former datasets archives. Therefore, precursor VIDEO data are processed via OpenPose, and the output (JSON files) is stored. In this repository, generated JSON files are provided, to allow the users to skip the time consuming OpenPose step, and to provide a fair benchmark platform for methods comparison. On the basis of JSON files, RGB and POSE data for MPOSE2021 are generated. At this stage, the pipeline concludes with a post-processing step where defective sequences are amended/discarded.
 
 For licence-related reasons, the user must download the FORMER DATASETS ARCHIVES from the original sources, as explanined in the following documentation.
 
@@ -37,17 +37,7 @@ The following procedure initialise the dataset variables and generates video dat
     * Make sure to use Python 3.8. Previous versions are not tested.
     * Activate virtual environment.
 
-3. Check and set top variables in "init_vars.py":
-    * "dataset_path": where you want the dataset to be exported;
-    * "archives_path": where you want to save the former dataset archives (see below point 5.);
-    * "temporary_path": where temporary files will be stored (see below point 7.);
-    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't chance for reproducibility);
-    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't chance for reproducibility).
-
-4. Run variables initialization
-    * `python init_vars.py`
-
-5. Download RGB archives from the following third-party repositories:
+3. Download RGB archives from the following third-party repositories:
     * [IXMAS Dataset](https://www.epfl.ch/labs/cvlab/data/data-ixmas10).
         * Download "original IXMAS ROIs" archive;
         * Save the archive into "arhives_path"/ixmas/.
@@ -67,18 +57,28 @@ The following procedure initialise the dataset variables and generates video dat
         * Download archive;
         * Save the archive into "arhives_path"/isldas/.
 
-6. Install python requirements:
+4. Install python requirements:
     * `pip3 install -r requirements.txt`
+
+5. Check and setup variables in "init_vars.py":
+    * "dataset_path": where you want the dataset to be exported;
+    * "archives_path": where you want to save the former dataset archives (see below point 5.);
+    * "temporary_path": where temporary files will be stored (see below point 7.);
+    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't change for reproducibility);
+    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't change for reproducibility).
+
+6. Run variables initialization
+    * `python init_vars.py`
 
 7. Extract archives:
     * `python extract_formers.py`
     *  Archives are extracted into the "temporary_path" folder.
   
-8. Create RGB data:
+8. Create precursor VIDEO data:
     * `python create_video.py`
-    * RGB data for MPOSE2021 are located in "dataset_path"/video.
+    * VIDEO data for generating MPOSE2021 are located in "dataset_path"/video.
     
-9. Check integrity of RGB data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
+9. Check integrity of VIDEO data (to make sure that the json files in "archives_path"/json are compatible, see "Generate POSE data" instructions below, point 2.):
     * `python check_integrity.py`
 
 ## 2. Generate RGB and POSE data
@@ -96,6 +96,15 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
     * `python create_rgb_pose.py`
     * RGB data is available in the "dataset_path"/rgb folder;
     * POSE data is available in the "dataset_path"/pose folder.
+
+## 3. Post-processing to RGB and POSE data
+1. Refine generated RGB and POSE:
+    * `python refine_dataset.py`
+
+NOTE: This procedure applies the following transformations: 1) remove samples such that the RGB encoding failed due to corrupted data; 2) renaming "outliers", i.e. sequences that, due to the above processing, do not contain the target action anymore; 3) remove sequences judjed to be non-sense. The script `find_outliers.py` was used to manually scan RGB files and find which sequence should have been considered an outlier. The results of this search are located into 'misc/refine_dataset/'.
+
+2. Generate dataset meta and summary figures:
+    * `python export_meta_and_figures.py`
 
 # References
 [1] F. Angelini, Z. Fu, Y. Long, L. Shao and S. M. Naqvi, "2D Pose-based Real-time Human Action Recognition with Occlusion-handling," in IEEE Transactions on Multimedia. URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8853267&isnumber=4456689
