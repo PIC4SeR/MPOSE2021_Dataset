@@ -3,4 +3,4 @@ venv
 data
 temp
 figures
-init_vars.py
+beta_*
