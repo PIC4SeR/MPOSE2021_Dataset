@@ -12,6 +12,7 @@
 # http://www.gnu.org/licenses/gpl.txt
 
 from init_vars import *
+from misc.video_lists import *
 import os
 import cv2
 import pandas as pd
@@ -21,10 +22,8 @@ import shutil
 def process_former(dataset):
     if dataset == 'weizmann':
         print('WEIZMANN DATASET PRE-PROCESSING:')
-        samples = [f for f in os.listdir(former_paths[dataset]) if
-                   os.path.isfile(os.path.join(former_paths[dataset], f))]
         unique_id = 0
-        for i in samples:
+        for i in weizmann_video_list:
             action = i[i.find('_') + 1:i.find('.')]
             actor = i[:i.find('_')]
             if action in ['bend', 'jump', 'pjump', 'run', 'walk', 'wave1', 'wave2']:
@@ -36,9 +35,7 @@ def process_former(dataset):
 
     elif dataset == 'isldas':
         print('{} pre-processing:'.format(dataset))
-        samples = [f for f in os.listdir(former_paths[dataset]) if
-                   os.path.isfile(os.path.join(former_paths[dataset], f))]
-        for unique_id, i in enumerate(samples):
+        for unique_id, i in enumerate(isldas_video_list):
             res = [j for j in range(len(i)) if i.startswith('_', j)]
             actor = i[res[0] + 1:res[1]]
             action = i[res[1] + 1:res[2]]
@@ -69,10 +66,8 @@ def process_former(dataset):
 
     elif dataset == 'isld':
         print('{} pre-processing:'.format(dataset))
-        samples = [f for f in os.listdir(former_paths[dataset]) if
-                   os.path.isfile(os.path.join(former_paths[dataset], f))]
         unique_id = 0
-        for i in samples:
+        for i in isld_video_list:
             actor = i[:i.find('_')]
             gt = pd.read_excel(misc_paths[dataset], sheet_name=actor, header=1, usecols='A:F')
             gt = gt.sort_values(by='start')
@@ -129,10 +124,7 @@ def process_former(dataset):
 
     elif dataset == 'ixmas':
         print('{} pre-processing:'.format(dataset))
-        samples = [f for f in os.listdir(former_paths[dataset]) if
-                   os.path.isfile(os.path.join(former_paths[dataset], f)) and f[-4:] == '.avi'
-                   and f not in pd.read_csv(misc_paths['ixmas'])['samples'].values]
-        for unique_id, i in enumerate(samples):
+        for unique_id, i in enumerate(ixmas_video_list):
             res = [j for j in range(len(i)) if i.startswith('_', j)]
             actor = i[:res[0]]
             action = i[res[1] + 1:res[2]]
@@ -151,7 +143,7 @@ def process_former(dataset):
     elif dataset == 'kth':
         print('{} pre-processing:'.format(dataset))
         unique_id = 0
-        for i in os.listdir(former_paths[dataset]):
+        for i in kth_video_list:
             print('\t', 'Splitting: {}'.format(i))
             res = [j for j in range(len(i)) if i.startswith('_', j)]
             actor = i[:res[0]]
@@ -179,22 +171,18 @@ def process_former(dataset):
     elif dataset == 'i3dpost':
         print('{} pre-processing:'.format(dataset))
         gt = pd.read_csv(misc_paths[dataset], header=0, dtype=str)
-        actors = os.listdir(former_paths[dataset])
         unique_id = 0
-        for actor in actors:
+        for actor in i3dpost_list['actor']:
             child_dir = os.listdir(os.path.join(former_paths[dataset], actor))[0]
-            sets = os.listdir(os.path.join(former_paths[dataset], actor, child_dir))
-            for s in sets:
+            for s in i3dpost_list[actor]:
                 action = gt.loc[(gt['Code'] == s) & (gt['Actor'] == actor), 'Action'].values[0].lower()
                 if action == 'hand-wave':
                     action = 'wave1'
                 elif action == 'jump in place':
                     action = 'pjump'
-                path = os.path.join(former_paths[dataset], actor, child_dir, s)
-                point_of_views = [f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
-                for pov in point_of_views:
+                for pov in i3dpost_list['pov'][actor]:
                     unique_id += 1
-                    folder = os.path.join(path, pov)
+                    folder = os.path.join(former_paths[dataset], actor, child_dir, s, pov)
                     new_name = '{}{}_{}_{}_{}{}'.format(paths['video'], dataset, actor.lower(), action, unique_id,
                                                         video_extention)
                     print('\tEncoding: {}'.format(new_name))
