@@ -35,9 +35,10 @@ def generate_checksums(path):
 
 
 def check_integrity(current, path):
-    standard = pd.read_csv(path, index_col='sample')
+    standard = pd.read_csv(path, index_col='sample').sort_values('sample')
+    current = current.sort_values('sample')
     try:
-        if ((standard == current).sum() == len(standard)).values[0]:
+        if current.equals(standard):
             print('Test against {} passed!'.format(path))
         else:
             print('Error (code 1)')
