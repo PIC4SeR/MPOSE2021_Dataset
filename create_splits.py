@@ -1,4 +1,3 @@
-import os
 from init_vars import *
 import pandas as pd
 from scripts.lib_common import read_poses
@@ -59,7 +58,7 @@ testing_actors = {1: ['person12',
 if __name__ == '__main__':
     report = read_poses()
 
-    for i in range(1, 3):
+    for i in range(1, 4):
         split = pd.DataFrame({'sample': report.loc[report.actor.isin(testing_actors[i]), 'sample'],
                                'set': 'test'})
         split = pd.concat([split,
