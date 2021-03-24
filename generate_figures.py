@@ -23,8 +23,10 @@ if __name__ == '__main__':
     palette = sns.color_palette("Spectral", len(actions))
 
     fig = plt.figure(figsize=(10, 5))
-    sns.countplot(x="action", data=report.loc[~report.actor.isin(testing_actors[split_id])],
-                           order=actions, palette=palette)
+    sns.countplot(x="action",
+                  data=report,
+                  order=actions,
+                  palette=palette)
     plt.title('MPOSE2021 Summary')
     plt.xticks(rotation=90)
     plt.tight_layout()
