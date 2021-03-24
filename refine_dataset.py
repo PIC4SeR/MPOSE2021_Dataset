@@ -25,7 +25,7 @@ def change_meta(file, new_action):
     pickle.dump(dict, open(file, 'wb'))
 
 
-# Remove sample in post-processing as video-encoding is failed
+# Remove sample in post-processing as video-encoding has failed
 samples_to_remove = [
     'ixmas_hedlena3_get-up_572.avi-50-79.avi',
 ]
