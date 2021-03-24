@@ -17,8 +17,9 @@ import pickle
 import pandas as pd
 import numpy as np
 
+
 def read_poses(path=paths['pose']):
-    report = pd.DataFrame(columns=['sample', 'dataset', 'lenght', 'aver_conf'])
+    report = pd.DataFrame(columns=['sample', 'dataset', 'actor', 'action', 'length', 'aver_conf'])
     for i in sorted(os.listdir(path)):
         with open(os.path.join(path, i), 'rb') as f:
             d = pickle.load(f)
