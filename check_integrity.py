@@ -17,8 +17,9 @@ import os
 import pandas as pd
 import sys
 
+
 try:
-    target = int(sys.argv[1])
+    target = sys.argv[1]
 except:
     target = 'video'
 
