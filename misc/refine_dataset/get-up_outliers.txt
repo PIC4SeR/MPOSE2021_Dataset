@@ -14,7 +14,7 @@ ixmas_amel1_get-up_1341-60-82	remove
 ixmas_nicolas2_get-up_90-60-89	standing
 ixmas_julien1_get-up_1136-60-87	standing
 ixmas_julien1_get-up_1370-64-87	standing
-ixmas_hedlena3_get-up_293-37-66	standing
+ixmas_hedlena3_get-up_293-37-66	remove
 ixmas_hedlena3_get-up_40-45-74	standing
 ixmas_nicolas2_get-up_1207-60-89	standing
 ixmas_julien1_get-up_1119-56-85	standing

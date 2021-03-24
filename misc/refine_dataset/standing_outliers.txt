@@ -281,4 +281,3 @@ isld_anna_standing_282-0-42	run
 isld_federico_standing_40-0-29	sit-down
 isld_zeyu_standing_691-0-29	sit-down
 isld_federico_standing_58-0-133 remove
-ixmas_hedlena3_standing_293-37-66	remove
