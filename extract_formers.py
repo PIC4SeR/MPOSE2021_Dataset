@@ -54,13 +54,21 @@ def untar_isld(filename, save_to):
             shutil.rmtree(save_to + 'ISLD/')
 
 
+def unzip_all(filename, save_to):
+    with ZipFile(filename, 'r') as zipObj:
+        zipObj.extractall(save_to)
+
+
 def extract(dataset):
     print('Extracting from {} archive...'.format(dataset))
     files = [f for f in os.listdir(archives_paths[dataset]) if os.path.isfile(os.path.join(archives_paths[dataset], f))]
     for file in files:
         if verbose:
             print('\tExtracting: {}'.format(file))
-        if file.endswith('.zip'):
+        if dataset == 'utkinect':
+            unzip_all(filename=archives_paths[dataset] + file,
+                  save_to=former_paths[dataset])
+        elif file.endswith('.zip'):
             unzip(filename=archives_paths[dataset]+file,
                   save_to=former_paths[dataset])
         elif file.endswith('.tar.gz'):
@@ -78,6 +86,7 @@ if __name__ == '__main__':
         'isld',
         'ixmas',
         'kth',
-        'i3dpost'
+        'i3dpost',
+        'utkinect',
     ]:
         extract(dataset)

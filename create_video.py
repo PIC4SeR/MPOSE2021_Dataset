@@ -202,15 +202,68 @@ def process_former(dataset):
                             success = False
                     out.release()
 
+    elif dataset == 'utkinect':
+        print('{} pre-processing:'.format(dataset))
+        temp = pd.read_csv(misc_paths[dataset], header=None)
+        gt = pd.DataFrame(columns=['sample', 'actor', 'counter', 'action', 'start', 'end'])
+        ids = [i for i, row in temp.iterrows() if row[0] in utkinect_list]
+        for i, j in zip(ids[:-1], ids[1:]):
+            sample = temp.loc[i, 0]
+            record = {'sample': sample,
+                      'actor': sample[:sample.find('_')],
+                      'counter': sample[sample.find('_') + 1:]}
+            for k, row in temp.loc[range(i+1, j)].iterrows():
+                row = row[0].strip()
+                record['action'] = row[:row.find(':')]
+                if record['action'] == 'sitDown':
+                    record['action'] = 'sit-down'
+                elif record['action'] == 'standUp':
+                    record['action'] = 'get-up'
+                elif record['action'] == 'pickUp':
+                    record['action'] = 'pick-up'
+                elif record['action'] == 'waveHands':
+                    record['action'] = 'wave2'
+                elif record['action'] == 'clapHands':
+                    record['action'] = 'hands-clap'
+                elif record['action'] == 'pull':
+                    record['action'] = 'point'
+                elif record['action'] == 'push':
+                    record['action'] = 'point'
+                elif record['action'] == 'carry':
+                    record['action'] = 'walk'
+                elif record['action'] == 'throw':
+                    record['action'] = 'wave1'
+                record['start'], record['end'] = [int(i) for i in row[row.find(':')+2:].split(' ')]
+                gt = gt.append(record, ignore_index=True)
+
+        for unique_id, sample in enumerate(utkinect_list):
+            folder = os.path.join(former_paths[dataset], 'RGB', sample)
+            frames_nums = sorted([int(i.replace('colorImg', '').replace('.jpg', '')) for i in os.listdir(folder) if 'Copy' not in i])
+            for i, row in gt.loc[gt['sample'] == sample].iterrows():
+                window = [t for t in frames_nums if t>= row['start'] and t<=row['end']]
+                new_name = '{}{}_{}_{}_{}_{}-{}-{}{}'.format(paths['video'], dataset,
+                                                             row['actor'], row['action'], row['counter'],
+                                                             unique_id, row['start'], row['end'], video_extention)
+                print('\tEncoding: {}'.format(new_name))
+                out = cv2.VideoWriter(new_name,
+                                      codec,
+                                      fps[dataset],
+                                      former_frame_size[dataset])
+                for t in window:
+                    image = cv2.imread(os.path.join(folder, 'colorImg'+str(t)+'.jpg'))
+                    out.write(cv2.resize(image, frame_size[dataset], fx=0, fy=0, interpolation=resize_interpolation))
+                out.release()
+
 
 if __name__ == '__main__':
     for dataset in [
-        'weizmann',
-        'isldas',
-        'isld',
-        'ixmas',
-        'kth',
-        'i3dpost'
+        # 'weizmann',
+        # 'isldas',
+        # 'isld',
+        # 'ixmas',
+        # 'kth',
+        # 'i3dpost',
+        'utkinect',
     ]:
         process_former(dataset)
 

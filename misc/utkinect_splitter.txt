@@ -1,0 +1,221 @@
+s01_e01
+walk: 252 390
+sitDown: 572 686
+standUp: 704 752
+pickUp: 822 954
+carry: 1016 1242
+throw: 1434 1488
+push: 1686 1748
+pull: 1640 1686
+waveHands: 1834 2064
+clapHands: 2110 2228
+s01_e02
+walk: 154 192
+sitDown: 530 628
+standUp: 640 720
+pickUp: 1202 1356
+carry: 1364 1520
+throw: 2246 2294
+push: 2752 2792
+pull: 2820 2858
+waveHands: 2984 3204
+clapHands: 3250 3448
+s02_e01
+walk: 266 368
+sitDown: 672 788
+standUp: 818 910 
+pickUp: 1262 1386
+carry: 1424 1780
+throw: 2040 2086
+push: 2340 2376
+pull: 2488 2550
+waveHands: 2668 2830
+clapHands: 3198 3324
+s02_e02
+walk: 40 208
+sitDown: 468 602
+standUp: 620 722
+pickUp: 894 1038
+carry: 1340 1480
+throw: 1966 2014
+push: 2194 2230
+pull: 2314 2358
+waveHands: 2408 2630
+clapHands: 2690 2810
+s03_e01
+walk: 372 528
+sitDown: 734 862
+standUp: 902 1000
+pickUp: 1118 1284
+carry: 1934 2168
+throw: 3226 3282
+push: 3556 3622
+pull: 3660 3730
+waveHands: 3806 3960
+clapHands: 4076 4184
+s03_e02
+walk: 122 254
+sitDown: 452 592 
+standUp: 644 724 
+pickUp: 848 1018 
+carry: 1078 1192
+throw: 1638 1690
+push: 1866 1896
+pull: 1928 2008
+waveHands: 2054 2208
+clapHands: 2324 2460
+s04_e01
+walk: 348 496
+sitDown: 788 864
+standUp: 954 1056 
+pickUp: 1190 1326
+carry: 1580 1882
+throw: 2306 2350
+push: 2532 2572
+pull: 2644 2686
+waveHands: 2790 2968
+clapHands: 3064 3146
+s04_e02
+walk: 420 546
+sitDown: 1046 1144 
+standUp: 1352 1414
+pickUp: 1682 1820
+carry: 1868 2122
+throw: 2564 2608 
+push: 2760 2792 
+pull: 2866 2910 
+waveHands: 3070 3260
+clapHands: 3448 3622
+s05_e01
+walk: 708 888
+sitDown: 1140 1238
+standUp: 1294 1394 
+pickUp: 1482 1676
+carry: 1736 2064
+throw: 3104 3176
+push: 3596 3632
+pull: 3706 3770
+waveHands: 3946 4352
+clapHands: 4522 4734
+s05_e02
+walk: 212 376
+sitDown: 634 756
+standUp: 788 862
+pickUp: 974 1180
+carry: 1266 1540
+throw: 1752 1828
+push: 2172 2230
+pull: 2104 2156
+waveHands: 2504 2784
+clapHands: 2798 2900
+s06_e01
+walk: 1230 1366
+sitDown: 1564 1644
+standUp: 1678 1758
+pickUp: 1862 1948
+carry: 1966 2098
+throw: 2392 2414
+push: 2672 2698
+pull: 2790 2824 
+waveHands: 3046 3216
+clapHands: 3290 3444
+s06_e02
+walk: 294 426
+sitDown: 710 818
+standUp: 856 956
+pickUp: 1088 1174
+carry: 2031 2202
+throw: 2518 2562
+push: 2702 2726
+pull: 2770 2808
+waveHands: 2952 3060
+clapHands: 3096 3188
+s07_e01
+walk: 130 252
+sitDown: 1038 1186
+standUp: 1256 1372
+pickUp: 1450 1602
+carry: 1602 1758
+throw: 2534 2614
+push: 3290 3350
+pull: 3350 3522
+waveHands: 3666 3902
+clapHands: 3990 4128
+s07_e02
+walk: 552 638
+sitDown: 880 1014
+standUp: 1014 1146
+pickUp: 1228 1352
+carry: 1352 1518
+throw: 1990 2058
+push: 2434 2496
+pull: 2496 2618
+waveHands: 2672 2982
+clapHands: 3042 3152
+s08_e01
+walk: 446 534 
+sitDown: 714 812
+standUp: 836 900
+pickUp: 1026 1144
+carry: 1228 1588
+throw: 1880 1916
+push: 2236 2268
+pull: 2334 2398
+waveHands: 2598 2772
+clapHands: 2794 2892
+s08_e02
+walk: 138 246
+sitDown: 610 716
+standUp: 770 878
+pickUp: 1126 1200
+carry: 1364 1650
+throw: 1826 1878
+push: 2030 2078
+pull: 2126 2204
+waveHands: 2280 2506
+clapHands: 2574 2650
+s09_e01
+walk: 404 544
+sitDown: 1080 1196
+standUp: 1212 1290 
+pickUp: 1422 1538
+carry: 1668 1970
+throw: 2688 2728
+push: 3266 3316
+pull: 3316 3390
+waveHands: 3576 3762
+clapHands: 3992 4118
+s09_e02
+walk: 482 610 
+sitDown: 1026 1158
+standUp: 1206 1310
+pickUp: 1546 1678
+carry: 1714 2120
+throw: 2468 2522
+push: 2696 2760
+pull: 2770 2838
+waveHands: 4708 4872
+clapHands: 4904 4964
+s10_e01
+walk: 100 272
+sitDown: 562 730
+standUp: 730 862
+pickUp: 924 1150
+carry: 1394 1846
+throw: 3304 3388
+push: 3468 3524
+pull: 3524 3608
+waveHands: 3962 4222
+clapHands: 4268 4336
+s10_e02
+walk: 96 220
+sitDown: 500 658
+standUp: 664 770
+pickUp: 1022 1232
+throw: 1720 1810
+push: 1944 1994
+pull: 1982 2062
+waveHands: 2094 2350
+clapHands: 2454 2598
+
+

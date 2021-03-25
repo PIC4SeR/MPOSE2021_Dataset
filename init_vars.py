@@ -43,6 +43,7 @@ archives_paths = dict(kth=archives_path + 'kth/',
                       weizmann=archives_path + 'weizmann/',
                       isld=archives_path + 'isld/',
                       isldas=archives_path + 'isldas/',
+                      utkinect=archives_path + 'utkinect/',
                       json=archives_path + 'json/')
 del archives_path
 
@@ -51,7 +52,8 @@ former_paths = dict(kth=temp_path + 'kth/',
                     i3dpost=temp_path + 'i3dpost/',
                     weizmann=temp_path + 'weizmann/',
                     isld=temp_path + 'isld/',
-                    isldas=temp_path + 'isldas/')
+                    isldas=temp_path + 'isldas/',
+                    utkinect=temp_path + 'utkinect/')
 
 paths = dict(video=dataset_path + 'video/',
              pose=dataset_path + 'pose/',
@@ -85,27 +87,31 @@ fps = dict(kth=25,
            i3dpost=25,
            weizmann=25,
            isld=25,
-           isldas=19)
+           isldas=19,
+           utkinect=19)
 
 former_frame_size = dict(kth=(160, 120),
                          ixmas=(64, 48),
                          i3dpost=(1920, 1080),
                          weizmann=(180, 144),
                          isld=(1920, 1080),
-                         isldas=(960, 600))
+                         isldas=(960, 600),
+                         utkinect=(640, 480))
 
 frame_size = dict(kth=(160, 120),
                   ixmas=(48, 64),
                   i3dpost=(480, 270),
                   weizmann=(180, 144),
                   isld=(480, 270),
-                  isldas=(960, 600))
+                  isldas=(960, 600),
+                  utkinect=(640, 480))
 resize_interpolation = cv2.INTER_CUBIC
 
 misc_paths = dict(kth='misc/kth_splitter.csv',
                   ixmas='misc/ixmas_exclude.csv',
                   i3dpost='misc/i3dpost_archives.csv',
                   isld='misc/isld_truth.xlsx',
+                  utkinect='misc/utkinect_splitter.txt',
                   checksum_video='misc/cksum_video.csv',
                   checksum_rgb='misc/cksum_rgb.csv',
                   checksum_pose='misc/cksum_pose.csv',
