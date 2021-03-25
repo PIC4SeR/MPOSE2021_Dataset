@@ -154,3 +154,17 @@ ixmas_julien3_walk_309-90-119	remove
 ixmas_alba2_walk_721-150-169	standing
 ixmas_andreas2_walk_134-123-142	remove
 ixmas_clare3_walk_511-120-149	remove
+utkinect_s10_walk_e01_18-1394-1846-60-89	standing
+utkinect_s02_walk_e01_2-1424-1780-0-29	turn
+utkinect_s02_walk_e01_2-1424-1780-30-49	turn
+utkinect_s08_walk_e01_14-1228-1588-0-29	turn
+utkinect_s09_walk_e01_16-1668-1970-30-59	turn
+utkinect_s04_walk_e02_7-1868-2122-0-29	turn
+utkinect_s08_walk_e02_15-1364-1650-0-29	turn
+utkinect_s03_walk_e02_5-1078-1192-0-29	turn
+utkinect_s01_walk_e01_0-1016-1242-30-54	turn
+utkinect_s08_walk_e01_14-1228-1588-30-59	turn
+utkinect_s03_walk_e01_4-1934-2168-0-29	turn
+utkinect_s04_walk_e02_7-1868-2122-30-59	turn
+utkinect_s04_walk_e01_6-1580-1882-0-29	turn
+utkinect_s05_walk_e01_8-1736-2064-0-29	turn

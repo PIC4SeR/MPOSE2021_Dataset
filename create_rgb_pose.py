@@ -31,6 +31,7 @@ def trim_seq(s, d, f):
     else:
         return s[:, :, start:], d[start:], f[start:]
 
+
 # split sequence in parts with min_frame_length >= frames >= max_frame_length
 def split_seq(s, d, f, meta, video, trim=True):
     if trim:

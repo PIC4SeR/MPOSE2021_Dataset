@@ -17,15 +17,16 @@ import pandas as pd
 import cv2
 from pathlib import Path
 import numpy as np
+import sys
 
 action = input('Which action? (type label): ')
-#action = 'bend'
+dataset = input('Which dataset? (type name): ')
 text = []
 rgb = os.listdir(paths['rgb'])
 num = np.sum([1 for i in rgb if action in i])
 count = 0
 for i in rgb:
-    if action in i:
+    if (action in i) and (dataset in i):
         count += 1
         # Create a VideoCapture object and read from input file
         cap = cv2.VideoCapture(os.path.join(paths['rgb'], i))
@@ -83,6 +84,7 @@ with open('temp_{}_outliers.txt'.format(action), 'w') as f:
 print('Saved: temporary file temp_{}_outliers.txt\t'.format(action))
 
 while True:
+    error_occurred = False
     to_do = input('Do you want to integrate results into misc/refine_dataset/{}_outliers.txt? (y/n): '.format(action))
     if to_do == 'y':
         outliers = pd.read_csv(os.path.join(misc_paths['outliers'], '{}_outliers.txt'.format(action)), delimiter='\t', header=None)
@@ -92,9 +94,10 @@ while True:
             if name not in outliers[0].to_list():
                 outliers = outliers.append({0: name, 1: do}, ignore_index=True)
             else:
+                error_occurred = True
                 print('{} is conflicting, is \'{}\' but was previously set to \'{}\'. Therefore, skipped.'.format(name,
                                                                                                                   do,
-                                                                                                                  outliers.loc[outliers[0] == name, 1].values[0]))
+                                                                                                                 outliers.loc[outliers[0] == name, 1].values[0]))
         break
     elif to_do == 'n':
         break
@@ -102,14 +105,20 @@ while True:
         print('Please, input a valid value.\t')
         continue
 
-if to_do == 'n':
-    while True:
-        to_do = input('Save a new misc/refine_dataset/{}_outliers.txt? (y/n): '.format(action))
-        if to_do == 'y':
-            np.savetxt('misc/refine_dataset/{}_outliers.txt'.format(action), outliers.values, fmt='%s\t%s', delimiter='\t')
-        elif to_do == 'n':
-            break
-        else:
-            print('Please, input a valid value.\t')
-            continue
+if error_occurred:
+    sys.exit()
+else:
+    if to_do == 'y':
+        while True:
+            to_do = input('Save a new misc/refine_dataset/{}_outliers.txt? (y/n): '.format(action))
+            if to_do == 'y':
+                np.savetxt('misc/refine_dataset/{}_outliers.txt'.format(action), outliers.values, fmt='%s\t%s', delimiter='\t')
+                break
+            elif to_do == 'n':
+                break
+            else:
+                print('Please, input a valid value.\t')
+                continue
+    else:
+        sys.exit()
 

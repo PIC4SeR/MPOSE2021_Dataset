@@ -15,3 +15,4 @@ ixmas_hedlena1_pick-up_311-0-29	bend
 ixmas_nicolas2_pick-up_532-0-29	remove
 ixmas_daniel2_pick-up_343-0-29	standing
 ixmas_clare3_pick-up_87-0-29	remove
+utkinect_s05_pick-up_e02_9-974-1180-0-29	bend

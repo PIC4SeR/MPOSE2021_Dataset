@@ -48,14 +48,17 @@ def check_integrity(current, path):
 
 
 if __name__ == '__main__':
-    if target == 'video':
+    if 'video' in target:
         current = generate_checksums(paths['video'])
+        #current.to_csv(misc_paths['checksum_video'])
         check_integrity(current, misc_paths['checksum_video'])
-    elif target == 'rgb_pose':
+
+    if 'rgb' in target:
         current = generate_checksums(paths['rgb'])
+        #current.to_csv(misc_paths['checksum_rgb'])
         check_integrity(current, misc_paths['checksum_rgb'])
+
+    if 'pose' in target:
         current = generate_checksums(paths['pose'])
-        check_integrity(current, misc_paths['checksum_pose'])
-    elif target == 'pose':
-        current = generate_checksums(paths['pose'])
+        #current.to_csv(misc_paths['checksum_pose'])
         check_integrity(current, misc_paths['checksum_pose'])
