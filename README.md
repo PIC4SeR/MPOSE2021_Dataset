@@ -85,8 +85,6 @@ The following procedure initialise the dataset variables and generates video dat
     * "dataset_path": where you want the dataset to be exported;
     * "archives_path": where you want to save the former dataset archives (see below point 5.);
     * "temporary_path": where temporary files will be stored (see below point 7.);
-    * "max_frame_length": maximum frame length of each MPOSE2021 sequence (default 30, don't change for reproducibility);
-    * "min_frame_length": minimum frame length for a sequence of poses to be accepted (default 20, don't change for reproducibility).
 
 6. Run variables initialization
     * `python init_vars.py`

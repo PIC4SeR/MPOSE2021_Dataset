@@ -28,15 +28,14 @@ archives_path = dataset_path + 'archives/'
 # (leave as it is if you want to store temporary files into the "'dataset_path'/temp/" folder)
 temp_path = dataset_path + 'temp/'
 
-# maximum/minimum frame length for each MPOSE2021 sequence
-max_frame_length = 30  # default 30, don't change for reproducibility!
-min_frame_length = 20  # default 20, don't change for reproducibility!
-
 '''
 ########################################################################
 ################ do NOT modify after this point ########################
 ########################################################################
 '''
+max_frame_length = 30
+min_frame_length = 20
+
 archives_paths = dict(kth=archives_path + 'kth/',
                       ixmas=archives_path + 'ixmas/',
                       i3dpost=archives_path + 'i3dpost/',
@@ -120,7 +119,7 @@ misc_paths = dict(kth='misc/kth_splitter.csv',
 video_extention = '.avi'
 codec = cv2.VideoWriter_fourcc(*'MPEG')
 
-# OpenPose keypoints index
+# OpenPose keypoints index (used for animation only, see scripts.lib_seq.py)
 openpose_parts = dict(head=[0, 15, 16, 17, 18],
                       right_foot=[11, 22, 23, 24],
                       left_foot=[14, 19, 20, 21])
