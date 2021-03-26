@@ -25,20 +25,6 @@ def change_meta(file, new_action):
     pickle.dump(dict, open(file, 'wb'))
 
 
-# Remove sample in post-processing as video-encoding has failed
-samples_to_remove = [
-    'ixmas_hedlena3_get-up_572.avi-50-79.avi',
-]
-
-# remove samples
-for i in samples_to_remove:
-    if os.path.exists(os.path.join(paths['rgb'], i)):
-        os.remove(os.path.join(paths['rgb'], i))
-        os.remove(os.path.join(paths['pose'], i))
-        print('REMOVED: {}'.format(i))
-    else:
-        print('Already REMOVED: {}'.format(i))
-
 # redefine outliers (reassign/remove)
 for i in os.listdir(misc_paths['outliers']):
     outliers = pd.read_csv(os.path.join(misc_paths['outliers'], i), delimiter='\t', header=None)
