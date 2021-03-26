@@ -67,17 +67,7 @@ if __name__ == '__main__':
     for i in jsons:
         meta = ls.get_meta(i)
         video = read_video(os.path.join(paths['video'], i))
-        if meta['dataset'] == 'isldas':
-            seq, det, fra = ls.read_sequence(paths['json'] + i)
-            if det.sum() >= min_frame_length:
-                ls.save_sequence(seq=seq,
-                                 det=det,
-                                 fra=fra,
-                                 name=i,
-                                 meta=meta,
-                                 video=video)
-        else:
-            seq, det, fra = ls.read_sequence(paths['json'] + i)
-            split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
+        seq, det, fra = ls.read_sequence(paths['json'] + i)
+        split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
 
 
