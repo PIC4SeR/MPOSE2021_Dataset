@@ -21,32 +21,40 @@ import matplotlib.pyplot as plt
 import pickle
 
 
-def read(file):
+def read(file, compress=False):
     with open(file) as json_file:
         try:
             data = np.array(json.load(json_file)['people'][0]['pose_keypoints_2d'])
             detection = 1
             data[data == 0] = np.nan
-            x = np.zeros((25, 3))
-            for i in range(0, 3):
-                x[:, i] = data[range(i, 75, 3)]
-            if np.isnan(x[openpose_parts['head'], :]).all():
-                x[0, :] = [np.nan, np.nan, np.nan]
-            else:
-                x[0, :] = np.nanmean(x[openpose_parts['head'], :], axis=0)
-            if np.isnan(x[openpose_parts['right_foot'], :]).all():
-                x[11, :] = [np.nan, np.nan, np.nan]
-            else:
-                x[11, :] = np.nanmean(x[openpose_parts['right_foot'], :], axis=0)
-            if np.isnan(x[openpose_parts['left_foot'], :]).all():
-                x[14, :] = [np.nan, np.nan, np.nan]
-            else:
-                x[14, :] = np.nanmean(x[openpose_parts['left_foot'], :], axis=0)
-            return x[0:15, :], detection
-
         except:
             detection = 0
-            return np.nan * np.zeros((15, 3)), detection
+
+        if detection == 1:
+            if compress:
+                x = np.zeros((25, 3))
+                for i in range(0, 3):
+                    x[:, i] = data[range(i, 75, 3)]
+                if np.isnan(x[openpose_parts['head'], :]).all():
+                    x[0, :] = [np.nan, np.nan, np.nan]
+                else:
+                    x[0, :] = np.nanmean(x[openpose_parts['head'], :], axis=0)
+                if np.isnan(x[openpose_parts['right_foot'], :]).all():
+                    x[11, :] = [np.nan, np.nan, np.nan]
+                else:
+                    x[11, :] = np.nanmean(x[openpose_parts['right_foot'], :], axis=0)
+                if np.isnan(x[openpose_parts['left_foot'], :]).all():
+                    x[14, :] = [np.nan, np.nan, np.nan]
+                else:
+                    x[14, :] = np.nanmean(x[openpose_parts['left_foot'], :], axis=0)
+                return x[0:15, :], detection
+            else:
+                return data.reshape((25, 3)), detection
+        else:
+            if compress:
+                return np.nan * np.zeros((15, 3)), detection
+            else:
+                return np.nan * np.zeros((25, 3)), detection
 
 
 def create_limbs(body):
@@ -60,7 +68,6 @@ def create_limbs(body):
 
 
 def animation(seq, filename, path=temp_path):
-
     if filename.find('.avi'):
         filename.replace('avi', '')
 
@@ -96,18 +103,30 @@ def animation(seq, filename, path=temp_path):
     print('Saved GIF: {}'.format(os.path.join(path, filename) + '.gif'))
 
 
-def read_sequence(sample, animate_path=None):
+def read_sequence_to_animate(sample, animate_path):
     jsons = os.listdir(sample)
     sequence = np.nan * np.zeros((15, 3, len(jsons)))
     detections = np.nan * np.zeros((len(jsons)))
     frames = np.nan * np.zeros((len(jsons)))
     for i in jsons:
         t = int(i[-27:-15])
-        sequence[:, :, t], detections[t] = read(os.path.join(sample, i))
+        sequence[:, :, t], detections[t] = read(os.path.join(sample, i), compress=True)
         frames[t] = t
 
-    if animate_path is not None:
-        animation(sequence, animate_path, os.path.basename(sample).replace('.avi', ''))
+    animation(sequence, animate_path, os.path.basename(sample).replace('.avi', ''))
+
+    return sequence, detections, frames
+
+
+def read_sequence(sample):
+    jsons = os.listdir(sample)
+    sequence = np.nan * np.zeros((25, 3, len(jsons)))
+    detections = np.nan * np.zeros((len(jsons)))
+    frames = np.nan * np.zeros((len(jsons)))
+    for i in jsons:
+        t = int(i[-27:-15])
+        sequence[:, :, t], detections[t] = read(os.path.join(sample, i), compress=False)
+        frames[t] = t
 
     return sequence, detections, frames
 
