@@ -60,13 +60,13 @@ The following procedure initialise the dataset variables and generates video dat
         * Save the archive into "archives_path"/ixmas/.
     * [Weizmann Dataset](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html).
         * Download actions: Walk, Run, Jump, Bend, One-hand wave, Two-hands wave, Jump in place;
-        * Save the archive into "archives_path"/weizmann/.
+        * Save the archives into "archives_path"/weizmann/.
     * [i3DPost Dataset](http://kahlan.eps.surrey.ac.uk/i3dpost_action/) (subject to password request!).
         * Download all archives related to actions: Walk, Run, Jump, Bend, Hand-wave, Jump in place;
-        * Save the archive into "archives_path"/i3DPost/.
+        * Save the archives into "archives_path"/i3DPost/.
     * [KTH Dataset](https://www.csc.kth.se/cvap/actions/).
         * Download archives "walking.zip", "jogging.zip", "running.zip", "boxing.zip", "handwaving.zip", "handclapping.zip";
-        * Save the archive into "archives_path"/kth/.
+        * Save the archives into "archives_path"/kth/.
     * [ISLD Dataset](https://doi.org/10.25405/data.ncl.14061806.v1)
         * Download archive;
         * Save the archive into "archives_path"/isld/.
