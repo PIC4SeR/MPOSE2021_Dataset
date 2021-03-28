@@ -11,6 +11,7 @@ MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by
 [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) [4] (and [Posenet](https://github.com/tensorflow/tfjs-models/tree/master/posenet), coming soon!) 
 on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7], KTH [8], UTKinetic-Action3D (RGB only) [9] and UTD-MHAD (RGB only) [10], alongside original video datasets, i.e. ISLD and ISLD-Additional-Sequences [1].
 Since these datasets had heterogenous action labels, each dataset labels were remapped to a common and homogeneous list of actions.
+Overall, MPOSE2021 contains 15428 samples, divided into 20 actions, performed by 100 subjects.
 
 This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. 
 Generated RGB+POSE sequences have a number of frames between 20 and 30. 
