@@ -9,7 +9,7 @@ MPOSE2021 is specifically designed to perform short-time Human Action Recognitio
 
 MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by human pose data detected by 
 [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) [4] (and [Posenet](https://github.com/tensorflow/tfjs-models/tree/master/posenet), coming soon!) 
-on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7], KTH [8] and UTKinetic-Action3D (RGB only) [9] alongside original video datasets, i.e. ISLD and ISLD-Additional-Sequences [1]. 
+on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7], KTH [8], UTKinetic-Action3D (RGB only) [9] and UTD-MHAD (RGB only) [10], alongside original video datasets, i.e. ISLD and ISLD-Additional-Sequences [1].
 Since these datasets had heterogenous action labels, each dataset labels were remapped to a common and homogeneous list of actions.
 
 This repository allows users to generate RGB+POSE data for MPOSE2021 in a python-friendly format. 
@@ -37,7 +37,7 @@ The overview of the action composition of MPOSE2021 is provided [here](https://g
 
 ## Citations
 MPOSE2021 is intended for scientific research purposes.
-The user that wants to use MPOSE2021 for publications, please cite [1-9].
+The user that wants to use MPOSE2021 for publications, please cite [1-10].
 
 ## Requirements
 The following requirements are needed to generate RGB data for MPOSE2021 (tested on Ubuntu 20.04).
@@ -58,25 +58,28 @@ The following procedure initialise the dataset variables and generates video dat
 3. Download RGB archives from the following third-party repositories:
     * [IXMAS Dataset](https://www.epfl.ch/labs/cvlab/data/data-ixmas10).
         * Download "original IXMAS ROIs" archive;
-        * Save the archive into "arhives_path"/ixmas/.
+        * Save the archive into "archives_path"/ixmas/.
     * [Weizmann Dataset](http://www.wisdom.weizmann.ac.il/~vision/SpaceTimeActions.html).
         * Download actions: Walk, Run, Jump, Bend, One-hand wave, Two-hands wave, Jump in place;
-        * Save the archive into "arhives_path"/weizmann/.
+        * Save the archive into "archives_path"/weizmann/.
     * [i3DPost Dataset](http://kahlan.eps.surrey.ac.uk/i3dpost_action/) (subject to password request!).
         * Download all archives related to actions: Walk, Run, Jump, Bend, Hand-wave, Jump in place;
-        * Save the archive into "arhives_path"/i3DPost/.
+        * Save the archive into "archives_path"/i3DPost/.
     * [KTH Dataset](https://www.csc.kth.se/cvap/actions/).
         * Download archives "walking.zip", "jogging.zip", "running.zip", "boxing.zip", "handwaving.zip", "handclapping.zip";
-        * Save the archive into "arhives_path"/kth/.
+        * Save the archive into "archives_path"/kth/.
     * [ISLD Dataset](https://doi.org/10.25405/data.ncl.14061806.v1)
         * Download archive;
-        * Save the archive into "arhives_path"/isld/.
+        * Save the archive into "archives_path"/isld/.
     * [ISLD-Additional-Sequences Dataset](https://drive.google.com/file/d/1L1AvAP56fUwHQO6QvRGuYxfAHllw5PLe/view?usp=sharing)
         * Download archive;
-        * Save the archive into "arhives_path"/isldas/.
+        * Save the archive into "archives_path"/isldas/.
     * [UTKinect-Action3D Dataset](http://cvrc.ece.utexas.edu/KinectDatasets/HOJ3D.html)
         * Download archive (RGB images only);
-        * Save the archive into "arhives_path"/utkinect/.
+        * Save the archive into "archives_path"/utkinect/.
+    * [UTD-MHAD Dataset](https://personal.utdallas.edu/~kehtar/UTD-MHAD.html)
+        * Downlad archive (RGB images only);
+        * Save the archive into "archives_path"/utdmhad/  
 
 4. Install python requirements:
     * `pip3 install -r requirements.txt`
@@ -105,7 +108,7 @@ The following procedure initialise the dataset variables and generates video dat
 The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length" (default: 20 <= f <= 30).
 
 1. Download detected poses (by OpenPose) as JSON files:
-    * Download [json](https://drive.google.com/file/d/1DvdSQkZ6JRkTUy4-MRic1Toj_sILGWdH/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
+    * Download [json](https://drive.google.com/file/d/1gmq5q4Ck5VVDVn1HZuiXXmPkFbF0GldF/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
     * Save the archive into "archives_path"/json/.
    
 2. Extract json data:
@@ -156,6 +159,8 @@ Coming soon.
 
 [7] Weinland, Daniel, Mustafa Özuysal, and Pascal Fua. "Making action recognition robust to occlusions and viewpoint changes." European Conference on Computer Vision. Springer, Berlin, Heidelberg, 2010.
 
-[8] Schuldt, Christian, Ivan Laptev, and Barbara Caputo. "Recognizing human actions: a local SVM approach." Proceedings of the 17th International Conference on Pattern Recognition, 2004. ICPR 2004.. Vol. 3. IEEE, 2004.
+[8] Schuldt, Christian, Ivan Laptev, and Barbara Caputo. "Recognizing human actions: a local SVM approach." Proceedings of the 17th International Conference on Pattern Recognition, ICPR 2004. Vol. 3. IEEE, 2004.
 
 [9] L. Xia, C.C. Chen and JK Aggarwal. "View invariant human action recognition using histograms of 3D joints", 2012 IEEE Computer Society Conference on Computer Vision and Pattern Recognition Workshops (CVPRW), 20-27, 2012.
+
+[10] C. Chen, R. Jafari, and N. Kehtarnavaz. "UTD-MHAD: A Multimodal Dataset for Human Action Recognition Utilizing a Depth Camera and a Wearable Inertial Sensor". Proceedings of IEEE International Conference on Image Processing, Canada, 2015. 
