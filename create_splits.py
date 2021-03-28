@@ -20,7 +20,9 @@ testing_actors = {1: ['person12',
                       'lyova',
                       'shahar',
                       's02',
-                      's07'],
+                      's07',
+                      'ss1',
+                      'ss4'],
                   2: ['person01',
                       'person07',
                       'person16',
@@ -39,7 +41,9 @@ testing_actors = {1: ['person12',
                       'daria',
                       'eli',
                       's08',
-                      's05'],
+                      's05',
+                      'ss7',
+                      'ss8'],
                   3: ['person03',
                       'person11',
                       'person17',
@@ -58,7 +62,9 @@ testing_actors = {1: ['person12',
                       'moshe',
                       'ira',
                       's04',
-                      's10']}
+                      's10',
+                      'ss2',
+                      'ss5']}
 
 
 if __name__ == '__main__':
@@ -66,7 +72,7 @@ if __name__ == '__main__':
 
     for i in range(1, 4):
         split = pd.DataFrame({'sample': report.loc[report.actor.isin(testing_actors[i]), 'sample'],
-                               'set': 'test'})
+                              'set': 'test'})
         split = pd.concat([split,
                            pd.DataFrame({'sample': report.loc[~report.actor.isin(testing_actors[i]), 'sample'],
                                          'set': 'train'})])

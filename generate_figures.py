@@ -19,16 +19,22 @@ from create_splits import *
 if __name__ == '__main__':
     report = read_poses()
     actions = report.action.drop_duplicates().sort_values()
+    actors = report.actor.drop_duplicates()
 
     palette = sns.color_palette("Spectral", len(actions))
 
-    fig = plt.figure(figsize=(10, 5))
-    sns.countplot(x="action",
-                  data=report,
-                  order=actions,
-                  palette=palette)
-    plt.title('MPOSE2021 Summary')
+    fig = plt.figure(figsize=(15, 10))
+    df_plot = report.groupby(['dataset', 'action']).size().reset_index().pivot(columns='dataset', index='action', values=0)
+    df_plot.plot(kind='bar', stacked=True)
+    # sns.countplot(x="action",
+    #               data=report,
+    #               order=actions,
+    #               palette=palette)
+    plt.title('MPOSE2021 ({} actions, {} actors, {} samples)'.format(len(actions),
+                                                                     len(actors),
+                                                                     len(report)))
     plt.xticks(rotation=90)
+    plt.ylabel('samples')
     plt.tight_layout()
     plt.savefig(os.path.join(paths['figures'], 'mpose2021_summary.pdf'))
 

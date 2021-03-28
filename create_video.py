@@ -254,16 +254,48 @@ def process_former(dataset):
                     out.write(cv2.resize(image, frame_size[dataset], fx=0, fy=0, interpolation=resize_interpolation))
                 out.release()
 
+    elif dataset == 'utdmhad':
+        print('{} pre-processing:'.format(dataset))
+        gt = pd.read_csv(misc_paths[dataset], header=0, index_col=0)
+        unique_id = 0
+        for sample in utdmhad_list:
+            action, actor, counter, _ = sample.split('_')
+            action = gt.loc[int(action[1:])].values[0]
+            actor = 's'+actor
+            if action in ['swipt_left', 'swipt_right', 'wave', 'throw', 'catch', 'knock', 'draw_x', 'draw_circle_CW',
+                          'draw_circle_CCW', 'draw_triangle', 'tennis_swing', 'catch']:
+                action = 'wave1'
+            elif action == 'clap':
+                action = 'hands-clap'
+            elif action == 'arm_cross':
+                action = 'cross-arms'
+            elif action == 'sit2stand':
+                action = 'get-up'
+            elif action == 'stand2sit':
+                action = 'sit-down'
+            elif action in ['basketball_shoot', 'baseball_swing', 'tennis_serve']:
+                action = 'wave2'
+            elif action == 'boxing':
+                action = 'box'
+            elif action in ['push', 'bowling', 'arm_curl', 'knock', 'pickup_throw', 'lunge', 'squat']:
+                continue
+            unique_id += 1
+            file = os.path.join(former_paths[dataset], 'RGB', sample)
+            new_file = os.path.join(paths['video'], '{}_{}_{}_{}_{}.avi'.format(dataset, actor, action, counter, unique_id))
+            print('\tCopying: {}'.format(new_file))
+            shutil.copy(file, new_file)
+
 
 if __name__ == '__main__':
     for dataset in [
-        # 'weizmann',
-        # 'isldas',
-        # 'isld',
-        # 'ixmas',
-        # 'kth',
-        # 'i3dpost',
+        'weizmann',
+        'isldas',
+        'isld',
+        'ixmas',
+        'kth',
+        'i3dpost',
         'utkinect',
+        'utdmhad',
     ]:
         process_former(dataset)
 

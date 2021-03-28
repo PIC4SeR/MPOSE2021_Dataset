@@ -23,7 +23,7 @@ action = input('Which action? (type label): ')
 dataset = input('Which dataset? (type name): ')
 text = []
 rgb = os.listdir(paths['rgb'])
-num = np.sum([1 for i in rgb if action in i])
+num = np.sum([1 for i in rgb if (action in i) and (dataset in i)])
 count = 0
 for i in rgb:
     if (action in i) and (dataset in i):

@@ -6,3 +6,5 @@ ixmas_daniel2_box_1282-0-29	standing
 ixmas_daniel2_box_12-0-29	standing
 kth_person23_box_21-210-239	standing
 kth_person23_box_21-180-209	standing
+utdmhad_ss8_boxing_t2_580-30-49.avi	remove
+utdmhad_ss7_boxing_t3_464-30-49.avi	remove

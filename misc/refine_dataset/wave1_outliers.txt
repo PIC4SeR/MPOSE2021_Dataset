@@ -29,3 +29,11 @@ ixmas_julien3_wave1_918-60-82	standing
 ixmas_daniel3_wave1_628-30-59	remove
 ixmas_daniel3_wave1_527-30-59	remove
 ixmas_julien3_wave1_616-60-82	remove
+utdmhad_ss3_wave1_t1_6-30-52.avi	remove
+utdmhad_ss7_wave1_t3_440-30-50.avi	remove
+utdmhad_ss1_wave1_t3_657-30-54.avi	remove
+utdmhad_ss8_wave1_t2_548-30-51.avi	remove
+utdmhad_ss5_wave1_t1_278-30-49.avi	remove
+utdmhad_ss1_wave1_t4_88-30-49.avi	remove
+utdmhad_ss8_wave1_t1_59-30-51.avi	remove
+utdmhad_ss7_wave1_t1_486-30-49.avi	remove

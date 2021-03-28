@@ -65,7 +65,7 @@ def extract(dataset):
     for file in files:
         if verbose:
             print('\tExtracting: {}'.format(file))
-        if dataset == 'utkinect':
+        if dataset in ['utkinect', 'utdmhad']:
             unzip_all(filename=archives_paths[dataset] + file,
                   save_to=former_paths[dataset])
         elif file.endswith('.zip'):
@@ -88,5 +88,6 @@ if __name__ == '__main__':
         'kth',
         'i3dpost',
         'utkinect',
+        'utdmhad',
     ]:
         extract(dataset)
