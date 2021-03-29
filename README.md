@@ -107,7 +107,7 @@ The following procedure initialise the dataset variables and generates video dat
 The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length" (default: 20 <= f <= 30).
 
 1. Download detected poses (by OpenPose) as JSON files:
-    * Download [json](https://drive.google.com/file/d/1gmq5q4Ck5VVDVn1HZuiXXmPkFbF0GldF/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
+    * Download [json](https://drive.google.com/file/d/1Q9FRKhuv9UOKgxw8g3g7zZQ4_tvp6Iss/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
     * Save the archive into "archives_path"/json/.
    
 2. Extract json data:
