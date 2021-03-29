@@ -1,6 +1,5 @@
 isld_safaa_hands-clap_94-0-29	remove
-utdmhad_ss7_hands-clap_t2_217-30-52	remove
-utdmhad_ss8_hands-clap_t2_200-30-55	remove
-utdmhad_ss7_hands-clap_t3_69-30-50	remove
-utdmhad_ss6_hands-clap_t1_114-30-59	remove
-utdmhad_ss6_hands-clap_t4_439-30-52	remove
+utdmhad_ss7_hands-clap_t2_206-30-52	remove
+utdmhad_ss8_hands-clap_t2_189-30-55	remove
+utdmhad_ss7_hands-clap_t3_67-30-50	remove
+utdmhad_ss6_hands-clap_t4_420-30-52 remove
