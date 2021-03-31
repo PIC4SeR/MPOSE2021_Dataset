@@ -132,8 +132,6 @@ def read_sequence(sample):
 
 
 def save_sequence(seq, det, fra, name, meta, video):
-    name = name.replace('.avi', '')
-
     # save POSE
     to_save = dict(seq=seq,
                    det=det,
@@ -154,7 +152,6 @@ def save_sequence(seq, det, fra, name, meta, video):
     for i in fra:
         out.write(video[int(i)])
     out.release()
-
     print('Saved: {}'.format(name))
 
 

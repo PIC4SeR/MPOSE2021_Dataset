@@ -35,17 +35,20 @@ def trim_seq(s, d, f):
 # split sequence in parts with min_frame_length >= frames >= max_frame_length
 def split_seq(s, d, f, meta, video, trim=True):
     if trim:
-        s, d, f, = trim_seq(s, d, f)
+        s, d, f = trim_seq(s, d, f)
     s = s[:, :, d == 1]
     frames = f[d == 1]
     for count, start in enumerate(range(0, s.shape[2], max_frame_length)):
         sub_s = s[:, :, start:start+max_frame_length]
         fra = frames[start:start + max_frame_length]
         if sub_s.shape[2] >= min_frame_length:
+            name = '{}-{}-{}'.format(meta['sample'].replace('.avi', ''),
+                                                    int(fra[0]),
+                                                    int(fra[-1]))
             ls.save_sequence(seq=sub_s,
                              det=np.ones((sub_s.shape[2])),
                              fra=fra,
-                             name='{}-{}-{}'.format(i, int(fra[0]), int(fra[-1])),
+                             name=name,
                              meta=meta,
                              video=video)
 
@@ -55,9 +58,10 @@ def read_video(path):
     success, image = vidcap.read()
     frames = []
     while success:
-        success, image = vidcap.read()
         frames.append(image)
+        success, image = vidcap.read()
     vidcap.release()
+    cv2.destroyAllWindows()
 
     return frames
 
