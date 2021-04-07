@@ -14,10 +14,15 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 from create_splits import *
+import sys
 
 
 if __name__ == '__main__':
+
+    print('Reading openpose sequences...')
     report = read_poses()
+    report['detector'] = 'openpose'
+
     actions = report.action.drop_duplicates().sort_values()
     actors = report.actor.drop_duplicates()
 
@@ -26,10 +31,6 @@ if __name__ == '__main__':
     fig = plt.figure(figsize=(15, 10))
     df_plot = report.groupby(['dataset', 'action']).size().reset_index().pivot(columns='dataset', index='action', values=0)
     df_plot.plot(kind='bar', stacked=True)
-    # sns.countplot(x="action",
-    #               data=report,
-    #               order=actions,
-    #               palette=palette)
     plt.title('MPOSE2021 ({} actions, {} actors, {} samples)'.format(len(actions),
                                                                      len(actors),
                                                                      len(report)))
@@ -52,9 +53,15 @@ if __name__ == '__main__':
         plt.tight_layout()
         plt.savefig(os.path.join(paths['figures'], 'split{}_summary.pdf'.format(split_id)))
 
+    print('Reading posenet sequences...')
+    report_posenet = read_poses(paths['posenet'])
+    report_posenet['detector'] = 'posenet'
+    report_tot = report.append(report_posenet)
+
     fig = plt.figure(figsize=(10, 5))
-    palette = sns.color_palette("Spectral", len(report.dataset.drop_duplicates()))
-    sns.boxplot(x="dataset", y="aver_conf", data=report, palette=palette)
+    palette = sns.color_palette()
+    sns.boxplot(x="dataset", y="aver_conf", data=report_tot, palette=palette, hue='detector')
     plt.title('Sequence Averaged Detection Confidence (POSE)')
     plt.tight_layout()
     plt.savefig(os.path.join(paths['figures'], 'averaged_confidence.pdf'))
+

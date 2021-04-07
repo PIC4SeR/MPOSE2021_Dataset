@@ -108,9 +108,9 @@ The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequenc
 
 1. Download detected poses (by OpenPose) as JSON files:
     * Download [json](https://drive.google.com/file/d/1Q9FRKhuv9UOKgxw8g3g7zZQ4_tvp6Iss/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
-    * Save the archive into "archives_path"/json/.
+    * Save the archive into "archives_path"/json.
    
-2. Extract json data:
+2. Extract OpenPose json data:
     * `python extract_json.py`
     * The archive is extracted into the "dataset_path"/json folder.
     
@@ -130,6 +130,12 @@ NOTE: This procedure applies the following transformations: 1) remove samples su
     * `python check_integrity.py rgb_pose`
     * You should get the following message: "Test against misc/cksum_rgb.csv passed!";
     * You should get the following message: "Test against misc/cksum_pose.csv passed!".
+
+6. (Optional) Extract PoseNet pose data (PoseNet data is obtained on RGB sequences generated above):
+    * Download [posenet pose data]();
+    * Save the archive into "archives_path"/posenet  
+    * `python extract_posenet_pose.py`
+    * The archive is extracted into the "dataset_path"/posenet folder.
 
 6. Generate meta data containing the 3 default splits list.
     * `python create_splits.py`
