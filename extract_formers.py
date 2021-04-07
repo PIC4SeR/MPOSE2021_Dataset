@@ -23,16 +23,16 @@ verbose = True
 def unzip(filename, save_to):
     with ZipFile(filename, 'r') as zipObj:
         for member in zipObj.namelist():
-            filename = os.path.basename(member)
+            file = os.path.basename(member)
             # skip directories
-            if not filename:
+            if not file:
                 continue
             source = zipObj.open(member)
-            target = open(os.path.join(save_to, filename), "wb")
+            target = open(os.path.join(save_to, file), "wb")
             with source, target:
                 shutil.copyfileobj(source, target)
             if verbose:
-                print('\t', 'Unzipped file {} to {}'.format(filename, save_to))
+                print('\t', 'Unzipped file {} to {}'.format(file, save_to))
 
 
 def untar(filename, save_to):
