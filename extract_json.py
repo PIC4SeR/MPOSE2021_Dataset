@@ -24,6 +24,7 @@ def unzip(filename, save_to):
     with ZipFile(filename, 'r') as zipObj:
         zipObj.extractall(save_to.replace('json/', ''))
 
+
 if __name__ == '__main__':
     print('Extracting json archive...')
     unzip(filename=os.path.join(archives_paths['json'], os.listdir(archives_paths['json'])[0]),
