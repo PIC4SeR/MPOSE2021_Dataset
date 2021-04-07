@@ -44,7 +44,8 @@ archives_paths = dict(kth=archives_path + 'kth/',
                       isldas=archives_path + 'isldas/',
                       utkinect=archives_path + 'utkinect/',
                       utdmhad=archives_path + 'utdmhad/',
-                      json=archives_path + 'json/')
+                      json=archives_path + 'json/',
+                      posenet=archives_path + 'posenet/')
 del archives_path
 
 former_paths = dict(kth=temp_path + 'kth/',
@@ -58,6 +59,7 @@ former_paths = dict(kth=temp_path + 'kth/',
 
 paths = dict(video=dataset_path + 'video/',
              pose=dataset_path + 'pose/',
+             posenet=dataset_path + 'posenet_pose/',
              json=dataset_path + 'json/',
              figures=dataset_path + 'figures/',
              rgb=dataset_path + 'rgb/')
