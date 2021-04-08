@@ -20,8 +20,8 @@ import pickle
 
 def change_meta(file, new_action):
     dict = pickle.load(open(file, 'rb'))
+    dict['name'] = os.path.basename(file)[:-2].replace(dict['action'], new_action)
     dict['action'] = new_action
-    dict['name'] = os.path.basename(file)[:-2]
     pickle.dump(dict, open(file, 'wb'))
 
 
