@@ -65,3 +65,10 @@ if __name__ == '__main__':
     plt.tight_layout()
     plt.savefig(os.path.join(paths['figures'], 'averaged_confidence.pdf'))
 
+    fig = plt.figure(figsize=(10, 5))
+    palette = sns.color_palette()
+    sns.boxplot(x="dataset", y="fn%", data=report_tot, palette=palette, hue='detector')
+    plt.title('Sequence false negative percentage')
+    plt.ylabel('False Negative (%)')
+    plt.tight_layout()
+    plt.savefig(os.path.join(paths['figures'], 'fn_percentage.pdf'))

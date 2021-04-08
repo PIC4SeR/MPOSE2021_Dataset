@@ -19,7 +19,7 @@ import numpy as np
 
 
 def read_poses(path=paths['pose']):
-    report = pd.DataFrame(columns=['sample', 'dataset', 'actor', 'action', 'length', 'aver_conf'])
+    report = pd.DataFrame(columns=['sample', 'dataset', 'actor', 'action', 'length', 'aver_conf', 'fn%'])
     for i in sorted(os.listdir(path)):
         with open(os.path.join(path, i), 'rb') as f:
             d = pickle.load(f)
@@ -28,7 +28,8 @@ def read_poses(path=paths['pose']):
                                 'actor': d['actor'],
                                 'action': d['action'],
                                 'length': d['length'],
-                                'aver_conf': np.nanmean(d['seq'][:, 2, :])}, ignore_index=True)
+                                'aver_conf': np.nanmean(d['seq'][:, 2, :]),
+                                'fn%': np.isnan(d['seq'][:, [0, 1], :]).sum()/d['seq'][:, [0, 1], :].size}, ignore_index=True)
 
     return report
 
