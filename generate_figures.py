@@ -11,64 +11,79 @@
 # GNU General Public License for more details:
 # http://www.gnu.org/licenses/gpl.txt
 
-import seaborn as sns
+import pandas as pd
 import matplotlib.pyplot as plt
-from create_splits import *
-import sys
+import seaborn as sns
+import scripts.lib_common as lc
+import numpy as np
+import os
+from init_vars import *
+
+report_openpose = lc.read_poses(paths['pose'])
+report_posenet = lc.read_poses(paths['posenet'])
+
+datasets = ['KTH',
+            'IXMAS',
+            'i3DPost',
+            'Weizmann',
+            'ISLD',
+            'ISLD-AS',
+            'UTKinect',
+            'UTD-MHAD']
+palette = sns.color_palette('tab10', n_colors=len(datasets))
+colors = {dataset.lower().replace('-', ''): palette[i] for i, dataset in enumerate(datasets)}
+
+# average confidence
+df1 = report_openpose[['dataset', 'aver_conf']]
+df1['detector'] = 'openpose'
+df2 = report_posenet[['dataset', 'aver_conf']]
+df2['detector'] = 'posenet'
+plt.figure()
+ax = sns.boxplot(x="dataset", y="aver_conf", hue='detector', data=df1.append(df2), whis=np.inf)
+ax.set_xticklabels(datasets)
+plt.xticks(rotation=45)
+plt.savefig(os.path.join(paths['figures'], 'report_aver_conf.pdf'), bbox_inches='tight')
+print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_aver_conf.pdf')))
+
+# number of frames
+report = report_openpose
+fig, axs = plt.subplots(4, 2, figsize=(7, 7))
+sns.set(style="darkgrid")
+for ax, dataset_label in zip(axs.reshape(-1)[:len(datasets)], datasets):
+    dataset = dataset_label.lower().replace('-', '')
+    sns.histplot(data=report[report['dataset'] == dataset],
+                 x="length", color=colors[dataset], label=dataset_label,
+                 ax=ax, discrete=True, legend=True)
+    ax.set_ylabel('samples')
+    ax.set_xlabel('length')
+    ax.set_xticks(range(20, 32, 2))
+    ax.legend(loc='upper left')
+    ax.set_xlim([19, 31])
+    ax.set_yscale('log')
+plt.tight_layout()
+plt.savefig(os.path.join(paths['figures'], 'report_frame_num.pdf'), bbox_inches='tight')
+print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_frame_num.pdf')))
+
+# summary
+f, ax = plt.subplots()
+sns.color_palette("Set1", n_colors=6, desat=.5)
+for dataset_label in datasets:
+    dataset = dataset_label.lower().replace('-', '')
+    sns.barplot(df_plot[dataset].index, df_plot[dataset], label=dataset_label, color=colors[dataset])
+ax.legend(ncol=1, frameon=True, loc='upper left',  bbox_to_anchor=(1, 1))
+plt.title('MPOSE2021 ({} actions, {} actors, {} samples)'.format(len(report.action.drop_duplicates()),
+                                                                 len(report.actor.drop_duplicates()),
+                                                                 len(report)))
+ax.set(ylabel="samples",
+       xlabel="")
+ax.set_yscale('log')
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.savefig(os.path.join(paths['figures'], 'mpose2021_summary.pdf'))
 
 
-if __name__ == '__main__':
 
-    print('Reading openpose sequences...')
-    report = read_poses()
-    report['detector'] = 'openpose'
 
-    actions = report.action.drop_duplicates().sort_values()
-    actors = report.actor.drop_duplicates()
 
-    palette = sns.color_palette("Spectral", len(actions))
 
-    fig = plt.figure(figsize=(15, 10))
-    df_plot = report.groupby(['dataset', 'action']).size().reset_index().pivot(columns='dataset', index='action', values=0)
-    df_plot.plot(kind='bar', stacked=True)
-    plt.title('MPOSE2021 ({} actions, {} actors, {} samples)'.format(len(actions),
-                                                                     len(actors),
-                                                                     len(report)))
-    plt.xticks(rotation=90)
-    plt.ylabel('samples')
-    plt.tight_layout()
-    plt.savefig(os.path.join(paths['figures'], 'mpose2021_summary.pdf'))
 
-    for split_id in range(1, 4):
-        fig, axs = plt.subplots(2,1, figsize=(10, 10))
-        axs[0] = sns.countplot(x="action", data=report.loc[~report.actor.isin(testing_actors[split_id])],
-                               order=actions, ax=axs[0], palette=palette)
-        axs[0].tick_params(labelrotation=45)
-        axs[0].set_title('Split{} - Training Data Summary'.format(split_id))
-        axs[1] = sns.countplot(x="action", data=report.loc[report.actor.isin(testing_actors[split_id])],
-                               order=actions, ax=axs[1], palette=palette)
-        axs[1].tick_params(labelrotation=45)
-        axs[1].set_title('Split{} - Testing Data Summary'.format(split_id))
-        plt.xticks(rotation=90)
-        plt.tight_layout()
-        plt.savefig(os.path.join(paths['figures'], 'split{}_summary.pdf'.format(split_id)))
-
-    print('Reading posenet sequences...')
-    report_posenet = read_poses(paths['posenet'])
-    report_posenet['detector'] = 'posenet'
-    report_tot = report.append(report_posenet)
-
-    fig = plt.figure(figsize=(10, 5))
-    palette = sns.color_palette()
-    sns.boxplot(x="dataset", y="aver_conf", data=report_tot, palette=palette, hue='detector')
-    plt.title('Sequence Averaged Detection Confidence (POSE)')
-    plt.tight_layout()
-    plt.savefig(os.path.join(paths['figures'], 'averaged_confidence.pdf'))
-
-    fig = plt.figure(figsize=(10, 5))
-    palette = sns.color_palette()
-    sns.boxplot(x="dataset", y="fn%", data=report_tot, palette=palette, hue='detector')
-    plt.title('Sequence false negative percentage')
-    plt.ylabel('False Negative (%)')
-    plt.tight_layout()
-    plt.savefig(os.path.join(paths['figures'], 'fn_percentage.pdf'))
