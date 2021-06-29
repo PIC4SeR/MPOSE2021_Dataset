@@ -65,18 +65,27 @@ plt.savefig(os.path.join(paths['figures'], 'report_frame_num.pdf'), bbox_inches=
 print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_frame_num.pdf')))
 
 # summary
+report = report_openpose
 f, ax = plt.subplots()
 sns.color_palette("Set1", n_colors=6, desat=.5)
+df = {}
+total = pd.DataFrame(columns=['samples'], index=sorted(actions.keys()))
+total['samples'] = 0
 for dataset_label in datasets:
     dataset = dataset_label.lower().replace('-', '')
-    sns.barplot(df_plot[dataset].index, df_plot[dataset], label=dataset_label, color=colors[dataset])
+    df[dataset] = pd.DataFrame(columns=['samples'], index=sorted(actions.keys()))
+    df_plot = pd.DataFrame(report.loc[report['dataset'] == dataset, 'action'].value_counts())
+    df_plot.rename(columns={'action': 'samples'}, inplace=True)
+    df[dataset].update(df_plot)
+    df[dataset].fillna(0, inplace=True)
+    ax.bar(df[dataset].index, df[dataset].samples, bottom=total.samples, width=1, label=dataset_label, color=colors[dataset])
+    total = total.add(df[dataset])
 ax.legend(ncol=1, frameon=True, loc='upper left',  bbox_to_anchor=(1, 1))
 plt.title('MPOSE2021 ({} actions, {} actors, {} samples)'.format(len(report.action.drop_duplicates()),
                                                                  len(report.actor.drop_duplicates()),
                                                                  len(report)))
 ax.set(ylabel="samples",
        xlabel="")
-ax.set_yscale('log')
 plt.xticks(rotation=90)
 plt.tight_layout()
 plt.savefig(os.path.join(paths['figures'], 'mpose2021_summary.pdf'))
