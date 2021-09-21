@@ -1,0 +1,64 @@
+#---- GENERAL SETTINGS
+
+VERBOSE: False
+LOGS_DIR: './logs/'
+CACHE_DIR: './tmp/'
+
+#---- DATASET URLS
+
+URLS:
+    posenet:
+        split_1: 'https://zenodo.org/record/5507363/files/1.zip'
+        split_2: 'https://zenodo.org/record/5507363/files/2.zip'
+        split_3: 'https://zenodo.org/record/5507363/files/3.zip'
+        txt_1: 'https://zenodo.org/record/5507363/files/1.txt'
+        txt_2: 'https://zenodo.org/record/5507363/files/2.txt'
+        txt_3: 'https://zenodo.org/record/5507363/files/3.txt'
+        
+    openpose:
+        split_1: 'https://zenodo.org/record/5507363/files/1.zip' # to update
+        split_2: 'https://zenodo.org/record/5507363/files/2.zip'
+        split_3: 'https://zenodo.org/record/5507363/files/3.zip'
+        txt_1: 'https://zenodo.org/record/5507363/files/1.txt'
+        txt_2: 'https://zenodo.org/record/5507363/files/2.txt'
+        txt_3: 'https://zenodo.org/record/5507363/files/3.txt'
+   
+#---- DATASET CONSTANTS
+DATASET:
+    T: 30
+    F: 3
+    
+    posenet:
+        K: 17
+        center_1: 5
+        center_2: 6
+        module_keypoint: 0
+        
+    openpose:
+        K: 17
+        center_1: 5
+        center_2: 6
+        module_keypoint: 0  
+        
+    labels: {
+        "standing":0,
+        "check-watch":1,
+        "cross-arms":2,
+        "scratch-head":3,
+        "sit-down":4,
+        "get-up":5,
+        "turn":6, 
+        "walk":7, 
+        "wave1":8,
+        "box":9,
+        "kick":10,
+        "point":11, 
+        "pick-up":12,
+        "bend":13,
+        "hands-clap":14,
+        "wave2":15,
+        "jog":16,
+        "jump":17,
+        "pjump":18,
+        "run":19
+        }
