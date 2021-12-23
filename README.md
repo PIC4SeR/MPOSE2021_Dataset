@@ -31,8 +31,10 @@ B. allows the user to generate POSE data only, ignoring RGB data.
 
 Below, the instructions to perform 1A., 2A. or B. are explained.
 
-The overview of the action composition of MPOSE2021 is provided [here](https://github.com/FedericoAngelini/MPOSE2021_Dataset/blob/master/docs/mpose2021_summary.pdf?raw=true).
-
+The overview of the action composition of MPOSE2021 is provided in the following image:
+<p align="center">
+  <img src="https://raw.githubusercontent.com/PIC4SeRCentre/MPOSE2021_Dataset/master/docs/mpose2021_summary.png" alt="MPOSE2021 Summary" width="600">
+</p>
 
 ## Citations
 MPOSE2021 is intended for scientific research purposes.
