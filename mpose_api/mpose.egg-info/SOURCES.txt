@@ -1,8 +1,8 @@
+README.md
 setup.py
 mpose/__init__.py
 mpose/config.yaml
 mpose/mpose.py
-mpose/transforms.py
 mpose/utils.py
 mpose.egg-info/PKG-INFO
 mpose.egg-info/SOURCES.txt

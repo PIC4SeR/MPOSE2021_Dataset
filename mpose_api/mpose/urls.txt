@@ -1,6 +1,2 @@
-https://zenodo.org/record/5507363/files/1.txt
-https://zenodo.org/record/5507363/files/1.zip
-https://zenodo.org/record/5507363/files/2.txt
-https://zenodo.org/record/5507363/files/2.zip
-https://zenodo.org/record/5507363/files/3.txt
-https://zenodo.org/record/5507363/files/3.zip
+https://zenodo.org/record/5803076/files/openpose.zip
+https://zenodo.org/record/5803076/files/posenet.zip

@@ -1,10 +1,10 @@
 import os
 import sys
-import urllib
-import zipfile
+import urllib.request
+from zipfile import ZipFile
 import yaml
 from tqdm import tqdm
-
+import matplotlib.pyplot as plt
 
 def update_progress(progress):
     barLength = 20  # Modify this to change the length of the progress bar
@@ -46,15 +46,9 @@ def download_file(url, output_path, overwrite=False):
 
 
 def unzip(zipfile_path, target_dir):
-    with zipfile.ZipFile(zipfile_path) as zip:
-        for zip_info in zip.infolist():
-            if zip_info.filename[-1] == '/':
-                continue
-            zip_info.filename = os.path.basename(zip_info.filename)
-            zip.extract(zip_info, target_dir)
-
-    #with zipfile.ZipFile(zipfile_path, 'r') as zip_ref:
-    #    zip_ref.extractall(target_dir)
+    with ZipFile(zipfile_path, 'r') as zipObj:
+        zipObj.extractall(target_dir)
+    
     
 def read_yaml(path):
     """
@@ -62,5 +56,11 @@ def read_yaml(path):
     """
     stream = open(path, 'r')
     dictionary = yaml.safe_load(stream)
-    
     return dictionary
+
+
+def plot_pose(pose):
+    plt.scatter(pose[:,0],-pose[:,1])
+    for i in range(pose.shape[0]):
+        plt.annotate(str(i), (pose[i,0], -pose[i,1]), textcoords='offset points', xytext=(5,-10))
+    plt.show()
