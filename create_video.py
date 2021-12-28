@@ -69,7 +69,7 @@ def process_former(dataset):
         unique_id = 0
         for i in isld_video_list:
             actor = i[:i.find('_')]
-            gt = pd.read_excel(misc_paths[dataset], sheet_name=actor, header=1, usecols='A:F')
+            gt = pd.read_excel(misc_paths[dataset], sheet_name=actor, header=1, usecols='A:F', engine='openpyxl')
             gt = gt.sort_values(by='start')
             vidcap = cv2.VideoCapture(former_paths[dataset] + i)
             success, image = vidcap.read()

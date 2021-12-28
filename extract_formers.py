@@ -51,7 +51,7 @@ def untar_isld(filename, save_to):
             for i in os.listdir(save_to+'RGB/'):
                 os.replace(save_to+'RGB/'+i, save_to+i)
             shutil.rmtree(save_to+'RGB/')
-            shutil.rmtree(save_to + 'ISLD/')
+            shutil.rmtree(save_to + 'ISLD/', ignore_errors=True)
 
 
 def unzip_all(filename, save_to):
@@ -82,7 +82,7 @@ def extract(dataset):
 if __name__ == '__main__':
     for dataset in [
         'weizmann',
-        'isldas',
+#        'isldas',
         'isld',
         'ixmas',
         'kth',

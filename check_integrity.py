@@ -62,3 +62,7 @@ if __name__ == '__main__':
         current = generate_checksums(paths['pose'])
         # current.to_csv(misc_paths['checksum_pose'])
         check_integrity(current, misc_paths['checksum_pose'])
+        
+    if target == 'create':
+        current = generate_checksums(paths['pose'])
+        current.to_csv(misc_paths['checksum_pose'])

@@ -16,7 +16,7 @@ import cv2
 
 # path where the dataset will be exported 
 # (specify an absolute path, leave 'MPOSE2021' to export in the current folder)
-dataset_path = '/home/federico/Documents/MPOSE2021/'
+dataset_path = '/media/MPOSE2021/'
 
 # paths where the formers dataset archives will be stored
 # which requires around 180 GB of free space
@@ -145,3 +145,4 @@ if __name__ == '__main__':
     for i in former_paths.keys():
         if not os.path.exists(former_paths[i]):
             os.makedirs(former_paths[i])
+
