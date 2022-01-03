@@ -5,3 +5,9 @@ temp
 figures
 beta_*
 private_*
+pose
+archives
+json
+rgb
+posenet_pose
+video

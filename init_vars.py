@@ -16,7 +16,7 @@ import cv2
 
 # path where the dataset will be exported 
 # (specify an absolute path, leave 'MPOSE2021' to export in the current folder)
-dataset_path = '/media/MPOSE2021/'
+dataset_path = '/media/MPOSE2021_Dataset/'
 
 # paths where the formers dataset archives will be stored
 # which requires around 180 GB of free space

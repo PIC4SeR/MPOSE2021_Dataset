@@ -82,7 +82,7 @@ def extract(dataset):
 if __name__ == '__main__':
     for dataset in [
         'weizmann',
-#        'isldas',
+        'isldas',
         'isld',
         'ixmas',
         'kth',
