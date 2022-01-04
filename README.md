@@ -105,11 +105,11 @@ The following procedure initialises the dataset variables and generates video da
     * `python check_integrity.py video`
     * You should get the following message: "Test against misc/cksum_video.csv passed!";
 
-## 2A. Generate RGB+POSE data
+## 2A. Generate RGB+ Openpose POSE data
 The following procedure generates MPOSE2021 sequences (RGB + POSE). Each sequence will have a variable number of frames f, such that "min_frame_length" <= f <= "max_frame_length" (default: 20 <= f <= 30).
 
 1. Download detected poses (by OpenPose) as JSON files:
-    * Download [json](https://drive.google.com/file/d/1Q9FRKhuv9UOKgxw8g3g7zZQ4_tvp6Iss/view?usp=sharing) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
+    * Download [json.zip](https://www.dropbox.com/s/pdel0462lfuqxfr/json.zip) obtained by using [OpenPose v1.6.0](https://github.com/CMU-Perceptual-Computing-Lab/openpose/releases) portable demo for Windows running on MPOSE2021 precursor VIDEO data;
     * Save the archive into "archives_path"/json.
    
 2. Extract OpenPose json data:
@@ -134,10 +134,10 @@ NOTE: This procedure applies the following transformations: 1) remove samples su
     * You should get the following message: "Test against misc/cksum_pose.csv passed!".
 
 6. (Optional) Extract PoseNet pose data (PoseNet data is obtained on RGB sequences generated above):
-    * Download [posenet pose data]();
-    * Save the archive into "archives_path"/posenet  
+    * Download [posenet.zip](https://www.dropbox.com/s/sk0z66hemzyq2ze/posenet.zip?dl=0);
+    * Save the archive into "archives_path"/posenet/  
     * `python extract_posenet_pose.py`
-    * The archive is extracted into the "dataset_path"/posenet folder.
+    * The archive is extracted into the "data_path"/posenet folder.
 
 6. Generate meta data containing the 3 default splits list.
     * `python create_splits.py`
@@ -146,10 +146,6 @@ NOTE: This procedure applies the following transformations: 1) remove samples su
 7. Generate dataset summary figures:
     * `python generate_figures.py`
     * Figures are stored into "dataset_path"/figures folder.
-
-## B. Generate POSE data only
-
-Coming soon.
 
 # References
 [1] Angelini, F., Fu, Z., Long, Y., Shao, L., & Naqvi, S. M. (2019). 2D Pose-Based Real-Time Human Action Recognition With Occlusion-Handling. IEEE Transactions on Multimedia, 22(6), 1433-1446.

@@ -16,9 +16,6 @@ import os
 import scripts.lib_seq as ls
 import numpy as np
 
-verbose = True
-
-
 # remove empty frames at the beginning and at the end
 def trim_seq(s, d, f):
     if d[0] == 0:
@@ -30,7 +27,6 @@ def trim_seq(s, d, f):
         return s[:, :, start:end], d[start:end], f[start:end]
     else:
         return s[:, :, start:], d[start:], f[start:]
-
 
 # split sequence in parts with min_frame_length >= frames >= max_frame_length
 def split_seq(s, d, f, meta, video, trim=True):
@@ -52,7 +48,6 @@ def split_seq(s, d, f, meta, video, trim=True):
                              meta=meta,
                              video=video)
 
-
 def read_video(path):
     vidcap = cv2.VideoCapture(path)
     success, image = vidcap.read()
@@ -62,11 +57,9 @@ def read_video(path):
         success, image = vidcap.read()
     vidcap.release()
     cv2.destroyAllWindows()
-
     return frames
 
-
-if __name__ == '__main__':
+def create_rgb_pose():
     jsons = os.listdir(paths['json'])
     for i in jsons:
         meta = ls.get_meta(i)
@@ -74,4 +67,5 @@ if __name__ == '__main__':
         seq, det, fra = ls.read_sequence(paths['json'] + i)
         split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
 
-
+if __name__ == '__main__':
+    create_rgb_pose()

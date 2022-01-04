@@ -21,7 +21,6 @@ import shutil
 
 def process_former(dataset):
     if dataset == 'weizmann':
-        print('WEIZMANN DATASET PRE-PROCESSING:')
         unique_id = 0
         for i in weizmann_video_list:
             action = i[i.find('_') + 1:i.find('.')]
@@ -34,7 +33,6 @@ def process_former(dataset):
                 unique_id += 1
 
     elif dataset == 'isldas':
-        print('{} pre-processing:'.format(dataset))
         for unique_id, i in enumerate(isldas_video_list):
             res = [j for j in range(len(i)) if i.startswith('_', j)]
             actor = i[res[0] + 1:res[1]]
@@ -65,7 +63,6 @@ def process_former(dataset):
             shutil.copy('{}{}'.format(former_paths[dataset], i), new_name)
 
     elif dataset == 'isld':
-        print('{} pre-processing:'.format(dataset))
         unique_id = 0
         for i in isld_video_list:
             actor = i[:i.find('_')]
@@ -141,7 +138,6 @@ def process_former(dataset):
             unique_id += 1
 
     elif dataset == 'kth':
-        print('{} pre-processing:'.format(dataset))
         unique_id = 0
         for i in kth_video_list:
             print('\t', 'Splitting: {}'.format(i))
@@ -169,7 +165,6 @@ def process_former(dataset):
             unique_id += 1
 
     elif dataset == 'i3dpost':
-        print('{} pre-processing:'.format(dataset))
         gt = pd.read_csv(misc_paths[dataset], header=0, dtype=str)
         unique_id = 0
         for actor in i3dpost_list['actor']:
@@ -203,7 +198,6 @@ def process_former(dataset):
                     out.release()
 
     elif dataset == 'utkinect':
-        print('{} pre-processing:'.format(dataset))
         temp = pd.read_csv(misc_paths[dataset], header=None)
         gt = pd.DataFrame(columns=['sample', 'actor', 'counter', 'action', 'start', 'end'])
         ids = [i for i, row in temp.iterrows() if row[0] in utkinect_list]
@@ -255,7 +249,6 @@ def process_former(dataset):
                 out.release()
 
     elif dataset == 'utdmhad':
-        print('{} pre-processing:'.format(dataset))
         gt = pd.read_csv(misc_paths[dataset], header=0, index_col=0)
         unique_id = 0
         for sample in utdmhad_list:
@@ -285,20 +278,12 @@ def process_former(dataset):
             print('\tCopying: {}'.format(new_file))
             shutil.copy(file, new_file)
 
-
+def create_video():
+        for dataset in precursors:
+            print('{} pre-processing:'.format(dataset))
+            process_former(dataset)
+            
 if __name__ == '__main__':
-    for dataset in [
-        'weizmann',
-        'isldas',
-        'isld',
-        'ixmas',
-        'kth',
-        'i3dpost',
-        'utkinect',
-        'utdmhad',
-    ]:
-        process_former(dataset)
-
-
+    create_video()
 
 

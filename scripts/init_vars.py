@@ -14,19 +14,24 @@
 import os
 import cv2
 
-# path where the dataset will be exported 
+# main path of the dataset repository
 # (specify an absolute path, leave 'MPOSE2021' to export in the current folder)
 dataset_path = '/media/MPOSE2021_Dataset/'
+
+# path where the data will be extracted 
+data_path = dataset_path + 'data/'
 
 # paths where the formers dataset archives will be stored
 # which requires around 180 GB of free space
 # (leave as it is if you want to store archives into the "'dataset_path'/archives/" folder)
-archives_path = dataset_path + 'archives/'
+archives_path = data_path + 'archives/'
 
 # temporary folder, which requires 200 GB of free space
 # it will contain unzipped archives
 # (leave as it is if you want to store temporary files into the "'dataset_path'/temp/" folder)
-temp_path = dataset_path + 'temp/'
+temp_path = data_path + 'temp/'
+
+logs_path = dataset_path + 'logs/'
 
 '''
 ########################################################################
@@ -35,6 +40,15 @@ temp_path = dataset_path + 'temp/'
 '''
 max_frame_length = 30
 min_frame_length = 20
+
+precursors = ['weizmann',
+              'isldas',
+              'isld',
+              'ixmas',
+              'kth',
+              'i3dpost',
+              'utkinect',
+              'utdmhad']
 
 archives_paths = dict(kth=archives_path + 'kth/',
                       ixmas=archives_path + 'ixmas/',
@@ -46,7 +60,6 @@ archives_paths = dict(kth=archives_path + 'kth/',
                       utdmhad=archives_path + 'utdmhad/',
                       json=archives_path + 'json/',
                       posenet=archives_path + 'posenet/')
-del archives_path
 
 former_paths = dict(kth=temp_path + 'kth/',
                     ixmas=temp_path + 'ixmas/',
@@ -57,12 +70,12 @@ former_paths = dict(kth=temp_path + 'kth/',
                     utkinect=temp_path + 'utkinect/',
                     utdmhad=temp_path + 'utdmhad/')
 
-paths = dict(video=dataset_path + 'video/',
-             pose=dataset_path + 'pose/',
-             posenet=dataset_path + 'posenet_pose/',
-             json=dataset_path + 'json/',
-             figures=dataset_path + 'figures/',
-             rgb=dataset_path + 'rgb/')
+paths = dict(video=data_path + 'video/',
+             pose=data_path + 'openpose/',
+             posenet=data_path + 'posenet/',
+             json=data_path + 'json/',
+             figures=dataset_path + 'docs/',
+             rgb=data_path + 'rgb/')
 
 actions = {'standing': 0,
            'check-watch': 1,
@@ -113,16 +126,16 @@ frame_size = dict(kth=(160, 120),
                   utdmhad=(640, 480))
 resize_interpolation = cv2.INTER_CUBIC
 
-misc_paths = dict(kth='misc/kth_splitter.csv',
-                  ixmas='misc/ixmas_exclude.csv',
-                  i3dpost='misc/i3dpost_archives.csv',
-                  isld='misc/isld_truth.xlsx',
-                  utkinect='misc/utkinect_splitter.txt',
-                  utdmhad='misc/utdmhad_truth.csv',
-                  checksum_video='misc/cksum_video.csv',
-                  checksum_rgb='misc/cksum_rgb.csv',
-                  checksum_pose='misc/cksum_pose.csv',
-                  outliers='misc/refine_dataset')
+misc_paths = dict(kth=dataset_path+'scripts/misc/kth_splitter.csv',
+                  ixmas=dataset_path+'scripts/misc/ixmas_exclude.csv',
+                  i3dpost=dataset_path+'scripts/misc/i3dpost_archives.csv',
+                  isld=dataset_path+'scripts/misc/isld_truth.xlsx',
+                  utkinect=dataset_path+'scripts/misc/utkinect_splitter.txt',
+                  utdmhad=dataset_path+'scripts/misc/utdmhad_truth.csv',
+                  checksum_video=dataset_path+'scripts/misc/cksum_video.csv',
+                  checksum_rgb=dataset_path+'scripts/misc/cksum_rgb.csv',
+                  checksum_pose=dataset_path+'scripts/misc/cksum_pose.csv',
+                  outliers=dataset_path+'scripts/misc/refine_dataset')
 
 video_extention = '.avi'
 codec = cv2.VideoWriter_fourcc(*'MPEG')
@@ -132,17 +145,29 @@ openpose_parts = dict(head=[0, 15, 16, 17, 18],
                       right_foot=[11, 22, 23, 24],
                       left_foot=[14, 19, 20, 21])
 
-
-if __name__ == '__main__':
+def init_paths():
     if not os.path.exists(temp_path):
+        os.mkdir(temp_path)    
+        
+    if not os.path.exists(data_path):
+        os.mkdir(temp_path)    
+        
+    if not os.path.exists(logs_path):
         os.mkdir(temp_path)
+        
     for i in archives_paths.keys():
         if not os.path.exists(archives_paths[i]):
             os.makedirs(archives_paths[i])
+            
     for i in paths.keys():
         if not os.path.exists(paths[i]):
             os.makedirs(paths[i])
+            
     for i in former_paths.keys():
         if not os.path.exists(former_paths[i]):
             os.makedirs(former_paths[i])
+            
+if __name__ == '__main__':
+    init_paths()
+            
 

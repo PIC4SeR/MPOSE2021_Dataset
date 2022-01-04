@@ -1,6 +1,6 @@
 from init_vars import *
 import pandas as pd
-from scripts.lib_common import read_poses
+from lib.lib_common import read_poses
 
 testing_actors = {1: ['person12',
                       'person23',
@@ -67,13 +67,15 @@ testing_actors = {1: ['person12',
                       'ss5']}
 
 
-if __name__ == '__main__':
+def create_splits():
     report = read_poses()
-
     for i in range(1, 4):
         split = pd.DataFrame({'sample': report.loc[report.actor.isin(testing_actors[i]), 'sample'],
                               'set': 'test'})
         split = pd.concat([split,
                            pd.DataFrame({'sample': report.loc[~report.actor.isin(testing_actors[i]), 'sample'],
                                          'set': 'train'})])
-        split.to_csv(dataset_path + 'train_test_split{}.txt'.format(i), sep='\t', index=None, header=None)
+        split.to_csv(logs_path + 'train_test_split{}.txt'.format(i), sep='\t', index=None, header=None)
+
+if __name__ == '__main__':
+    create_splits()

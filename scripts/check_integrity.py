@@ -18,12 +18,6 @@ import pandas as pd
 import sys
 
 
-try:
-    target = sys.argv[1]
-except:
-    target = 'video'
-
-
 def generate_checksums(path):
     report = pd.DataFrame(columns=['sample', 'cksum'])
     for f in os.listdir(path):
@@ -34,35 +28,23 @@ def generate_checksums(path):
 
     return report
 
-
-def check_integrity(current, path):
+def check_checksums(current, path):
     standard = pd.read_csv(path, index_col='sample').sort_values('sample')
     current = current.sort_values('sample')
-    try:
-        if current.equals(standard):
-            print('Test against {} passed!'.format(path))
-        else:
-            print('Error (code 1)')
-    except:
-        print('Error (code 2)')
+    if current.equals(standard):
+        print('Test against {} passed!'.format(path))
+    else:
+        print('Error! {} checksums do not match'.format(path))
 
-
-if __name__ == '__main__':
-    if 'video' in target:
-        current = generate_checksums(paths['video'])
-        # current.to_csv(misc_paths['checksum_video'])
-        check_integrity(current, misc_paths['checksum_video'])
-
-    if 'rgb' in target:
-        current = generate_checksums(paths['rgb'])
-        # current.to_csv(misc_paths['checksum_rgb'])
-        check_integrity(current, misc_paths['checksum_rgb'])
-
-    if 'pose' in target:
-        current = generate_checksums(paths['pose'])
-        # current.to_csv(misc_paths['checksum_pose'])
-        check_integrity(current, misc_paths['checksum_pose'])
+def check_integrity(data):
+    current = generate_checksums(paths[data])
+    current.to_csv(logs_path + data + '.csv')
+    check_checksums(current, misc_paths['checksum_' + data])
         
-    if target == 'create':
-        current = generate_checksums(paths['pose'])
-        current.to_csv(misc_paths['checksum_pose'])
+if __name__ == '__main__':
+    try:
+        target = sys.argv[1]
+    except:
+        target = 'video'
+
+    check_integrity(target)

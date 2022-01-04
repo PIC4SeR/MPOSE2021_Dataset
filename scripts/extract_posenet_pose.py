@@ -17,9 +17,6 @@ from init_vars import archives_paths, paths
 import os
 import tarfile
 
-verbose = True
-
-
 def unzip(filename, save_to):
     with ZipFile(filename, 'r') as zipObj:
         for member in zipObj.namelist():
@@ -31,9 +28,6 @@ def unzip(filename, save_to):
             target = open(os.path.join(save_to, file), "wb")
             with source, target:
                 shutil.copyfileobj(source, target)
-            if verbose:
-                print('\t', 'Unzipped file {} to {}'.format(file, save_to))
-
 
 if __name__ == '__main__':
     print('Extracting posenet pose archive...')

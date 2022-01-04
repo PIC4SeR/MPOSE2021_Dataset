@@ -14,15 +14,15 @@
 import os
 from init_vars import *
 import pandas as pd
-from scripts.lib_seq import get_meta
-import pickle
+from lib.lib_seq import get_meta
+import pickle as pkl
 
 
 def change_meta(file, new_action):
-    dict = pickle.load(open(file, 'rb'))
+    dict = pkl.load(open(file, 'rb'))
     dict['name'] = os.path.basename(file)[:-2].replace(dict['action'], new_action)
     dict['action'] = new_action
-    pickle.dump(dict, open(file, 'wb'))
+    pkl.dump(dict, open(file, 'wb'))
 
 def refine_data():
     # redefine outliers (reassign/remove)
@@ -58,8 +58,11 @@ def refine_data():
                         os.remove(os.path.join(paths['pose'], sample + '.p'))
                         print('TRASHED: {}'.format(sample))
 
-                        
-print('Refining Data...')
-refine_data()
-print('Checking if Everything is OK...')
-refine_data()
+def refine_dataset():
+    print('Refining Data...')
+    refine_data()
+    print('Checking Everything...')
+    refine_data()
+
+if __name__ == '__main__':
+    refine_dataset()

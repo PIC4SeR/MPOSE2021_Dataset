@@ -1,14 +1,14 @@
 import os
 import shutil
-from init_vars import *
-import pickle
+from ..init_vars import *
+import pickle as pkl
 
 def change_meta(file, meta, new_meta):
-    dict = pickle.load(open(file, 'rb'))
+    dict = pkl.load(open(file, 'rb'))
     dict[meta] = new_meta
     if meta == 'action':
         dict['name'] = os.path.basename(file)[:-2]
-    pickle.dump(dict, open(file, 'wb'))
+    pkl.dump(dict, open(file, 'wb'))
 
 
 def rename_class(dataset, old_class, new_class):

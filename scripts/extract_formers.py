@@ -17,9 +17,6 @@ from init_vars import former_paths, archives_paths
 import os
 import tarfile
 
-verbose = True
-
-
 def unzip(filename, save_to):
     with ZipFile(filename, 'r') as zipObj:
         for member in zipObj.namelist():
@@ -31,14 +28,10 @@ def unzip(filename, save_to):
             target = open(os.path.join(save_to, file), "wb")
             with source, target:
                 shutil.copyfileobj(source, target)
-            if verbose:
-                print('\t', 'Unzipped file {} to {}'.format(file, save_to))
-
 
 def untar(filename, save_to):
     tf = tarfile.open(filename)
     tf.extractall(save_to)
-
 
 def untar_isld(filename, save_to):
     target = 'ISLD/ISLD_RGB_original_videos.tar.xz'
@@ -53,13 +46,11 @@ def untar_isld(filename, save_to):
             shutil.rmtree(save_to+'RGB/')
             shutil.rmtree(save_to + 'ISLD/', ignore_errors=True)
 
-
 def unzip_all(filename, save_to):
     with ZipFile(filename, 'r') as zipObj:
         zipObj.extractall(save_to)
 
-
-def extract(dataset):
+def extract(dataset, verbose=True):
     print('Extracting from {} archive...'.format(dataset))
     files = [f for f in os.listdir(archives_paths[dataset]) if os.path.isfile(os.path.join(archives_paths[dataset], f))]
     for file in files:
@@ -78,16 +69,10 @@ def extract(dataset):
             untar_isld(filename=archives_paths[dataset]+file,
                        save_to=former_paths[dataset])
 
-
+def extract_formers(verbose=True):
+    for dataset in precursors:
+        extract(dataset, verbose=verbose)
+            
+            
 if __name__ == '__main__':
-    for dataset in [
-        'weizmann',
-        'isldas',
-        'isld',
-        'ixmas',
-        'kth',
-        'i3dpost',
-        'utkinect',
-        'utdmhad',
-    ]:
-        extract(dataset)
+    extract_formers()
