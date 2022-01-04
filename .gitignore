@@ -1,4 +1,4 @@
-data/*
-logs/*
-__pycache__/*
-*.pyc
+data
+logs
+**/__pycache__
+**.pyc
