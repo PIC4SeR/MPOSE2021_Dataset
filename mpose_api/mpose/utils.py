@@ -33,16 +33,16 @@ class DownloadProgressBar(tqdm):
         self.update(b * bsize - self.n)
 
 
-def download_file(url, output_path, overwrite=False):
+def download_file(url, output_path, overwrite=False, verbose=False):
     if url is None:
-        raise ValueError("download_file: provided url is None!")
+        raise ValueError("Download_file: provided url is None!")
 
     if not os.path.exists(output_path) or overwrite:
         with DownloadProgressBar(unit='B', unit_scale=True,
                                  miniters=1, desc=url.split('/')[-1]) as t:
             urllib.request.urlretrieve(url, filename=output_path, reporthook=t.update_to)
-    else:
-        print(f"file exists in {output_path}. specify overwrite=True if intended")
+    elif verbose:
+        print(f"File exists in {output_path}. specify overwrite=True if intended")
 
 
 def unzip(zipfile_path, target_dir):

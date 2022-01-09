@@ -17,7 +17,8 @@ class MPOSE():
                  config_file=None,
                  velocities=False,
                  remove_zip=False,
-                 overwrite=False
+                 overwrite=False,
+                 verbose=True
                  ):
         
         """
@@ -40,7 +41,8 @@ class MPOSE():
         self.velocities = velocities
         self.remove_zip = remove_zip
         self.overwrite = overwrite
-                
+        self.verbose = verbose
+        
         self.get_config()
         
         self.T = self.config['DATASET']['T']
@@ -72,7 +74,8 @@ class MPOSE():
             
     # Configuration         
     def get_config(self):
-        print(f"Initializing MPOSE2021 with {self.pose_extractor} Pose Extractor")
+        if self.verbose:
+            print(f"Initializing MPOSE2021 with {self.pose_extractor} Pose Extractor")
         if self.config_file is None:
             with pkg_resources.path(mpose, 'config.yaml') as config:
                 self.config_file = config
@@ -81,17 +84,23 @@ class MPOSE():
 
     # Get Data
     def download_data(self):
-        print(f"Downloading Data...")
+        if self.verbose:
+            print(f"Downloading Data...")
         if not os.path.exists(self.config['CACHE_DIR']):
             os.makedirs(self.config['CACHE_DIR'])
         download_file(self.config['URLS'][self.pose_extractor], self.config['CACHE_DIR']+self.pose_extractor+'.zip',
-                      overwrite=self.overwrite)
-        
-        print(f"Extracting Archive to {self.config['CACHE_DIR']}...")
+                      overwrite=self.overwrite, verbose=self.verbose)
+        if self.verbose:
+            print(f"Extracting Data...")
         if not os.path.exists(self.config['CACHE_DIR']+self.pose_extractor+'/'+self.split+'/'):
+            if self.verbose:
+                print(f"Extracting Archive to {self.config['CACHE_DIR']}...")
             unzip(self.config['CACHE_DIR']+self.pose_extractor+'.zip', self.config['CACHE_DIR'])
+        elif self.verbose:
+            print(f"File exists in {self.config['CACHE_DIR']+self.pose_extractor+'/'}. specify overwrite=True if intended")
         if self.remove_zip:
-            print(f"Removing Archive...")
+            if self.verbose:
+                print(f"Removing Archive...")
             os.remove(self.config['CACHE_DIR']+self.pose_extractor+'.zip')
         
     def load_data(self):
@@ -254,6 +263,10 @@ class MPOSE():
         self.X_train = self.X_train[...,:-1]
         self.X_test = self.X_test[...,:-1]
             
+    def flatten_features(self):
+        self.X_train = self.X_train.reshape(self.X_train.shape[0], self.T, -1)
+        self.X_test = self.X_test.reshape(self.X_test.shape[0], self.T, -1)
+    
     def reset_data(self):
         if self.remove_zip is True:
             print('Error! The zip file was removed from disk!')
