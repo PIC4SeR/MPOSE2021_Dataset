@@ -14,12 +14,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import lib.lib_common as lc
+import scripts.lib.lib_common as lc
 import numpy as np
 import os
-from init_vars import *
+from scripts.init_vars import *
 
-def generate_figures():
+def generate_figures(force=False, verbose=True): 
+    if os.path.isfile(os.path.join(paths['figures'], 'report_aver_conf.pdf')) and not force:
+        if verbose:
+            print(f'Report figures already generated, skipping...')
+        return
+    
     report_openpose = lc.read_poses(paths['pose'])
     report_posenet = lc.read_poses(paths['posenet'])
 
@@ -36,15 +41,16 @@ def generate_figures():
 
     # average confidence
     df1 = report_openpose[['dataset', 'aver_conf']]
-    df1['detector'] = 'openpose'
+    df1.insert(2, 'detector', 'openpose')
     df2 = report_posenet[['dataset', 'aver_conf']]
-    df2['detector'] = 'posenet'
+    df2.insert(2, 'detector', 'posenet')
     plt.figure()
     ax = sns.boxplot(x="dataset", y="aver_conf", hue='detector', data=df1.append(df2), whis=np.inf)
     ax.set_xticklabels(datasets)
     plt.xticks(rotation=45)
     plt.savefig(os.path.join(paths['figures'], 'report_aver_conf.pdf'), bbox_inches='tight')
-    print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_aver_conf.pdf')))
+    if verbose:
+        print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_aver_conf.pdf')))
 
     # number of frames
     report = report_openpose
@@ -63,7 +69,8 @@ def generate_figures():
         ax.set_yscale('log')
     plt.tight_layout()
     plt.savefig(os.path.join(paths['figures'], 'report_frame_num.pdf'), bbox_inches='tight')
-    print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_frame_num.pdf')))
+    if verbose:
+        print('Saved figure: {}'.format(os.path.join(paths['figures'], 'report_frame_num.pdf')))
 
     # summary
     report = report_openpose
@@ -79,7 +86,8 @@ def generate_figures():
         df_plot.rename(columns={'action': 'samples'}, inplace=True)
         df[dataset].update(df_plot)
         df[dataset].fillna(0, inplace=True)
-        ax.bar(df[dataset].index, df[dataset].samples, bottom=total.samples, width=1, label=dataset_label, color=colors[dataset])
+        ax.bar(df[dataset].index, df[dataset].samples, bottom=total.samples, 
+               width=1, label=dataset_label, color=colors[dataset])
         total = total.add(df[dataset])
     ax.legend(ncol=1, frameon=True, loc='upper left',  bbox_to_anchor=(1, 1))
     plt.title('MPOSE2021 ({} actions, {} actors, {} samples)'.format(len(report.action.drop_duplicates()),
@@ -90,6 +98,5 @@ def generate_figures():
     plt.xticks(rotation=90)
     plt.tight_layout()
     plt.savefig(os.path.join(paths['figures'], 'mpose2021_summary.pdf'))
-
-if __name__ == '__main__':
-    generate_figures()
+    if verbose:
+        print('Saved figure: {}'.format(os.path.join(paths['figures'], 'mpose2021_summary.pdf')))

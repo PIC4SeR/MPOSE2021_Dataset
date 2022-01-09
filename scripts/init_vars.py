@@ -145,7 +145,7 @@ openpose_parts = dict(head=[0, 15, 16, 17, 18],
                       right_foot=[11, 22, 23, 24],
                       left_foot=[14, 19, 20, 21])
 
-def init_paths():
+def init_vars(verbose=True):
     if not os.path.exists(temp_path):
         os.mkdir(temp_path)    
         
@@ -167,7 +167,8 @@ def init_paths():
         if not os.path.exists(former_paths[i]):
             os.makedirs(former_paths[i])
             
-if __name__ == '__main__':
-    init_paths()
+    if verbose:
+        print('All variables have been initialized!')
             
-
+if __name__ == '__main__':
+    init_vars()

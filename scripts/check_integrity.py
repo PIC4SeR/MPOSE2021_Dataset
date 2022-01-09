@@ -12,7 +12,7 @@
 # http://www.gnu.org/licenses/gpl.txt
 
 import hashlib
-from init_vars import *
+from scripts.init_vars import *
 import os
 import pandas as pd
 import sys
@@ -30,21 +30,13 @@ def generate_checksums(path):
 
 def check_checksums(current, path):
     standard = pd.read_csv(path, index_col='sample').sort_values('sample')
-    current = current.sort_values('sample')
     if current.equals(standard):
         print('Test against {} passed!'.format(path))
     else:
-        print('Error! {} checksums do not match'.format(path))
+        print('Error! {} checksum does not match'.format(path))
 
-def check_integrity(data):
-    current = generate_checksums(paths[data])
+def check_integrity(data='video'):
+    print('Checking {} integrity...'.format(data))
+    current = generate_checksums(paths[data]).sort_values('sample')
     current.to_csv(logs_path + data + '.csv')
     check_checksums(current, misc_paths['checksum_' + data])
-        
-if __name__ == '__main__':
-    try:
-        target = sys.argv[1]
-    except:
-        target = 'video'
-
-    check_integrity(target)

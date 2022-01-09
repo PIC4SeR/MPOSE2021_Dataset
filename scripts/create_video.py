@@ -11,15 +11,15 @@
 # GNU General Public License for more details:
 # http://www.gnu.org/licenses/gpl.txt
 
-from init_vars import *
-from misc.video_lists import *
+from scripts.init_vars import *
+from scripts.misc.video_lists import *
 import os
 import cv2
 import pandas as pd
 import shutil
 
 
-def process_former(dataset):
+def process_former(dataset, force=False, verbose=True):
     if dataset == 'weizmann':
         unique_id = 0
         for i in weizmann_video_list:
@@ -28,7 +28,13 @@ def process_former(dataset):
             if action in ['bend', 'jump', 'pjump', 'run', 'walk', 'wave1', 'wave2']:
                 new_name = '{}{}_{}_{}_{}{}'.format(paths['video'], dataset, actor, action, unique_id,
                                                     video_extention)
-                print('\tCopying: {}'.format(new_name))
+                if os.path.isfile(new_name) and not force:
+                    if verbose:
+                        print(f'\t{new_name} already encoded, skipping...')
+                    unique_id += 1
+                    continue
+                if verbose:
+                    print('\tEncoding: {}'.format(new_name))
                 shutil.copy(former_paths[dataset] + i, new_name)
                 unique_id += 1
 
@@ -59,7 +65,12 @@ def process_former(dataset):
                 continue
             new_name = '{}{}_{}_{}_{}{}'.format(paths['video'], dataset, actor, action, unique_id,
                                                 video_extention)
-            print('\tEncoding: {}'.format(new_name))
+            if os.path.isfile(new_name) and not force:
+                if verbose:
+                    print(f'\t{new_name} already encoded, skipping...')
+                continue
+            if verbose:
+                print('\tEncoding: {}'.format(new_name))
             shutil.copy('{}{}'.format(former_paths[dataset], i), new_name)
 
     elif dataset == 'isld':
@@ -72,6 +83,7 @@ def process_former(dataset):
             success, image = vidcap.read()
             frame_num = 1
             count = 0
+            skip = False
             index = gt.index[count]
             start = gt.loc[index, 'start']
             while success:
@@ -98,18 +110,28 @@ def process_former(dataset):
                         action = gt.loc[index, 'Action']
                     new_name = '{}{}_{}_{}_{}{}'.format(paths['video'], dataset, actor.lower(), action, unique_id,
                                                         video_extention)
-                    print('\tEncoding: {}'.format(new_name))
+                    if os.path.isfile(new_name) and not force:
+                        if verbose:
+                            print(f'\t{new_name} already encoded, skipping...')
+                        skip = True
+                        success, image = vidcap.read()
+                        frame_num += 1
+                        continue
+                    if verbose:
+                        print('\tEncoding: {}'.format(new_name))
                     out = cv2.VideoWriter(new_name,
                                           codec,
                                           fps[dataset],
                                           frame_size[dataset])
-                if frame_num >= start:
+                if frame_num >= start and not skip:
                     out.write(cv2.resize(image, frame_size[dataset], fx=0, fy=0, interpolation=resize_interpolation))
 
                 if frame_num == gt.loc[index, 'end']:
-                    out.release()
+                    if not skip:
+                        out.release()
                     unique_id += 1
                     count += 1
+                    skip = False
                     try:
                         index = gt.index[count]
                         start = gt.loc[index, 'start']
@@ -133,14 +155,17 @@ def process_former(dataset):
                 action = 'box'
             new_name = '{}{}_{}_{}_{}{}'.format(paths['video'], dataset, actor, action, unique_id,
                                                 video_extention)
-            print('\tCopying: {}'.format(new_name))
+            if os.path.isfile(new_name) and not force:
+                if verbose:
+                    print(f'\t{new_name} already encoded, skipping...')
+                continue
+            if verbose:
+                print('\tEncoding: {}'.format(new_name))
             shutil.copy('{}{}'.format(former_paths[dataset], i), new_name)
-            unique_id += 1
 
     elif dataset == 'kth':
         unique_id = 0
         for i in kth_video_list:
-            print('\t', 'Splitting: {}'.format(i))
             res = [j for j in range(len(i)) if i.startswith('_', j)]
             actor = i[:res[0]]
             action = i[res[0] + 1:res[1]]
@@ -160,7 +185,13 @@ def process_former(dataset):
                 action = 'hands-clap'
             new_name = '{}{}_{}_{}_{}{}'.format(paths['video'], dataset, actor, action, unique_id,
                                                 video_extention)
-            print('\tCopying: {}'.format(new_name))
+            if os.path.isfile(new_name) and not force:
+                if verbose:
+                    print(f'\t{new_name} already encoded, skipping...')
+                unique_id += 1
+                continue
+            if verbose:
+                print('\tEncoding: {}'.format(new_name))
             shutil.copy('{}{}'.format(former_paths[dataset], i), new_name)
             unique_id += 1
 
@@ -180,7 +211,12 @@ def process_former(dataset):
                     folder = os.path.join(former_paths[dataset], actor, child_dir, s, pov)
                     new_name = '{}{}_{}_{}_{}{}'.format(paths['video'], dataset, actor.lower(), action, unique_id,
                                                         video_extention)
-                    print('\tEncoding: {}'.format(new_name))
+                    if os.path.isfile(new_name) and not force:
+                        if verbose:
+                            print(f'\t{new_name} already encoded, skipping...')
+                        continue
+                    if verbose:
+                        print('\tEncoding: {}'.format(new_name))
                     out = cv2.VideoWriter(new_name,
                                           codec,
                                           fps[dataset],
@@ -238,7 +274,12 @@ def process_former(dataset):
                 new_name = '{}{}_{}_{}_{}_{}-{}-{}{}'.format(paths['video'], dataset,
                                                              row['actor'], row['action'], row['counter'],
                                                              unique_id, row['start'], row['end'], video_extention)
-                print('\tEncoding: {}'.format(new_name))
+                if os.path.isfile(new_name) and not force:
+                    if verbose:
+                        print(f'\t{new_name} already encoded, skipping...')
+                    continue
+                if verbose:
+                    print('\tEncoding: {}'.format(new_name))
                 out = cv2.VideoWriter(new_name,
                                       codec,
                                       fps[dataset],
@@ -274,16 +315,17 @@ def process_former(dataset):
                 continue
             unique_id += 1
             file = os.path.join(former_paths[dataset], 'RGB', sample)
-            new_file = os.path.join(paths['video'], '{}_{}_{}_{}_{}.avi'.format(dataset, actor, action, counter, unique_id))
-            print('\tCopying: {}'.format(new_file))
-            shutil.copy(file, new_file)
+            new_name = os.path.join(paths['video'], '{}_{}_{}_{}_{}.avi'.format(dataset, actor, action, counter, unique_id))
+            if os.path.isfile(new_name) and not force:
+                if verbose:
+                    print(f'\t{new_name} already encoded, skipping...')
+                continue
+            if verbose:
+                print('\tEncoding: {}'.format(new_name))
+            shutil.copy(file, new_name)
 
-def create_video():
+def create_video(force=False, verbose=True):
         for dataset in precursors:
-            print('{} pre-processing:'.format(dataset))
-            process_former(dataset)
-            
-if __name__ == '__main__':
-    create_video()
-
-
+            if verbose:
+                print('Processing {} videos...'.format(dataset))                    
+            process_former(dataset, force=force, verbose=verbose)  

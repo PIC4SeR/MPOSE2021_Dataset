@@ -13,7 +13,7 @@
 
 import shutil
 from zipfile import ZipFile
-from init_vars import archives_paths, paths
+from scripts.init_vars import archives_paths, paths
 import os
 import tarfile
 
@@ -29,7 +29,15 @@ def unzip(filename, save_to):
             with source, target:
                 shutil.copyfileobj(source, target)
 
-if __name__ == '__main__':
-    print('Extracting posenet pose archive...')
-    unzip(filename=os.path.join(archives_paths['posenet'], os.listdir(archives_paths['posenet'])[0]),
-          save_to=paths['posenet'])
+def extract_posenet_pose(force=False, verbose=True):
+    if verbose:
+        print('Extracting PoseNet poses...')
+    if any(os.scandir(paths['posenet'])) and not force:
+        if verbose:
+            print('\t{} already extracted, skipping...'.format(os.listdir(archives_paths['posenet'])[0]))
+    else:
+        if verbose:
+            print('\tExtracting: {}'.format(os.listdir(archives_paths['posenet'])[0]))
+        unzip(filename=os.path.join(archives_paths['posenet'],
+              os.listdir(archives_paths['posenet'])[0]),
+              save_to=paths['posenet'])

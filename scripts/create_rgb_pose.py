@@ -11,9 +11,10 @@
 # GNU General Public License for more details:
 # http://www.gnu.org/licenses/gpl.txt
 
-from init_vars import *
+from scripts.init_vars import *
 import os
-import scripts.lib_seq as ls
+import glob
+import scripts.lib.lib_seq as ls
 import numpy as np
 
 # remove empty frames at the beginning and at the end
@@ -59,13 +60,21 @@ def read_video(path):
     cv2.destroyAllWindows()
     return frames
 
-def create_rgb_pose():
+def create_rgb_pose(force=False, verbose=True):
     jsons = os.listdir(paths['json'])
+    print(paths['rgb'])
+    if any(os.scandir(paths['rgb'])) and not force:
+        if verbose:
+            print('RGB and Poses already processed, skipping...')
+        return
     for i in jsons:
         meta = ls.get_meta(i)
+        if glob.glob(os.path.join(paths['rgb'], i.split('.')[-2]+'-*')) and not force:
+            if verbose:
+                print(f'{i} already processed, skipping...')
+            continue
+        elif verbose:
+            print('Processing {}...'.format(i))
         video = read_video(os.path.join(paths['video'], i))
         seq, det, fra = ls.read_sequence(paths['json'] + i)
         split_seq(s=seq, d=det, f=fra, meta=meta, video=video)
-
-if __name__ == '__main__':
-    create_rgb_pose()

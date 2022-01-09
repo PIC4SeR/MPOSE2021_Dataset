@@ -12,9 +12,9 @@
 # http://www.gnu.org/licenses/gpl.txt
 
 import os
-from init_vars import *
+from scripts.init_vars import *
 import pandas as pd
-from lib.lib_seq import get_meta
+from scripts.lib.lib_seq import get_meta
 import pickle as pkl
 
 
@@ -24,7 +24,7 @@ def change_meta(file, new_action):
     dict['action'] = new_action
     pkl.dump(dict, open(file, 'wb'))
 
-def refine_data():
+def refine_data(verbose=False):
     # redefine outliers (reassign/remove)
     for i in os.listdir(misc_paths['outliers']):
         outliers = pd.read_csv(os.path.join(misc_paths['outliers'], i), delimiter='\t', header=None)
@@ -40,7 +40,8 @@ def refine_data():
                     old = os.path.join(paths['rgb'], sample+'.avi')
                     new = os.path.join(paths['rgb'], new_sample+'.avi')
                     if (not os.path.exists(old)) and os.path.exists(new):
-                        print('\t (done previously) renamed: {} into {}'.format(sample, new_sample))
+                        if verbose:
+                            print('\t (done previously) renamed: {} into {}'.format(sample, new_sample))
                     elif os.path.exists(old) and (not os.path.exists(new)):
                         os.rename(old, new)
                         old = os.path.join(paths['pose'], sample+'.p')
@@ -52,17 +53,15 @@ def refine_data():
                 elif new_action == 'remove':
                     old = os.path.join(paths['rgb'], sample+'.avi')
                     if not os.path.exists(old):
-                        print('\t (done previously) TRASHED: {}'.format(sample))
+                        if verbose:
+                            print('\t (done previously) TRASHED: {}'.format(sample))
                     else:
                         os.remove(os.path.join(paths['rgb'], sample + '.avi'))
                         os.remove(os.path.join(paths['pose'], sample + '.p'))
                         print('TRASHED: {}'.format(sample))
 
-def refine_dataset():
+def refine_dataset(verbose=False):
     print('Refining Data...')
-    refine_data()
+    refine_data(verbose=verbose)
     print('Checking Everything...')
     refine_data()
-
-if __name__ == '__main__':
-    refine_dataset()

@@ -13,7 +13,7 @@
 
 import shutil
 from zipfile import ZipFile
-from init_vars import former_paths, archives_paths
+from scripts.init_vars import former_paths, archives_paths, precursors
 import os
 import tarfile
 
@@ -50,8 +50,13 @@ def unzip_all(filename, save_to):
     with ZipFile(filename, 'r') as zipObj:
         zipObj.extractall(save_to)
 
-def extract(dataset, verbose=True):
-    print('Extracting from {} archive...'.format(dataset))
+def extract(dataset, force=False, verbose=True):
+    if any(os.scandir(former_paths[dataset])) and not force:
+        if verbose:
+            print(f'\t{dataset} already extracted, skipping...')
+        return
+    if verbose:
+        print('Extracting {} videos...'.format(dataset))
     files = [f for f in os.listdir(archives_paths[dataset]) if os.path.isfile(os.path.join(archives_paths[dataset], f))]
     for file in files:
         if verbose:
@@ -69,10 +74,6 @@ def extract(dataset, verbose=True):
             untar_isld(filename=archives_paths[dataset]+file,
                        save_to=former_paths[dataset])
 
-def extract_formers(verbose=True):
+def extract_formers(force=False, verbose=True):
     for dataset in precursors:
-        extract(dataset, verbose=verbose)
-            
-            
-if __name__ == '__main__':
-    extract_formers()
+        extract(dataset, force=force, verbose=verbose)

@@ -13,7 +13,7 @@
 
 import json
 import numpy as np
-from init_vars import *
+from scripts.init_vars import *
 import os
 from matplotlib import collections as mc
 from matplotlib.animation import FuncAnimation
@@ -152,8 +152,6 @@ def save_sequence(seq, det, fra, name, meta, video):
     for i in fra:
         out.write(video[int(i)])
     out.release()
-    print('Saved: {}'.format(name))
-
 
 def get_meta(sample, is_video=True):
     if is_video:

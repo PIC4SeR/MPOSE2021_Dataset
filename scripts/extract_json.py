@@ -13,18 +13,22 @@
 
 import shutil
 from zipfile import ZipFile
-from init_vars import archives_paths, paths
+from scripts.init_vars import archives_paths, paths
 import os
 import tarfile
 
-def unzip(filename, save_to):
-    with ZipFile(filename, 'r') as zipObj:
-        zipObj.extractall(save_to.replace('json/', ''))
+def unzip(filename, save_to, force=False, verbose=True):
+    if verbose:
+        print('Extracting OpenPose poses...')
+    if any(os.scandir(paths['json'])) and not force:
+        if verbose:
+            print('\t{} already extracted, skipping...'.format(os.listdir(archives_paths['json'])[0]))
+    else:
+        if verbose:
+            print('\tExtracting: {}'.format(os.listdir(archives_paths['json'])[0]))
+        with ZipFile(filename, 'r') as zipObj:
+            zipObj.extractall(save_to.replace('json/', ''))
 
-def extract_json():
-    print('Extracting json archive...')
+def extract_json(force=False, verbose=True):
     unzip(filename=os.path.join(archives_paths['json'], os.listdir(archives_paths['json'])[0]),
-          save_to=paths['json'])
-
-if __name__ == '__main__':
-    extract_json()
+          save_to=paths['json'], force=force, verbose=verbose)

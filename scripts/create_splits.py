@@ -1,6 +1,6 @@
-from init_vars import *
+from scripts.init_vars import *
 import pandas as pd
-from lib.lib_common import read_poses
+from scripts.lib.lib_common import read_poses
 
 testing_actors = {1: ['person12',
                       'person23',
@@ -67,7 +67,12 @@ testing_actors = {1: ['person12',
                       'ss5']}
 
 
-def create_splits():
+def create_splits(force=False, verbose=True):
+    if os.path.isfile(logs_path + 'train_test_split1.txt') and not force:
+        if verbose:
+            print(f'Splits already generated, skipping...')
+        return
+    
     report = read_poses()
     for i in range(1, 4):
         split = pd.DataFrame({'sample': report.loc[report.actor.isin(testing_actors[i]), 'sample'],
@@ -76,6 +81,5 @@ def create_splits():
                            pd.DataFrame({'sample': report.loc[~report.actor.isin(testing_actors[i]), 'sample'],
                                          'set': 'train'})])
         split.to_csv(logs_path + 'train_test_split{}.txt'.format(i), sep='\t', index=None, header=None)
-
-if __name__ == '__main__':
-    create_splits()
+    if verbose:
+        print('Splits generated!')
