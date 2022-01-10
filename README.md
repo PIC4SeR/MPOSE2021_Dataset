@@ -121,7 +121,7 @@ For licence-related reasons, the user must manually download precursor dataset a
       * `--verbose` `-v`: print more information
 
 
-## Citations
+# Citations
 MPOSE2021 is intended for scientific research purposes.
 If you want to use MPOSE2021 for publications, please cite our work ([Action Transformer: A Self-Attention Model for Short-Time Pose-Based Human Action Recognition](https://arxiv.org/abs/2107.00606)) as well as [1-11].
 
