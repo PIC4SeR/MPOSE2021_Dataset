@@ -271,7 +271,6 @@ class MPOSE():
         if self.remove_zip is True:
             print('Error! The zip file was removed from disk!')
             return
-        
         self.load_data()
         
         
