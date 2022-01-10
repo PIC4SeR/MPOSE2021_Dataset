@@ -19,7 +19,7 @@ Frames where OpenPose/PoseNet cannot detect any subject are automatically discar
 Overall, MPOSE2021 contains 15429 samples, divided into 20 actions performed by 100 subjects. 
 The overview of the action composition of MPOSE2021 is provided in the following image:
 <p align="center">
-  <img src="https://raw.githubusercontent.com/PIC4SeRCentre/MPOSE2021_Dataset/master/docs/mpose2021_summary.png" alt="MPOSE2021 Summary" width="600">
+  <img src="https://raw.githubusercontent.com/PIC4SeRCentre/MPOSE2021_Dataset/master/docs/mpose2021_summary.jpg" alt="MPOSE2021 Summary" width="600">
 </p>
 
 ## A. Access POSE Data Only
