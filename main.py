@@ -17,8 +17,8 @@ def get_args():
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--mode', '-m', default='init', help='Operation to be performed (init, extract, generate, check)')
     parser.add_argument('--pose', '-p', default='all', help='Poses to extract (openpose, all)')
-    parser.add_argument('--force','-f', type=bool, default=False, help='Whether to force data extraction') 
-    parser.add_argument('--verbose','-v', type=bool, default=True, help='Whether to force data extraction') 
+    parser.add_argument('--force','-f', action='store_true', help='Whether to force data extraction') 
+    parser.add_argument('--verbose','-v', action='store_true', help='Whether to force data extraction') 
     
     return parser.parse_args()
 
