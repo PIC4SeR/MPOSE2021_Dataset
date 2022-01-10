@@ -31,7 +31,7 @@ pip install mpose
 
 And use the MPOSE class to download, extract, and process POSE data (Openpose/PoseNet).
 
-```
+```python
 # import package
 import mpose
 
