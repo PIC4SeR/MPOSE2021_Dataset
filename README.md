@@ -1,4 +1,8 @@
-# MPOSE2021 - A Dataset for Short-Time Human Action Recognition
+[![arXiv](http://img.shields.io/badge/arXiv-2001.09136-B31B1B.svg)](https://arxiv.org/abs/2107.00606)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+<h1 align="center">  MPOSE2021 <br> A Dataset for Short-Time Human Action Recognition
+</h1>
+
 
 This repository contains the MPOSE2021 Dataset for short-time Human Action Recognition (HAR). 
 
@@ -7,37 +11,18 @@ MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by
 on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7], KTH [8], UTKinetic-Action3D (RGB only) [9] and UTD-MHAD (RGB only) [10], alongside original video datasets, i.e. ISLD and ISLD-Additional-Sequences [1].
 Since these datasets had heterogenous action labels, each dataset labels were remapped to a common and homogeneous list of 20 actions.
 
-This repository allows users to generate RGB and POSE data for MPOSE2021 in a python-friendly format. 
+This repository allows users to directly access the POSE dataset (Section A.) or generate RGB and POSE data for MPOSE2021 in a python-friendly format (Section B.). 
 Generated RGB and POSE sequences have a number of frames between 20 and 30. 
 Sequences are obtained by cutting the so-called "precursor videos" (videos from the above-mentioned datasets), with non-overlapping sliding windows.
-Frames where OpenPose/PoseNet cannot detect any subject are automatically discarded. Resulting samples contain one subject at the time, performing a fraction of a single action. Overall, MPOSE2021 contains 15429 samples, divided into 20 actions performed by 100 subjects. 
+Frames where OpenPose/PoseNet cannot detect any subject are automatically discarded. Resulting samples contain one subject at the time, performing a fraction of a single action. 
 
+Overall, MPOSE2021 contains 15429 samples, divided into 20 actions performed by 100 subjects. 
 The overview of the action composition of MPOSE2021 is provided in the following image:
 <p align="center">
   <img src="https://raw.githubusercontent.com/PIC4SeRCentre/MPOSE2021_Dataset/master/docs/mpose2021_summary.png" alt="MPOSE2021 Summary" width="600">
 </p>
 
-## Citations
-MPOSE2021 is intended for scientific research purposes.
-If you want to use MPOSE2021 for publications, please cite our work ([Action Transformer: A Self-Attention Model for Short-Time Pose-Based Human Action Recognition](https://arxiv.org/abs/2107.00606)) as well as [1-11].
-
-```
-@article{mazzia2021action,
-  title={Action Transformer: A Self-Attention Model for Short-Time Pose-Based Human Action Recognition},
-  author={Mazzia, Vittorio and Angarano, Simone and Salvetti, Francesco and Angelini, Federico and Chiaberge, Marcello},
-  journal={Pattern Recognition},
-  pages={108487},
-  year={2021},
-  publisher={Elsevier}
-}
-```
-
-## Requirements
-The following requirements are needed to generate RGB data for MPOSE2021 (tested on Ubuntu):
-* around 340 GB free disk space (330 GB for archives and temporary files, 10 GB for VIDEO, RGB and POSE data)
-* Python 3.6+
-
-## A. Generate POSE Data only
+## A. Access POSE Data Only
 To get only MPOSE2021 POSE data, install our light and simple [pip package](https://pypi.org/project/mpose/)
 
 ```
@@ -63,9 +48,15 @@ dataset.get_info()
 X_train, y_train, X_test, y_test = dataset.get_dataset()
 ```
 
-Check out the package documentation and [this Colab Notebook Tutorial](https://colab.research.google.com/drive/1_v3DYwgZPMCiELtgiwMRYxQzcYGdSWFH?usp=sharing) for more hands-on examples. The source code can be found in the [mpose_api](https://github.com/PIC4SeRCentre/MPOSE2021/edit/master/mpose_api/) subfolder.
+Check out the package documentation and [this Colab Notebook Tutorial](https://colab.research.google.com/drive/1_v3DYwgZPMCiELtgiwMRYxQzcYGdSWFH?usp=sharing) for more hands-on examples <a href="https://colab.research.google.com/drive/1_v3DYwgZPMCiELtgiwMRYxQzcYGdSWFH?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>. The source code can be found in the [mpose_api](https://github.com/PIC4SeRCentre/MPOSE2021/edit/master/mpose_api/) subfolder.
 
 ## B. Generate RGB and POSE Data
+### Requirements
+&nbsp;&nbsp;&nbsp;  The following requirements are needed to generate RGB data for MPOSE2021 (tested on Ubuntu):
+  * around 340 GB free disk space (330 GB for archives and temporary files, 10 GB for VIDEO, RGB and POSE data)
+  * Python 3.6+
+
+
 You can get both RGB and the corresponding POSE data running a simple python script.
 For licence-related reasons, the user must manually download precursor dataset archives from the original sources, as explanined in the following steps.
 
@@ -128,6 +119,22 @@ For licence-related reasons, the user must manually download precursor dataset a
         * `all`: OpenPose + PoseNet
       * `--force` `-f`: force the execution of unnecessary operations
       * `--verbose` `-v`: print more information
+
+
+## Citations
+MPOSE2021 is intended for scientific research purposes.
+If you want to use MPOSE2021 for publications, please cite our work ([Action Transformer: A Self-Attention Model for Short-Time Pose-Based Human Action Recognition](https://arxiv.org/abs/2107.00606)) as well as [1-11].
+
+```
+@article{mazzia2021action,
+  title={Action Transformer: A Self-Attention Model for Short-Time Pose-Based Human Action Recognition},
+  author={Mazzia, Vittorio and Angarano, Simone and Salvetti, Francesco and Angelini, Federico and Chiaberge, Marcello},
+  journal={Pattern Recognition},
+  pages={108487},
+  year={2021},
+  publisher={Elsevier}
+}
+```
 
 # References
 [1] Angelini, F., Fu, Z., Long, Y., Shao, L., & Naqvi, S. M. (2019). 2D Pose-Based Real-Time Human Action Recognition With Occlusion-Handling. IEEE Transactions on Multimedia, 22(6), 1433-1446.
