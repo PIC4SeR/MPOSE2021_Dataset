@@ -50,7 +50,8 @@ class MPOSE():
         self.K = self.config['DATASET'][pose_extractor]['K']
         self.center_1 = self.config['DATASET'][pose_extractor]['center_1']
         self.center_2 = self.config['DATASET'][pose_extractor]['center_2']
-        self.module_keypoint = self.config['DATASET'][pose_extractor]['module_keypoint']
+        self.module_keypoint_1 = self.config['DATASET'][pose_extractor]['module_keypoint_1']
+        self.module_keypoint_2 = self.config['DATASET'][pose_extractor]['module_keypoint_2']
         self.h = self.config['DATASET'][self.pose_extractor]['head']
         self.rf = self.config['DATASET'][self.pose_extractor]['right_foot']
         self.lf = self.config['DATASET'][self.pose_extractor]['left_foot']
@@ -157,23 +158,30 @@ class MPOSE():
             print('Poses already scaled. Please call reduce_keypoints() only before scale_and_center()!')
             return
         seq_list = []
+        to_prune = []
+        
+        for group in [self.h, self.rf, self.lf]:
+            if len(group) > 1:
+                to_prune.append(group[1:])
+        to_prune = [item for sublist in to_prune for item in sublist]
+        
         for seq in self.X_train:
             seq[:,self.h[0],:] = np.true_divide(seq[:,self.h,:].sum(1), (seq[:,self.h,:] != 0).sum(1)+1e-9)
             seq[:,self.rf[0],:] = np.true_divide(seq[:,self.rf,:].sum(1), (seq[:,self.rf,:] != 0).sum(1)+1e-9)
             seq[:,self.lf[0],:] = np.true_divide(seq[:,self.lf,:].sum(1), (seq[:,self.lf,:] != 0).sum(1)+1e-9)
-
-            seq_list.append(seq[:, :self.config['DATASET'][self.pose_extractor]['k'], :])           
+            seq_list.append(seq)
         self.X_train = np.stack(seq_list)
-
+        self.X_train = np.delete(self.X_train, to_prune, 2)
+        
         seq_list = []
         for seq in self.X_test:
             seq[:,self.h[0],:] = np.true_divide(seq[:,self.h,:].sum(1), (seq[:,self.h,:] != 0).sum(1)+1e-9)
             seq[:,self.rf[0],:] = np.true_divide(seq[:,self.rf,:].sum(1), (seq[:,self.rf,:] != 0).sum(1)+1e-9)
             seq[:,self.lf[0],:] = np.true_divide(seq[:,self.lf,:].sum(1), (seq[:,self.lf,:] != 0).sum(1)+1e-9)
-
-            seq_list.append(seq[:, :self.config['DATASET'][self.pose_extractor]['k'], :])           
+            seq_list.append(seq)           
         self.X_test = np.stack(seq_list)
-            
+        self.X_test = np.delete(self.X_test, to_prune, 2)
+        
     def scale_and_center(self):
         if self.scaled:
             print('Poses already scaled!')
@@ -185,7 +193,8 @@ class MPOSE():
                 pose_list = []
                 for pose in seq:
                     zero_point = (pose[self.center_1, :2] + pose[self.center_2,:2]) / 2
-                    scale_mag = np.linalg.norm(zero_point - pose[self.module_keypoint,:2])
+                    module_keypoint = (pose[self.module_keypoint_1, :2] + pose[self.module_keypoint_2,:2]) / 2
+                    scale_mag = np.linalg.norm(zero_point - module_keypoint)
                     if scale_mag < 1:
                         scale_mag = 1
                     pose[:,:2] = (pose[:,:2] - zero_point) / scale_mag
@@ -266,6 +275,12 @@ class MPOSE():
     def flatten_features(self):
         self.X_train = self.X_train.reshape(self.X_train.shape[0], self.T, -1)
         self.X_test = self.X_test.reshape(self.X_test.shape[0], self.T, -1)
+    
+    def reduce_labels(self):
+        for i in range(len(self.y_train)):
+            self.y_train[i] = self.config['DATASET']['red_lab'][str(self.y_train[i])]
+        for i in range(len(self.y_test)):
+            self.y_test[i] = self.config['DATASET']['red_lab'][str(self.y_test[i])]
     
     def reset_data(self):
         if self.remove_zip is True:

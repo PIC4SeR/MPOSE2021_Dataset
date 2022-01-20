@@ -9,7 +9,7 @@ except:
 setup(
     name='mpose',
     packages=find_packages(),
-    version='1.0.20',
+    version='1.0.22',
     description='MPOSE2021: a Dataset for Short-time Pose-based Human Action Recognition',
     long_description=long_description,
     long_description_content_type='text/markdown',  # This is important!
