@@ -6,6 +6,8 @@
 
 This repository contains the MPOSE2021 Dataset for short-time Human Action Recognition (HAR). 
 
+![](https://media1.giphy.com/media/1aOcKxFkRKwKBX4C4q/giphy.gif?cid=790b761165a847199c8b75f8eccb441036a37b7219830dda&rid=giphy.gif&ct=g)
+
 MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by human pose data detected by 
 [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) [4] and [Posenet](https://github.com/google-coral/project-posenet/tree/master/models) [11]
 on popular datasets for HAR, i.e. Weizmann [5], i3DPost [6], IXMAS [7], KTH [8], UTKinetic-Action3D (RGB only) [9] and UTD-MHAD (RGB only) [10], alongside original video datasets, i.e. ISLD and ISLD-Additional-Sequences [1].
