@@ -6,7 +6,9 @@
 
 This repository contains the MPOSE2021 Dataset for short-time Human Action Recognition (HAR). 
 
-![gif](https://media.giphy.com/media/1aOcKxFkRKwKBX4C4q/giphy.gif)
+<p align="center">
+  <img src="docs/giphy.gif" alt="animated" />
+</p>
 
 MPOSE2021 is developed as an evolution of the MPOSE Dataset [1-3]. It is made by human pose data detected by 
 [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) [4] and [Posenet](https://github.com/google-coral/project-posenet/tree/master/models) [11]
