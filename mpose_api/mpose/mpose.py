@@ -36,6 +36,7 @@ class MPOSE():
         # Configuration
         self.pose_extractor = pose_extractor
         self.split = str(split)
+        
         self.preprocess = preprocess
         self.config_file = config_file
         self.velocities = velocities
@@ -44,18 +45,7 @@ class MPOSE():
         self.verbose = verbose
         
         self.get_config()
-        
-        self.T = self.config['DATASET']['T']
-        self.C = self.config['DATASET']['C']
-        self.K = self.config['DATASET'][pose_extractor]['K']
-        self.center_1 = self.config['DATASET'][pose_extractor]['center_1']
-        self.center_2 = self.config['DATASET'][pose_extractor]['center_2']
-        self.module_keypoint_1 = self.config['DATASET'][pose_extractor]['module_keypoint_1']
-        self.module_keypoint_2 = self.config['DATASET'][pose_extractor]['module_keypoint_2']
-        self.h = self.config['DATASET'][self.pose_extractor]['head']
-        self.rf = self.config['DATASET'][self.pose_extractor]['right_foot']
-        self.lf = self.config['DATASET'][self.pose_extractor]['left_foot']
-        
+        self.set_data_config()
         
         self.X_train = None
         self.y_train = None
@@ -81,41 +71,68 @@ class MPOSE():
             with pkg_resources.path(mpose, 'config.yaml') as config:
                 self.config_file = config
         self.config = read_yaml(self.config_file)
+        self.data_dir = os.environ['HOME'] + self.config['CACHE_DIR']
    
+    def set_data_config(self, pose_extractor=None, split=None):
+        if split:
+            self.split = split
+        if pose_extractor:
+            self.pose_extractor = pose_extractor
+        self.T = self.config['DATASET']['T']
+        self.C = self.config['DATASET']['C']
+        self.K = self.config['DATASET'][self.pose_extractor]['K']
+        self.center_1 = self.config['DATASET'][self.pose_extractor]['center_1']
+        self.center_2 = self.config['DATASET'][self.pose_extractor]['center_2']
+        self.module_keypoint_1 = self.config['DATASET'][self.pose_extractor]['module_keypoint_1']
+        self.module_keypoint_2 = self.config['DATASET'][self.pose_extractor]['module_keypoint_2']
+        self.h = self.config['DATASET'][self.pose_extractor]['head']
+        self.rf = self.config['DATASET'][self.pose_extractor]['right_foot']
+        self.lf = self.config['DATASET'][self.pose_extractor]['left_foot']
 
     # Get Data
     def download_data(self):
         if self.verbose:
             print(f"Downloading Data...")
-        if not os.path.exists(self.config['CACHE_DIR']):
-            os.makedirs(self.config['CACHE_DIR'])
-        download_file(self.config['URLS'][self.pose_extractor], self.config['CACHE_DIR']+self.pose_extractor+'.zip',
+        if not os.path.exists(self.data_dir):
+            os.makedirs(self.data_dir)
+        download_file(self.config['URLS'][self.pose_extractor], self.data_dir+self.pose_extractor+'.zip',
                       overwrite=self.overwrite, verbose=self.verbose)
         if self.verbose:
             print(f"Extracting Data...")
-        if not os.path.exists(self.config['CACHE_DIR']+self.pose_extractor+'/'+self.split+'/'):
+        if not os.path.exists(self.data_dir+self.pose_extractor+'/'+self.split+'/'):
             if self.verbose:
-                print(f"Extracting Archive to {self.config['CACHE_DIR']}...")
-            unzip(self.config['CACHE_DIR']+self.pose_extractor+'.zip', self.config['CACHE_DIR'])
+                print(f"Extracting Archive to {self.data_dir}...")
+            unzip(self.data_dir+self.pose_extractor+'.zip', self.data_dir)
         elif self.verbose:
-            print(f"File exists in {self.config['CACHE_DIR']+self.pose_extractor+'/'}. specify overwrite=True if intended")
+            print(f"File exists in {self.data_dir+self.pose_extractor+'/'}. specify overwrite=True if intended")
         if self.remove_zip:
             if self.verbose:
                 print(f"Removing Archive...")
-            os.remove(self.config['CACHE_DIR']+self.pose_extractor+'.zip')
+            os.remove(self.data_dir+self.pose_extractor+'.zip')
         
-    def load_data(self):
-        self.X_train = np.load(self.config['CACHE_DIR'] + self.pose_extractor + '/' + self.split + '/X_train.npy')
-        self.y_train = np.load(self.config['CACHE_DIR'] + self.pose_extractor + '/' + self.split + '/y_train.npy')
-        self.X_test = np.load(self.config['CACHE_DIR'] + self.pose_extractor + '/' + self.split + '/X_test.npy')
-        self.y_test = np.load(self.config['CACHE_DIR'] + self.pose_extractor + '/' + self.split + '/y_test.npy')
+    def load_data(self, data=None, pose_extractor=None, split=None):
+        if pose_extractor or split:
+            self.set_data_config(pose_extractor=pose_extractor, split=split)
+        if data:
+            if not isinstance(data, tuple):
+                'Error! Be sure to set data = (X_train, y_train, X_test, y_test).'
+            self.X_train = data[0]
+            self.y_train = data[1]            
+            self.X_test = data[2]
+            self.y_test = data[3]
+        else:
+            self.X_train = np.load(self.data_dir + self.pose_extractor + '/' + self.split + '/X_train.npy')
+            self.y_train = np.load(self.data_dir + self.pose_extractor + '/' + self.split + '/y_train.npy')
+            self.X_test = np.load(self.data_dir + self.pose_extractor + '/' + self.split + '/X_test.npy') 
+            self.y_test = np.load(self.data_dir + self.pose_extractor + '/' + self.split + '/y_test.npy')
+        
         self.scaled = False
         
     def load_list(self):
         test_list = []
         train_list = []
         end = 0
-        list_path = self.config['CACHE_DIR'] + self.pose_extractor + '/' + self.split
+        list_path = self.data_dir + self.pose_extractor + '/' + self.split
         f = open(list_path + '/' + self.split + '.txt', "r")
         while not end:
             line = f.readline().split('\t')
@@ -298,7 +315,7 @@ class MPOSE():
     def get_info(self):
         print('----Dataset Information----')
         print(f'Pose Extractor: {self.pose_extractor}')
-        print(f'Split: {self.pose_extractor}') 
+        print(f'Split: {self.split}') 
         print(f'X_train shape: {self.X_train.shape}')
         print(f'X_test shape: {self.X_test.shape}')
         print('Min-Max feature ranges:')

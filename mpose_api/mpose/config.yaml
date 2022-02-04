@@ -1,13 +1,14 @@
 #---- GENERAL SETTINGS
 
-CACHE_DIR: './tmp/'
+CACHE_DIR: '/.mpose/'
 
 #---- DATASET URLS
 
 URLS:
-    posenet: 'https://zenodo.org/record/5803076/files/posenet.zip'
-    openpose: 'https://zenodo.org/record/5803076/files/openpose.zip'
-   
+    posenet: 'https://zenodo.org/record/5906977/files/posenet.zip'
+    openpose: 'https://zenodo.org/record/5906977/files/openpose.zip'
+    movenet: 'https://zenodo.org/record/5906977/files/movenet.zip'
+
 #---- DATASET CONSTANTS
 DATASET:
     T: 30
@@ -25,7 +26,20 @@ DATASET:
         right_foot: [15]
         left_foot: [16]
         prune: []
-            
+         
+    movenet:
+        K: 17
+        k: 13
+        k_axp: 13
+        center_1: 1
+        center_2: 2
+        module_keypoint_1: 7
+        module_keypoint_2: 8
+        head: [0, 1, 2, 3, 4]
+        right_foot: [15]
+        left_foot: [16]
+        prune: []     
+         
     openpose:
         K: 25
         k: 15
@@ -61,6 +75,7 @@ DATASET:
         "pjump":18,
         "run":19
         }
+        
     red_lab : { 
            "0":0,
            "1":0,
