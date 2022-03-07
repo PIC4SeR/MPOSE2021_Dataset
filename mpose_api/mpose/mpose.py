@@ -27,8 +27,6 @@ class MPOSE():
         :param preprocess: preprocess function to apply to the raw data
         :param config_file: path of the configuration file
         :param bool velocities: whether to include velocities in data 
-        :param string normalization: type of normalization to apply to data
-        :param shape: desired data shape
         :param bool remove_zip: whether to remove zip after download (if True, data_reset() is not available)
         :param bool overwrite: whether to overwrite previously downloaded files
         """
