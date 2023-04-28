@@ -2,7 +2,7 @@ import os
 import numpy as np
 from tqdm import tqdm
 import numpy as np
-from .utils import download_file, unzip, read_yaml
+from utils import download_file, unzip, read_yaml
 import importlib_resources as pkg_resources
 import mpose
 
@@ -244,6 +244,10 @@ class MPOSE():
         if self.X_train.shape[-1] > 3:
             self.add_velocities(overwrite=True)
         
+    def prune(self):
+        self.X_train = np.delete(self.X_train, self.config['DATASET'][self.pose_extractor]['prune'], 2)
+        self.X_test = np.delete(self.X_test, self.config['DATASET'][self.pose_extractor]['prune'], 2)
+    
     def add_velocities(self, overwrite=False):
         if self.X_train.shape[-1] > 3:
             if not overwrite:
