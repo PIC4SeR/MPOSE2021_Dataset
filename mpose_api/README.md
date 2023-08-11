@@ -71,7 +71,7 @@ Check out our [Colab Notebook Tutorial](https://colab.research.google.com/drive/
 
 * `reset_data()`: restore original data
 
-* `get_data(seq_id=False)`: get data samples (as numpy arrays)
+* `get_dataset(seq_id=False)`: get data samples (as numpy arrays)
   * `seq_id`: if True, returns also the lists of sample IDs correspondent to X_train and X_test
     
 * `get_info()`: print a summary of dataset statistics

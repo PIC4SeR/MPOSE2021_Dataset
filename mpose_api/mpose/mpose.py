@@ -2,7 +2,7 @@ import os
 import numpy as np
 from tqdm import tqdm
 import numpy as np
-from utils import download_file, unzip, read_yaml
+from mpose.utils import download_file, unzip, read_yaml
 import importlib_resources as pkg_resources
 import mpose
 
@@ -69,7 +69,7 @@ class MPOSE():
             with pkg_resources.path(mpose, 'config.yaml') as config:
                 self.config_file = config
         self.config = read_yaml(self.config_file)
-        self.data_dir = os.environ['HOME'] + self.config['CACHE_DIR']
+        self.data_dir = os.path.expanduser('~') + self.config['CACHE_DIR']
    
     def set_data_config(self, pose_extractor=None, split=None):
         if split:

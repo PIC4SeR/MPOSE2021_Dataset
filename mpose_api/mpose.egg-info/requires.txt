@@ -1,4 +1,4 @@
-importlib_resources
 numpy
-pyyaml
 tqdm
+pyyaml
+importlib_resources

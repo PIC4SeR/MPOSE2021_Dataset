@@ -9,12 +9,12 @@ except:
 setup(
     name='mpose',
     packages=find_packages(),
-    version='1.0.31',
+    version='1.0.33',
     description='MPOSE2021: a Dataset for Short-time Pose-based Human Action Recognition',
     long_description=long_description,
     long_description_content_type='text/markdown',  # This is important!
     author='Simone Angarano',
     license='MIT',
-    install_requires=['numpy', 'tqdm', 'pyyaml', 'importlib_resources'],
+    install_requires=['numpy', 'tqdm', 'pyyaml', 'importlib_resources', 'matplotlib'],
     package_data={'': ["*.yaml"]}
 )
