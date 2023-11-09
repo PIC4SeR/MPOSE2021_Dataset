@@ -66,10 +66,10 @@ class MPOSE():
         if self.verbose:
             print(f"Initializing MPOSE2021 with {self.pose_extractor} Pose Extractor")
         if self.config_file is None:
-            with pkg_resources.path(mpose, 'config.yaml') as config:
+            with pkg_resources.as_file(pkg_resources.files(mpose).joinpath('config.yaml')) as config:
                 self.config_file = config
         self.config = read_yaml(self.config_file)
-        self.data_dir = os.environ['HOME'] + self.config['CACHE_DIR']
+        self.data_dir = os.path.expanduser('~') + self.config['CACHE_DIR']
    
     def set_data_config(self, pose_extractor=None, split=None):
         if split:
@@ -93,7 +93,8 @@ class MPOSE():
             print(f"Downloading Data...")
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
-        download_file(self.config['URLS'][self.pose_extractor], self.data_dir+self.pose_extractor+'.zip',
+        download_file(url=self.config['URLS'][self.pose_extractor], 
+                      output_path=self.data_dir+self.pose_extractor+'.zip',
                       overwrite=self.overwrite, verbose=self.verbose)
         if self.verbose:
             print(f"Extracting Data...")

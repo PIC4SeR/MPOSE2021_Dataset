@@ -1,8 +1,10 @@
 Metadata-Version: 2.1
 Name: mpose
-Version: 1.0.33
+Version: 1.2
 Summary: MPOSE2021: a Dataset for Short-time Pose-based Human Action Recognition
+Home-page: https://pypi.org/project/mpose/
 Author: Simone Angarano
+Author-email: simone.angarano@polito.it
 License: MIT
 Description-Content-Type: text/markdown
 
@@ -49,7 +51,7 @@ dataset = mpose.MPOSE(pose_extractor='openpose',
 dataset.get_info()
 
 # get data samples (as numpy arrays)
-X_train, y_train, X_test, y_test = dataset.get_dataset()
+X_train, y_train, X_test, y_test = dataset.get_data()
 ```
 
 Check out our [Colab Notebook Tutorial](https://colab.research.google.com/drive/1_v3DYwgZPMCiELtgiwMRYxQzcYGdSWFH?usp=sharing) for quick hands-on examples.
@@ -79,7 +81,7 @@ Check out our [Colab Notebook Tutorial](https://colab.research.google.com/drive/
 
 * `reset_data()`: restore original data
 
-* `get_data(seq_id=False)`: get data samples (as numpy arrays)
+* `get_dataset(seq_id=False)`: get data samples (as numpy arrays)
   * `seq_id`: if True, returns also the lists of sample IDs correspondent to X_train and X_test
     
 * `get_info()`: print a summary of dataset statistics

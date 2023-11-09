@@ -41,7 +41,7 @@ dataset = mpose.MPOSE(pose_extractor='openpose',
 dataset.get_info()
 
 # get data samples (as numpy arrays)
-X_train, y_train, X_test, y_test = dataset.get_dataset()
+X_train, y_train, X_test, y_test = dataset.get_data()
 ```
 
 Check out our [Colab Notebook Tutorial](https://colab.research.google.com/drive/1_v3DYwgZPMCiELtgiwMRYxQzcYGdSWFH?usp=sharing) for quick hands-on examples.
